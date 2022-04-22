@@ -4,10 +4,10 @@ Thomas Was Alone 2
 OPEN GL x PROG IMAC1
 
 
-**Bike Mihell Team**
-Debeaune Tristan
-Gervais Wendy
-Huet Quentin
+**Bike Mihell Team**  
+Debeaune Tristan  
+Gervais Wendy  
+Huet Quentin  
 
 ## Getting started
 ```
