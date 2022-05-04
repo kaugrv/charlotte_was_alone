@@ -63,12 +63,8 @@ int main(int argc, char** argv) {
     QuadTree Q = initRootFromMap(M);
 
     buildQuadTree(&Q);
-    //printQ(&Q);
+    printQ(&Q);
    
-
-    // for (int i =0; i<=7; i++){
-    //     printf( "le rectangle R%d est dans la zone TR ? %d \n", i+1, rectDecorInZone(Q.listeRectDecor[i],Q.TopRight->xTopLeft,Q.TopRight->yTopLeft,Q.TopRight->size));
-    // }
 
     while(loop) {
 

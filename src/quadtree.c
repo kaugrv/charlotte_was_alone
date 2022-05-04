@@ -170,19 +170,19 @@ void buildQuadTree(QuadTree* Q) {
 
 
     if (Q->nbRectDecor > 4) {
-        if (Q->TopLeft!= NULL) {
+        if (Q->TopLeft!= NULL && Q->TopLeft->nbRectDecor > 4) {
             buildQuadTree(Q->TopLeft);
         }
 
-        if (Q->TopRight!=NULL) {
+        if (Q->TopRight!=NULL && Q->TopRight->nbRectDecor > 4) {
             buildQuadTree(Q->TopRight);
         }
 
-        if (Q->BottomLeft!=NULL) {
+        if (Q->BottomLeft!=NULL && Q->BottomLeft->nbRectDecor > 4) {
             buildQuadTree(Q->BottomLeft);
         }
 
-        if (Q->BottomRight!=NULL) {
+        if (Q->BottomRight!=NULL  && Q->BottomRight->nbRectDecor > 4) {
             buildQuadTree(Q->BottomRight);
         }
     
