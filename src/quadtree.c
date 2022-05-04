@@ -1,5 +1,12 @@
 #include "quadtree.h"
 
+// Renvoie 1 si Q est une feuille
+int isLeaf(QuadTree Q) {
+    if (Q.BottomLeft==NULL && Q.BottomRight==NULL && Q.TopLeft==NULL && Q.TopRight==NULL) {
+        return 1;
+    }
+    return 0;
+}
 
 void drawQuadrillage(float x, float y, float size) {
 
@@ -61,6 +68,8 @@ void createChildren(QuadTree* Q) {
     struct QuadTree *BL = malloc(sizeof(struct QuadTree));
     struct QuadTree *BR = malloc(sizeof(struct QuadTree));
 
+    printf("malloc success\n");
+
     TL->size = Q->size/2;
     TR->size = Q->size/2;
     BL->size = Q->size/2;
@@ -69,33 +78,54 @@ void createChildren(QuadTree* Q) {
     TL->xTopLeft = Q->xTopLeft;
     TL->yTopLeft = Q->yTopLeft;
 
-    TR->xTopLeft = Q->xTopLeft+TR->size;
+    TR->xTopLeft = Q->xTopLeft+Q->size/2;
     TR->yTopLeft = Q->yTopLeft;
 
     BL->xTopLeft = Q->xTopLeft;
-    BL->yTopLeft = Q->yTopLeft-BL->size;
+    BL->yTopLeft = Q->yTopLeft-Q->size/2;
 
-    BR->xTopLeft = Q->xTopLeft+BR->size;
-    BR->yTopLeft = Q->yTopLeft-BR->size;
+    BR->xTopLeft = Q->xTopLeft+Q->size/2;
+    BR->yTopLeft = Q->yTopLeft-Q->size/2;
 
     TL->nbRectDecor=0;
     TR->nbRectDecor=0;
     BL->nbRectDecor=0;
     BR->nbRectDecor=0;
 
+    TL->TopLeft=NULL;
+    TL->TopRight=NULL;
+    TL->BottomLeft=NULL;
+    TL->BottomRight=NULL;
+
+    TR->TopLeft=NULL;
+    TR->TopRight=NULL;
+    TR->BottomLeft=NULL;
+    TR->BottomRight=NULL;
+
+    BL->TopLeft=NULL;
+    BL->TopRight=NULL;
+    BL->BottomLeft=NULL;
+    BL->BottomRight=NULL;
+
+    BR->TopLeft=NULL;
+    BR->TopRight=NULL;
+    BR->BottomLeft=NULL;
+    BR->BottomRight=NULL;
+
     Q->TopLeft=TL;
     Q->TopRight=TR;
     Q->BottomLeft=BL;
     Q->BottomRight=BR;
-
 
 }
 
 
 // remplit le quadtree enfant des rectdecors de la liste du parent qui s'y trouvent
 void heritedRectDecor(QuadTree* Q, RectDecor listeRectDecorParent[256], int nbRectDecorParent) {
+   
     for (int i=0; i<nbRectDecorParent; i++) {
         if (rectDecorInZone(listeRectDecorParent[i], Q->xTopLeft, Q->yTopLeft, Q->size)) {
+            
             Q->listeRectDecor[Q->nbRectDecor] = listeRectDecorParent[i];
             Q->nbRectDecor++;
         }
@@ -105,11 +135,15 @@ void heritedRectDecor(QuadTree* Q, RectDecor listeRectDecorParent[256], int nbRe
 // crée la racine du QuadTree depuis les rectangles de la Map
 QuadTree initRootFromMap(Map M) {
     QuadTree Q;
-    Q.listeRectDecor = M.listeRectDecor;
+
+    for (int i=0; i<M.nbRectDecor; i++) {
+        Q.listeRectDecor[i] = M.listeRectDecor[i];
+    }
+
     Q.nbRectDecor = M.nbRectDecor;
 
     Q.xTopLeft = -M.w/2;
-    Q.yTopLeft = -M.h/2;
+    Q.yTopLeft = M.h/2;
 
     Q.size = M.w;
 
@@ -125,53 +159,108 @@ QuadTree initRootFromMap(Map M) {
 // Remplit le quadtree final
 void buildQuadTree(QuadTree* Q) {
 
-    createChildren(Q);
+    printf("nbRectDecor=%d\n", Q->nbRectDecor);
 
+    createChildren(Q);
+    
     heritedRectDecor(Q->TopLeft, Q->listeRectDecor, Q->nbRectDecor);
     heritedRectDecor(Q->TopRight, Q->listeRectDecor, Q->nbRectDecor);
     heritedRectDecor(Q->BottomLeft, Q->listeRectDecor, Q->nbRectDecor);
     heritedRectDecor(Q->BottomRight, Q->listeRectDecor, Q->nbRectDecor);
 
-    if (Q->TopLeft->nbRectDecor > 4) {
-        buildQuadTree(Q->TopLeft);
+
+    if (Q->nbRectDecor > 4) {
+        if (Q->TopLeft!= NULL) {
+            buildQuadTree(Q->TopLeft);
+        }
+
+        if (Q->TopRight!=NULL) {
+            buildQuadTree(Q->TopRight);
+        }
+
+        if (Q->BottomLeft!=NULL) {
+            buildQuadTree(Q->BottomLeft);
+        }
+
+        if (Q->BottomRight!=NULL) {
+            buildQuadTree(Q->BottomRight);
+        }
+    
     }
 
-    if (Q->TopRight->nbRectDecor > 4) {
-        buildQuadTree(Q->TopRight);
-    }
+    printf("Tree is built!\n");
 
-    if (Q->BottomLeft->nbRectDecor > 4) {
-        buildQuadTree(Q->BottomLeft);
-    }
-
-    if (Q->BottomRight->nbRectDecor > 4) {
-        buildQuadTree(Q->BottomRight);
-    }
 
 }
 
-// Renvoie 1 si Q est une feuille
-int isLeaf(QuadTree Q) {
-    if (Q.BottomLeft==NULL && Q.BottomRight==NULL && Q.TopLeft==NULL && Q.TopRight==NULL) {
-        return 1;
-    }
-    return 0;
-}
+
 
 
 // Affichage du QuadTree + dessin quadrillages sur écran
 void printQuadTree(QuadTree* Q) {
-    printf("Nombre de rect présents : %d\n", Q->nbRectDecor);
 
-    if (isLeaf(*Q)) {
-        return ;
-    }
-    else {
+    if (Q!=NULL) {
+
         drawQuadrillage(Q->xTopLeft+Q->size/2,Q->yTopLeft-Q->size/2, Q->size);
-        printQuadTree(Q->TopRight);
-        printQuadTree(Q->TopLeft);
-        printQuadTree(Q->BottomLeft);
-        printQuadTree(Q->BottomRight);
 
+        if (isLeaf(*Q)) {
+            return ;
+        }
+        
+        else {
+            if (Q->TopRight!=NULL && Q->TopRight->nbRectDecor>4) printQuadTree(Q->TopRight);
+            if (Q->TopLeft!=NULL && Q->TopLeft->nbRectDecor>4) printQuadTree(Q->TopLeft);
+            if (Q->BottomLeft!=NULL&& Q->BottomLeft->nbRectDecor>4) printQuadTree(Q->BottomLeft);
+            if (Q->BottomRight!=NULL&& Q->BottomRight->nbRectDecor>4) printQuadTree(Q->BottomRight);
+        }
+
+    }
+
+    return;
+}
+
+
+void printQ(QuadTree* Q) {
+    printf("TL Nul? %d \n", Q->TopLeft==NULL);
+    printf("TR Nul? %d \n", Q->TopRight==NULL);
+    printf("BL Nul? %d \n", Q->BottomLeft==NULL);
+    printf("BR Nul? %d \n", Q->BottomRight==NULL);
+
+    printf("xTopLeft=%f\n", Q->xTopLeft);
+    printf("yTopLeft=%f\n", Q->yTopLeft);
+
+    printf("size=%f\n", Q->size);
+
+    printf("nbRectDecor : %d\n", Q->nbRectDecor);
+
+    printf("------------\n");
+
+    if (Q->TopLeft!=NULL) {
+        printf("Enfant TL :\n");
+        printQ(Q->TopLeft);
+
+    } 
+
+    if (Q->TopRight!=NULL){
+        printf("Enfant TR :\n");
+        printQ(Q->TopRight);
+    }
+
+    if (Q->BottomLeft!=NULL) {
+        printf("Enfant BL : \n");
+        printQ(Q->BottomLeft) ;
+    }
+    
+    if (Q->BottomRight!=NULL) {
+        printf("Enfant BR : \n");
+        printQ(Q->BottomRight);
+    }
+
+}
+
+
+void drawMapFromQ(QuadTree Q) {
+    for (int i=0; i<Q.nbRectDecor; i++) {
+        drawRectDecor(Q.listeRectDecor[i]);
     }
 }

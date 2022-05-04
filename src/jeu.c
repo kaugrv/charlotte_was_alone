@@ -38,19 +38,37 @@ int main(int argc, char** argv) {
     RectDecor R4 = createRectDecor(50,50,0,240,1,1,1);
     RectDecor R5 = createRectDecor(100,100,-200,200,1,1,1);
 
+    RectDecor R6 = createRectDecor(50,50,40,40,1,1,1);
+    RectDecor R7 = createRectDecor(50,50,80,80,1,1,1);
+    RectDecor R8 = createRectDecor(50,50,80,140,1,1,1);
+
+
+    // RectDecor R1 = createRectDecor(50,50,0,0,1,1,1);
+    // RectDecor R2 = createRectDecor(50,50,-320,-310,1,1,1);
+    // RectDecor R3 = createRectDecor(50,50,320,-310,1,1,1);
+    // RectDecor R4 = createRectDecor(50,50,320,310,1,1,1);
+    // RectDecor R5 = createRectDecor(50,50,-320,310,1,1,1);
+
+
     addRectDecorToMap(R1, &M);
     addRectDecorToMap(R2, &M);
     addRectDecorToMap(R3, &M);
     addRectDecorToMap(R4, &M);
     addRectDecorToMap(R5, &M);
 
+    addRectDecorToMap(R6, &M);
+    addRectDecorToMap(R7, &M);
+    addRectDecorToMap(R8, &M);
 
-    for (int i =0; i<=4; i++){
-        printf( "le rectangle R%d est dans la zone ? %d \n", i+1, rectDecorInZone(M.listeRectDecor[i],0,640,640));
-    }
+    QuadTree Q = initRootFromMap(M);
 
+    buildQuadTree(&Q);
+    //printQ(&Q);
+   
 
-    QuadTree QUADTREE = initRootFromMap(M);
+    // for (int i =0; i<=7; i++){
+    //     printf( "le rectangle R%d est dans la zone TR ? %d \n", i+1, rectDecorInZone(Q.listeRectDecor[i],Q.TopRight->xTopLeft,Q.TopRight->yTopLeft,Q.TopRight->size));
+    // }
 
     while(loop) {
 
@@ -85,10 +103,9 @@ int main(int argc, char** argv) {
                 break;
 
             case 1: ;
-                drawQuadrillage(0,0,1280);
-                drawMap(M);
-
-
+                drawMapFromQ(Q);
+                printQuadTree(&Q);
+        
                 break;
         }
         glPopMatrix();

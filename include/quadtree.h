@@ -28,11 +28,12 @@ typedef struct QuadTree {
 
     float size; // taille en pixels de la zone
 
-    RectDecor* listeRectDecor;
+    RectDecor listeRectDecor[256];
     int nbRectDecor;
 
 } QuadTree ;
 
+int isLeaf(QuadTree Q);
 
 void drawQuadrillage(float x, float y, float size);
 
@@ -46,9 +47,10 @@ QuadTree initRootFromMap(Map M);
 
 void buildQuadTree(QuadTree* Q);
 
-int isLeaf(QuadTree Q);
-
 void printQuadTree(QuadTree* Q);
 
+void printQ(QuadTree* Q);
+
+void drawMapFromQ(QuadTree Q);
 
 #endif
