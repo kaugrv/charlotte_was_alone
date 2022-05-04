@@ -1,6 +1,10 @@
 #include "design.h"
 
-// draw le chiffre n : A GARDER POUR TEXTURES
+float lerp (float a , float b, float coeff){
+    return a + (a-b)*coeff;
+}
+
+
 void drawTexturedRect(float w, float h, float x, float y, char* adresse) {
 
     char a[70];
@@ -51,24 +55,22 @@ void drawSquare(int full) {
     if (full == 1) {
         g = GL_POLYGON ;
     }
-
-        glBegin(g);
-            glVertex2f(0.5,0.5);
-            glVertex2f(0.5,-0.5);
-            glVertex2f(-0.5,-0.5);
-            glVertex2f(-0.5,0.5);
-          
-        glEnd();
-
+    glBegin(g);
+        glVertex2f(0.5,0.5);
+        glVertex2f(0.5,-0.5);
+        glVertex2f(-0.5,-0.5);
+        glVertex2f(-0.5,0.5);
+    glEnd();
 }
 
 
-void drawRect(float w, float h, float x, float y, float r, float g, float b) {
+void drawRect(float w, float h, float x, float y, float r, float g, float b, int full) {
     glPushMatrix();
         glColor3f(r,g,b); 
         glTranslatef(x,y,0);
         glScalef(w,h,1);
-        drawSquare(1);
+        drawSquare(full);
         glColor3f(1,1,1); 
     glPopMatrix();
 }
+

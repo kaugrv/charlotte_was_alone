@@ -16,6 +16,7 @@ void inputMenuPrincipal(SDL_Event e, int* gameState, int* f){
             if (e.key.keysym.sym == 1073741904) { // Gauche
                 *f=0;
             } 
+            
             else if (e.key.keysym.sym == 1073741903) { // Droite
                 *f=2;
             }

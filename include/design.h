@@ -13,12 +13,13 @@
 #include <time.h>
 
 
+float lerp (float a , float b, float coeff);
 
-// draw le chiffre n : A GARDER POUR TEXTURES
 void drawTexturedRect(float w, float h, float x, float y, char* adresse);
 
 void drawSquare(int full);
 
-void drawRect(float w, float h, float x, float y, float r, float g, float b);
+void drawRect(float w, float h, float x, float y, float r, float g, float b, int full);
+
 
 #endif

@@ -11,7 +11,8 @@
 
 #include "gestionSDL.h"
 #include "design.h"
-
+#include "map.h"
+#include "quadtree.h"
 
 
 int main(int argc, char** argv) {
@@ -23,35 +24,60 @@ int main(int argc, char** argv) {
     int f = 5;
     float x;
     float y;
-    int GAMESTATE = 0;
+    
+    int GAMESTATE = 1;
     char* adresse;
     
     onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
 
+    Map M = createMap(1280,1280);
+
+    RectDecor R1 = createRectDecor(640,100,-320,-310,1,1,1);
+    RectDecor R2 = createRectDecor(200,250,100,-235,1,1,1);
+    RectDecor R3 = createRectDecor(150,200,285,200,1,1,1);
+    RectDecor R4 = createRectDecor(50,50,0,240,1,1,1);
+    RectDecor R5 = createRectDecor(100,100,-200,200,1,1,1);
+
+    addRectDecorToMap(R1, &M);
+    addRectDecorToMap(R2, &M);
+    addRectDecorToMap(R3, &M);
+    addRectDecorToMap(R4, &M);
+    addRectDecorToMap(R5, &M);
+
+
+    for (int i =0; i<=4; i++){
+        printf( "le rectangle R%d est dans la zone ? %d \n", i+1, rectDecorInZone(M.listeRectDecor[i],0,640,640));
+    }
+
+
+    QuadTree QUADTREE = initRootFromMap(M);
+
     while(loop) {
 
-        printf(" le gamestate actuel : %d \n", GAMESTATE);
 
         /* Recuperation du temps au debut de la boucle */
         Uint32 startTime = SDL_GetTicks();
     
         /* Placer ici le code de dessin */
+        
         glClear(GL_COLOR_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
+        glPushMatrix();
 
         switch (GAMESTATE) {
             case 0:;
                 adresse = "doc/textures/menu.png";
-                drawTexturedRect(90,60,0,10, adresse);
-                drawRect(6,9,x,y, 1.0,1.0,1.0);
+
+                drawTexturedRect(1280,720,0,10, adresse);
+                drawRect(60,90, x, y, 1.0,1.0,1.0,1);
                 switch(f) {
                     case 0:
-                        x--;
+                        x-=10;
                         break;
                         
                     case 2:
-                        x++;
+                        x+=10;
                         break;
 
                     f=5; 
@@ -59,11 +85,13 @@ int main(int argc, char** argv) {
                 break;
 
             case 1: ;
-                drawRect(6,9,x,y, 0.5,0.5,0.5);
-                adresse = "doc/textures/pause.png";
-                drawTexturedRect(90,60,0,10, adresse);
+                drawQuadrillage(0,0,1280);
+                drawMap(M);
+
+
                 break;
         }
+        glPopMatrix();
 
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapWindow(window);
@@ -85,7 +113,6 @@ int main(int argc, char** argv) {
                     inputPause(e, &GAMESTATE);
                     break;
             }
-
         }
 
         /* Calcul du temps ecoule */
@@ -98,3 +125,4 @@ int main(int argc, char** argv) {
     #include "fenetre/freeSDLressources.c"
     
 }
+

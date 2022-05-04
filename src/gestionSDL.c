@@ -45,4 +45,3 @@ GLuint loadingRessources(char* adresse){
 
 }
 
-
