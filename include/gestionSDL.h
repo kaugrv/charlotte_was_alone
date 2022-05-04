@@ -26,6 +26,10 @@ static const float GL_VIEW_SIZE = 1280.;
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
+
+static float aspectRatio =1.0* WINDOW_WIDTH/WINDOW_HEIGHT;
+
+
 void onWindowResized(unsigned int width, unsigned int height);
 
 // Retourne textureID pour charger textures

@@ -20,42 +20,33 @@ int main(int argc, char** argv) {
     #include "fenetre/createSDLwindowandcontext.c"
 
     /* Boucle principale */
+
     int loop = 1;
     int f = 5;
     float x;
     float y;
     
-    int GAMESTATE = 1;
+    int GAMESTATE = 0;
     char* adresse;
     
     onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     Map M = createMap(1280,1280);
 
-    RectDecor R1 = createRectDecor(640,100,-320,-310,1,1,1);
-    RectDecor R2 = createRectDecor(200,250,100,-235,1,1,1);
-    RectDecor R3 = createRectDecor(150,200,285,200,1,1,1);
-    RectDecor R4 = createRectDecor(50,50,0,240,1,1,1);
-    RectDecor R5 = createRectDecor(100,100,-200,200,1,1,1);
-
-    RectDecor R6 = createRectDecor(50,50,40,40,1,1,1);
-    RectDecor R7 = createRectDecor(50,50,80,80,1,1,1);
-    RectDecor R8 = createRectDecor(50,50,80,140,1,1,1);
-
-
-    // RectDecor R1 = createRectDecor(50,50,0,0,1,1,1);
-    // RectDecor R2 = createRectDecor(50,50,-320,-310,1,1,1);
-    // RectDecor R3 = createRectDecor(50,50,320,-310,1,1,1);
-    // RectDecor R4 = createRectDecor(50,50,320,310,1,1,1);
-    // RectDecor R5 = createRectDecor(50,50,-320,310,1,1,1);
-
+    RectDecor R1 = createRectDecor(640,100,-320,-310,253/255.0,108/255.0,158/255.0);
+    RectDecor R2 = createRectDecor(200,250,100,-235,253/255.0,108/255.0,158/255.0);
+    RectDecor R3 = createRectDecor(150,200,285,200,253/255.0,108/255.0,158/255.0);
+    RectDecor R4 = createRectDecor(50,50,0,240,253/255.0,108/255.0,158/255.0);
+    RectDecor R5 = createRectDecor(100,100,-200,200,253/255.0,108/255.0,158/255.0);
+    RectDecor R6 = createRectDecor(50,50,40,40,253/255.0,108/255.0,158/255.0);
+    RectDecor R7 = createRectDecor(50,50,80,80,253/255.0,108/255.0,158/255.0);
+    RectDecor R8 = createRectDecor(50,50,80,140,253/255.0,108/255.0,158/255.0);
 
     addRectDecorToMap(R1, &M);
     addRectDecorToMap(R2, &M);
     addRectDecorToMap(R3, &M);
     addRectDecorToMap(R4, &M);
     addRectDecorToMap(R5, &M);
-
     addRectDecorToMap(R6, &M);
     addRectDecorToMap(R7, &M);
     addRectDecorToMap(R8, &M);
@@ -82,27 +73,28 @@ int main(int argc, char** argv) {
         switch (GAMESTATE) {
             case 0:;
                 adresse = "doc/textures/menu.png";
-
                 drawTexturedRect(1280,720,0,10, adresse);
                 drawRect(60,90, x, y, 1.0,1.0,1.0,1);
                 switch(f) {
                     case 0:
                         x-=10;
                         break;
-                        
+                
                     case 2:
                         x+=10;
                         break;
-
                     f=5; 
                 }
                 break;
 
             case 1: ;
+                drawRect(1280,1280,0,0,1,1,1,1); //fond
+                //drawMap(M);
                 drawMapFromQ(Q);
                 printQuadTree(&Q);
         
                 break;
+
         }
         glPopMatrix();
 
@@ -125,6 +117,7 @@ int main(int argc, char** argv) {
                 case 1:
                     inputPause(e, &GAMESTATE);
                     break;
+
             }
         }
 

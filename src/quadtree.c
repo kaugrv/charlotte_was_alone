@@ -194,8 +194,6 @@ void buildQuadTree(QuadTree* Q) {
 }
 
 
-
-
 // Affichage du QuadTree + dessin quadrillages sur écran
 void printQuadTree(QuadTree* Q) {
 
@@ -238,7 +236,6 @@ void printQ(QuadTree* Q) {
     if (Q->TopLeft!=NULL) {
         printf("Enfant TL :\n");
         printQ(Q->TopLeft);
-
     } 
 
     if (Q->TopRight!=NULL){
