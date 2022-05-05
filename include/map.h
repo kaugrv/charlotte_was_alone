@@ -27,7 +27,6 @@ typedef struct RectDecor {
 RectDecor createRectDecor(float w, float h, float x, float y, float r, float g, float b);
 void drawRectDecor(RectDecor R);
 
-
 typedef struct Map {
     float w;
     float h;
@@ -37,11 +36,7 @@ typedef struct Map {
 
 Map createMap(float w, float h);
 void addRectDecorToMap(RectDecor R, Map* M);
-
 void drawMap(Map M);
-
-
-
 
 
 #endif

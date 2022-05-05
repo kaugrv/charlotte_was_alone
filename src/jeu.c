@@ -13,6 +13,7 @@
 #include "design.h"
 #include "map.h"
 #include "quadtree.h"
+#include "menus.h"
 
 
 int main(int argc, char** argv) {
@@ -22,13 +23,16 @@ int main(int argc, char** argv) {
     /* Boucle principale */
 
     int loop = 1;
+
     int f = 5;
     float x;
     float y;
+
+
+
+    int currentline = 1;
     
     int GAMESTATE = 0;
-    char* adresse;
-    
     onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     Map M = createMap(1280,1280);
@@ -54,7 +58,7 @@ int main(int argc, char** argv) {
     QuadTree Q = initRootFromMap(M);
 
     buildQuadTree(&Q);
-    printQ(&Q);
+    //printQ(&Q);
    
 
     while(loop) {
@@ -70,30 +74,36 @@ int main(int argc, char** argv) {
         glLoadIdentity();
         glPushMatrix();
 
+      
+
         switch (GAMESTATE) {
+
             case 0:;
-                adresse = "doc/textures/menu.png";
-                drawTexturedRect(1280,720,0,10, adresse);
+                afficheMenu(currentline);
+                break;
+            
+            case 1:; // Bouger rectangle
+        
                 drawRect(60,90, x, y, 1.0,1.0,1.0,1);
                 switch(f) {
                     case 0:
                         x-=10;
                         break;
-                
                     case 2:
                         x+=10;
                         break;
                     f=5; 
                 }
+
                 break;
 
-            case 1: ;
+            case 2: ; // QUADTREE
                 drawRect(1280,1280,0,0,1,1,1,1); //fond
-                //drawMap(M);
                 drawMapFromQ(Q);
-                printQuadTree(&Q);
+                //printQuadTree(&Q);
         
                 break;
+
 
         }
         glPopMatrix();
@@ -111,11 +121,15 @@ int main(int argc, char** argv) {
             
             switch(GAMESTATE) {
                 case 0:
-                    inputMenuPrincipal(e, &GAMESTATE, &f);
+                    inputMenuPrincipal(e, &GAMESTATE, &currentline, &loop);
                     break;
 
                 case 1:
-                    inputPause(e, &GAMESTATE);
+                    input1(e, &GAMESTATE, &f);
+                    break;
+
+                case 2:
+                    input1(e, &GAMESTATE, &f);
                     break;
 
             }

@@ -27,6 +27,7 @@ void drawQuadrillage(float x, float y, float size) {
 
        
     glEnd();
+    
     glPopMatrix();
 
 

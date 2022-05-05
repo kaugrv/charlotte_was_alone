@@ -11,9 +11,13 @@
 #include <string.h>
 #include <time.h>
 
-void inputMenuPrincipal(SDL_Event e, int* gameState, int* f);
+#include "design.h"
 
-void inputPause(SDL_Event e, int* gameState);
+void inputMenuPrincipal(SDL_Event e, int* gameState, int* currentline, int* loop);
+
+void afficheMenu(int currentline);
+
+void input1(SDL_Event e, int* gameState, int* f);
 
 
 
