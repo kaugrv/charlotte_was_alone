@@ -35,7 +35,9 @@ typedef struct QuadTree {
 
 int isLeaf(QuadTree Q);
 
-void drawQuadrillage(float x, float y, float size);
+void drawQuadrillage(float x, float y, float size, float r, float g, float b);
+
+
 
 int rectDecorInZone(RectDecor R, float xTopLeft, float yTopLeft, float size);
 
@@ -52,5 +54,10 @@ void printQuadTree(QuadTree* Q);
 void printQ(QuadTree* Q);
 
 void drawMapFromQ(QuadTree Q);
+
+QuadTree* QuadTreeContainPoint (float x, float y, QuadTree* Q);
+
+QuadTree searchQuadtrees(RectDecor R, QuadTree* Q, Map M);
+
 
 #endif

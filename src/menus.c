@@ -47,6 +47,7 @@ void inputMenuPrincipal(SDL_Event e, int* gameState, int* currentline, int* loop
 
 
 void afficheMenu(int currentline) {
+    glColor3f(1,1,1);
     char * adresse;
 
 
@@ -86,17 +87,24 @@ void input1(SDL_Event e, int* gameState, int * f){
             if (e.key.keysym.sym == 1073741904) { // Gauche
                 *f=0;
             } 
+
+            if (e.key.keysym.sym == 1073741906) { // Haut
+                *f=1;
+            } 
             
-            else if (e.key.keysym.sym == 1073741903) { // Droite
+            if (e.key.keysym.sym == 1073741903) { // Droite
                 *f=2;
             }
+
+            else if (e.key.keysym.sym == 1073741905) { // Bas
+                *f=3;
+            }            
             
 
             if (e.key.keysym.sym == SDLK_ESCAPE){
                 *gameState = 0;
             }
 
-            printf("touche pressee (code = %d)\n", e.key.keysym.sym);
             break;
 
         case SDL_KEYUP:
