@@ -53,4 +53,6 @@ void printQ(QuadTree* Q);
 
 void drawMapFromQ(QuadTree Q);
 
+
+QuadTree* QuadTreeContainPoint (float x, float y, QuadTree* Q);
 #endif

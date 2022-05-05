@@ -64,6 +64,9 @@ int main(int argc, char** argv) {
 
     buildQuadTree(&Q);
     printQ(&Q);
+
+    printf("le quadtree dans lequel se trouve le point : \n ");
+    printQ(QuadTreeContainPoint(1000,1000,&Q));
    
 
     while(loop) {

@@ -264,3 +264,15 @@ void drawMapFromQ(QuadTree Q) {
         drawRectDecor(Q.listeRectDecor[i]);
     }
 }
+
+
+QuadTree* QuadTreeContainPoint (float x, float y, QuadTree* Q){
+    if (isLeaf(*Q)) return Q;
+    if (x < Q->xTopLeft+Q->size/2){ // ici je suis à gauche
+        if (y > Q->yTopLeft-Q->size/2) return QuadTreeContainPoint(x,y,Q->TopLeft); // je suis en haut donc topleft
+        else return QuadTreeContainPoint(x,y,Q->BottomLeft); // je suis en bas donc bottomleft
+    }else{ // sinon je suis dans le côté droit
+        if (y > Q->yTopLeft-Q->size/2) return QuadTreeContainPoint(x,y,Q->TopRight); // je suis en haut donc topright
+        else return QuadTreeContainPoint(x,y,Q->BottomRight); // je suis en bas donc bottomright
+    }
+}
