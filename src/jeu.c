@@ -47,7 +47,6 @@ int main(int argc, char** argv) {
     RectDecor R7 = createRectDecor(50,50,80,80,253/255.0,108/255.0,158/255.0);
     RectDecor R8 = createRectDecor(50,50,80,140,253/255.0,108/255.0,158/255.0);
 
-    RectDecor Rcherche = createRectDecor(50,50,-600,600, 0,0,0);
 
     addRectDecorToMap(R1, &M);
     addRectDecorToMap(R2, &M);
@@ -58,10 +57,7 @@ int main(int argc, char** argv) {
     addRectDecorToMap(R7, &M);
     addRectDecorToMap(R8, &M);
 
-    addRectDecorToMap(Rcherche, &M);
-
     QuadTree Q = initRootFromMap(M);
-
     buildQuadTree(&Q);
 
    

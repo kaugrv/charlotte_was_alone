@@ -22,12 +22,14 @@ typedef struct QuadTree {
     struct QuadTree* BottomLeft;
     struct QuadTree* BottomRight;
 
+    // coordonnées du coin topleft de la zone
     float xTopLeft;
     float yTopLeft;
-    // coordonnées du coin topleft de la zone
 
-    float size; // taille en pixels de la zone
+    // taille en pixels de la zone
+    float size; 
 
+    // RectDecors se trouvant dans la zone
     RectDecor listeRectDecor[256];
     int nbRectDecor;
 
@@ -36,7 +38,6 @@ typedef struct QuadTree {
 int isLeaf(QuadTree Q);
 
 void drawQuadrillage(float x, float y, float size, float r, float g, float b);
-
 
 
 int rectDecorInZone(RectDecor R, float xTopLeft, float yTopLeft, float size);
