@@ -38,5 +38,6 @@ Map createMap(float w, float h);
 void addRectDecorToMap(RectDecor R, Map* M);
 void drawMap(Map M);
 
+void gestionCamera(float x, float y, float wp, float hp);
 
 #endif

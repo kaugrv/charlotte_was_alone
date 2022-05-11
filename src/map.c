@@ -1,5 +1,6 @@
 #include "map.h"
 
+
 RectDecor createRectDecor(float w, float h, float x, float y, float r, float g, float b) {
     RectDecor R;
     R.x=x;
@@ -33,4 +34,14 @@ void drawMap(Map M) {
     for (int i=0; i<M.nbRectDecor; i++) {
         drawRectDecor(M.listeRectDecor[i]);
     }
+}
+
+
+
+void gestionCamera(float x, float y, float wp, float hp) {
+    float camX = lerp(camX,x,0.5);
+    float camY = lerp(camY,y,0.5);
+ 
+    glTranslatef(camX,0,0);
+    glTranslatef(0,camY,0);
 }
