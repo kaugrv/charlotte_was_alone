@@ -39,9 +39,9 @@ void drawMap(Map M) {
 
 
 void gestionCamera(float x, float y, float wp, float hp) {
-    float camX = lerp(camX,x,0.5);
-    float camY = lerp(camY,y,0.5);
+    //float camX = lerp(camX,x,0.5);
+    //float camY = lerp(camY,y,0.5);
  
-    glTranslatef(camX,0,0);
-    glTranslatef(0,camY,0);
+    glTranslatef(-x,0,0);
+    glTranslatef(0,-y,0);
 }
