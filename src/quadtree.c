@@ -8,22 +8,9 @@ int isLeaf(QuadTree Q) {
     return 0;
 }
 
-// dessine une croix rgb de centre (x,y) et de largeur size
+// dessine rect rgb de centre (x,y) et de largeur size
 void drawQuadrillage(float x, float y, float size, float r, float g, float b) {
-
-    glPushMatrix();
-    glTranslatef(x,y,0);
-    glColor3f(r,g,b);
-    glBegin(GL_LINES);
-        glVertex2f(-size/2,0.0);
-        glVertex2f(size/2,0.0);
-        glColor3f(r,g,b);
-        glVertex2f(0.0,-size/2);
-        glVertex2f(0.0, size/2);
-    glEnd();
-    glPopMatrix();
-
-
+    drawRect(size, size, x,y, r, g, b,0);
 }
 
 // renvoie 0 si RectDecor R n'a aucun de ses 4 coins dans la zone carrée de taille size et de coin supérieur gauche xTopLeft, yTopLeft
@@ -296,4 +283,17 @@ QuadTree searchQuadtrees(RectDecor R, QuadTree* Q, Map M) {
     return QS;
 
 
+}
+
+void debugQuadTrees(QuadTree Q, RectDecor Rperso, Map M) {
+
+    QuadTree* Q1 = searchQuadtrees(Rperso, &Q,M).TopLeft;
+    QuadTree* Q2 = searchQuadtrees(Rperso, &Q,M).TopRight;
+    QuadTree* Q3 = searchQuadtrees(Rperso, &Q,M).BottomRight;
+    QuadTree* Q4 = searchQuadtrees(Rperso, &Q,M).BottomLeft;
+
+    drawQuadrillage(Q1->xTopLeft + Q1->size/2, Q1->yTopLeft - Q1->size/2, Q1->size, 0.0, 1.0, 0.0);
+    drawQuadrillage(Q2->xTopLeft + Q2->size/2, Q2->yTopLeft - Q2->size/2, Q2->size, 0.0, 1.0, 0.0);
+    drawQuadrillage(Q3->xTopLeft + Q3->size/2, Q3->yTopLeft - Q3->size/2, Q3->size, 0.0, 1.0, 0.0);
+    drawQuadrillage(Q4->xTopLeft + Q4->size/2, Q4->yTopLeft - Q4->size/2, Q4->size, 0.0, 1.0, 0.0);
 }

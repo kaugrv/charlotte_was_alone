@@ -11,10 +11,14 @@ RectDecor createRectDecor(float w, float h, float x, float y, float r, float g, 
     R.g=g;
     R.b=b;
     return R;
-}
+} 
 
 void drawRectDecor(RectDecor R) {
     drawRect(R.w, R.h, R.x, R.y, R.r, R.g, R.b, 1);
+}
+
+void drawRectDecorFin(RectDecorFin R) {
+    drawRect(R.w, R.h, R.x, R.y, R.r, R.g, R.b, 0);
 }
 
 Map createMap(float w, float h) {
@@ -22,6 +26,7 @@ Map createMap(float w, float h) {
     M.w=w;
     M.h=h;
     M.nbRectDecor=0;
+    M.nbRectDecorFin=0;
     return M;
 }
 
@@ -30,18 +35,17 @@ void addRectDecorToMap(RectDecor R, Map* M) {
     M->nbRectDecor++;    
 }
 
+void addRectDecorFinToMap(RectDecorFin R, Map* M) {
+    M->listeRectDecorFin[M->nbRectDecorFin] = R;
+    M->nbRectDecorFin++;    
+}
+
+
 void drawMap(Map M) {
     for (int i=0; i<M.nbRectDecor; i++) {
         drawRectDecor(M.listeRectDecor[i]);
     }
-}
-
-
-
-void gestionCamera(float x, float y, float wp, float hp) {
-    //float camX = lerp(camX,x,0.5);
-    //float camY = lerp(camY,y,0.5);
-    glScalef(2,2,0);
-    glTranslatef(-x,0,0);
-    glTranslatef(0,-y,0);
+    for (int i=0; i<M.nbRectDecorFin; i++) {
+        drawRectDecorFin(M.listeRectDecorFin[i]);
+    }
 }
