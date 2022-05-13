@@ -15,6 +15,8 @@
 
 float lerp(float a , float b, float coeff);
 
+float distance(float x1, float y1, float x2, float y2);
+
 void drawTexturedRect(float w, float h, float x, float y, char* adresse);
 
 void drawSquare(int full);

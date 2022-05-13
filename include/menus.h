@@ -19,7 +19,7 @@ void afficheMenu(int currentline);
 
 void affichePause(int currentline);
 
-void input1(SDL_Event e, int* gameState, int* f);
+void input1(SDL_Event e, int* gameState, int* f, int* debug);
 
 void inputPause(SDL_Event e, int* gameState, int* currentline);
 

@@ -25,6 +25,7 @@ int main(int argc, char** argv) {
     /* Boucle principale */
 
     int loop = 1;
+    int debug = 0;
 
     //Player test
     int f = 5;
@@ -55,6 +56,9 @@ int main(int argc, char** argv) {
     RectDecor R7 = createRectDecor(50,50,80,80,253/255.0,108/255.0,158/255.0);
     RectDecor R8 = createRectDecor(50,50,80,140,253/255.0,108/255.0,158/255.0);
 
+    RectDecorFin R9 = createRectDecor(wp,hp,-300,100, 0.8,0,0);
+
+
 
     addRectDecorToMap(R1, &M);
     addRectDecorToMap(R2, &M);
@@ -64,6 +68,8 @@ int main(int argc, char** argv) {
     addRectDecorToMap(R6, &M);
     addRectDecorToMap(R7, &M);
     addRectDecorToMap(R8, &M);
+
+    addRectDecorFinToMap(R9, &M);
 
 
 
@@ -122,13 +128,23 @@ int main(int argc, char** argv) {
                 drawRect(3000,3000,0,0,1,1,1,1); //fond
                 glPushMatrix();
                     gestionCamera(x,y,wp,hp,speedX,speedY,M);
-                    drawMapFromQ(Q);
-                    printQuadTree(&Q);
+                    drawMap(M);
+                    
+                    printf("%d \n", debug);
 
                     RectDecor Rperso = createRectDecor(wp,hp,x,y,1,1,1);
 
-                    drawRect(wp,hp, x, y, 0,0,0,1);
-                    debugQuadTrees(Q, Rperso, M);
+                    if (distance(R9.x, R9.y, Rperso.x, Rperso.y) <= R9.w/2) {
+                        drawRect(wp,hp, x, y, 0.8,0,0,1);
+                    }
+                    else {
+                        drawRect(wp,hp, x, y, 0,0,0,1);
+                    }
+                    if (debug) {
+                        printQuadTree(&Q);
+                        debugQuadTrees(Q, Rperso, M);
+
+                    }
 
 
                 glPopMatrix();
@@ -163,9 +179,12 @@ int main(int argc, char** argv) {
                 glPushMatrix();
                     gestionCamera(x,y,wp,hp,speedX,speedY,M);
                     drawMapFromQ(Q);
-                    printQuadTree(&Q);
+                    
                     drawRect(wp,hp, x, y, 0,0,0,1);
-                    debugQuadTrees(Q, Rperso, M);
+                    if (debug) {
+                        printQuadTree(&Q);
+                        debugQuadTrees(Q, Rperso, M);
+                    }
                 glPopMatrix();
 
                 affichePause(currentline);
@@ -191,11 +210,11 @@ int main(int argc, char** argv) {
                     break;
 
                 case 1:
-                    input1(e, &GAMESTATE, &f);
+                    input1(e, &GAMESTATE, &f, &debug);
                     break;
 
                 case 2:
-                    input1(e, &GAMESTATE, &f);
+                    input1(e, &GAMESTATE, &f, &debug);
                     break;
                 case 3:
                     inputPause(e, &GAMESTATE, &currentline);

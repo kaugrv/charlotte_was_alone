@@ -8,22 +8,9 @@ int isLeaf(QuadTree Q) {
     return 0;
 }
 
-// dessine une croix rgb de centre (x,y) et de largeur size
+// dessine rect rgb de centre (x,y) et de largeur size
 void drawQuadrillage(float x, float y, float size, float r, float g, float b) {
-
-    glPushMatrix();
-    glTranslatef(x,y,0);
-    glColor3f(r,g,b);
-    glBegin(GL_LINES);
-        glVertex2f(-size/2,0.0);
-        glVertex2f(size/2,0.0);
-        glColor3f(r,g,b);
-        glVertex2f(0.0,-size/2);
-        glVertex2f(0.0, size/2);
-    glEnd();
-    glPopMatrix();
-
-
+    drawRect(size, size, x,y, r, g, b,0);
 }
 
 // renvoie 0 si RectDecor R n'a aucun de ses 4 coins dans la zone carrée de taille size et de coin supérieur gauche xTopLeft, yTopLeft

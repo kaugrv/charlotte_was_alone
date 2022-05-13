@@ -4,6 +4,10 @@ float lerp (float a , float b, float coeff){
     return a + (a-b)*coeff;
 }
 
+float distance(float x1, float y1, float x2, float y2) {
+    return sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+}
+
 
 void drawTexturedRect(float w, float h, float x, float y, char* adresse) {
 
@@ -55,13 +59,16 @@ void drawSquare(int full) {
     if (full == 1) {
         g = GL_POLYGON ;
     }
+    glPushMatrix();
     glBegin(g);
         glVertex2f(0.5,0.5);
         glVertex2f(0.5,-0.5);
         glVertex2f(-0.5,-0.5);
         glVertex2f(-0.5,0.5);
     glEnd();
+    glPopMatrix();
 }
+
 
 
 void drawRect(float w, float h, float x, float y, float r, float g, float b, int full) {

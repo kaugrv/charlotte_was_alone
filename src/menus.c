@@ -101,7 +101,7 @@ void affichePause(int currentline) {
 
 
 // Gamestate = 1
-void input1(SDL_Event e, int* gameState, int * f){
+void input1(SDL_Event e, int* gameState, int * f, int* debug){
 
     switch(e.type) {
 
@@ -130,6 +130,9 @@ void input1(SDL_Event e, int* gameState, int * f){
                 *f=3;
             }            
             
+            if (e.key.keysym.sym == 98) { // B
+                *debug=!*debug;
+            }     
 
             if (e.key.keysym.sym == SDLK_ESCAPE){
                 *gameState=3;
