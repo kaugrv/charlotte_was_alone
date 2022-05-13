@@ -104,7 +104,7 @@ int main(int argc, char** argv) {
 
             case 2: ; // QUADTREE
                 
-                drawRect(1280,1280,0,0,1,1,1,1); //fond
+                drawRect(3000,3000,0,0,1,1,1,1); //fond
                 glPushMatrix();
                     gestionCamera(x,y,wp,hp);
                     drawMapFromQ(Q);

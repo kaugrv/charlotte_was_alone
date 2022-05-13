@@ -21,8 +21,9 @@ static const unsigned int WINDOW_HEIGHT = 1280;
 static const char WINDOW_TITLE[] = "JEU";
 
 
+
 /* Espace fenetre virtuelle */
-static const float GL_VIEW_SIZE = 400.;
+static const float GL_VIEW_SIZE = 1280.;
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
