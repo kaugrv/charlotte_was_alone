@@ -10,10 +10,12 @@
 #include <time.h>
 
 #include "gestionSDL.h"
+#include "camera.h"
 #include "design.h"
 #include "map.h"
 #include "quadtree.h"
 #include "menus.h"
+
 
 
 int main(int argc, char** argv) {
@@ -28,6 +30,9 @@ int main(int argc, char** argv) {
     int f = 5;
     float x;
     float y;
+    
+    float speedX = 0;
+    float speedY = 0;
     float wp=30;
     float hp=45;
 
@@ -69,7 +74,14 @@ int main(int argc, char** argv) {
    
 
     while(loop) {
+        
+        // réduction de la speed (test de la cam) // prochainement la speed physique du player
+        if (speedX >0) speedX = max (speedX-8,0.0);
+        if (speedX <0) speedX = min (speedX+8,0.0);
+        if (speedY >0) speedY = max (speedY-8,0.0);
+        if (speedY <0) speedY = min (speedY+8,0.0);
 
+        printf("speedX : %f // speedY : %f \n", speedX,speedY);
 
         /* Recuperation du temps au debut de la boucle */
         Uint32 startTime = SDL_GetTicks();
@@ -109,7 +121,7 @@ int main(int argc, char** argv) {
                 
                 drawRect(3000,3000,0,0,1,1,1,1); //fond
                 glPushMatrix();
-                    gestionCamera(x,y,wp,hp);
+                    gestionCamera(x,y,wp,hp,speedX,speedY,M);
                     drawMapFromQ(Q);
                     printQuadTree(&Q);
 
@@ -126,15 +138,19 @@ int main(int argc, char** argv) {
                 switch(f) {
                     case 0:
                         x-=10;
+                        speedX -= 10;
                         break;
                     case 1:
                         y+=10;
+                        speedY += 10;
                         break;
                     case 2:
                         x+=10;
+                        speedX += 10;
                         break;
                     case 3:
                         y-=10;
+                        speedY -= 10;
                         break;
                     f=5; 
                 }
@@ -145,7 +161,7 @@ int main(int argc, char** argv) {
                drawRect(3000,3000,0,0,1,1,1,1); //fond
 
                 glPushMatrix();
-                    gestionCamera(x,y,wp,hp);
+                    gestionCamera(x,y,wp,hp,speedX,speedY,M);
                     drawMapFromQ(Q);
                     printQuadTree(&Q);
                     drawRect(wp,hp, x, y, 0,0,0,1);
