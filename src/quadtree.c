@@ -8,25 +8,26 @@ int isLeaf(QuadTree Q) {
     return 0;
 }
 
-void drawQuadrillage(float x, float y, float size) {
+void drawQuadrillage(float x, float y, float size, float r, float g, float b) {
 
     glPushMatrix();
 
     glTranslatef(x,y,0);
 
-    glColor3f(1,0,0);
+    glColor3f(r,g,b);
     glBegin(GL_LINES);
         
 
         glVertex2f(-size/2,0.0);
         glVertex2f(size/2,0.0);
         
-        glColor3f(1,0,0);
+        glColor3f(r,g,b);
         glVertex2f(0.0,-size/2);
         glVertex2f(0.0, size/2);
 
        
     glEnd();
+    
     glPopMatrix();
 
 
@@ -58,7 +59,6 @@ int rectDecorInZone(RectDecor R, float xTopLeft, float yTopLeft, float size){
     return 0;
 
 }
-
 
 // subdivise la zone en ses quatre enfants
 void createChildren(QuadTree* Q) {
@@ -119,7 +119,6 @@ void createChildren(QuadTree* Q) {
 
 }
 
-
 // remplit le quadtree enfant des rectdecors de la liste du parent qui s'y trouvent
 void heritedRectDecor(QuadTree* Q, RectDecor listeRectDecorParent[256], int nbRectDecorParent) {
    
@@ -154,7 +153,6 @@ QuadTree initRootFromMap(Map M) {
 
     return Q;
 }
-
 
 // Remplit le quadtree final
 void buildQuadTree(QuadTree* Q) {
@@ -194,14 +192,12 @@ void buildQuadTree(QuadTree* Q) {
 }
 
 
-
-
 // Affichage du QuadTree + dessin quadrillages sur écran
 void printQuadTree(QuadTree* Q) {
 
     if (Q!=NULL) {
 
-        drawQuadrillage(Q->xTopLeft+Q->size/2,Q->yTopLeft-Q->size/2, Q->size);
+        drawQuadrillage(Q->xTopLeft+Q->size/2,Q->yTopLeft-Q->size/2, Q->size, 1.0,0,0);
 
         if (isLeaf(*Q)) {
             return ;
@@ -238,7 +234,6 @@ void printQ(QuadTree* Q) {
     if (Q->TopLeft!=NULL) {
         printf("Enfant TL :\n");
         printQ(Q->TopLeft);
-
     } 
 
     if (Q->TopRight!=NULL){
@@ -266,13 +261,49 @@ void drawMapFromQ(QuadTree Q) {
 }
 
 
-QuadTree* QuadTreeContainPoint (float x, float y, QuadTree* Q){
-    if (isLeaf(*Q)) return Q;
+// Renvoie le quadtree dans lequel se trouve (x,y)
+QuadTree* QuadTreeContainPoint(float x, float y, QuadTree* Q) {
+    if (isLeaf(*Q)) 
+      return Q;
     if (x < Q->xTopLeft+Q->size/2){ // ici je suis à gauche
-        if (y > Q->yTopLeft-Q->size/2) return QuadTreeContainPoint(x,y,Q->TopLeft); // je suis en haut donc topleft
-        else return QuadTreeContainPoint(x,y,Q->BottomLeft); // je suis en bas donc bottomleft
-    }else{ // sinon je suis dans le côté droit
-        if (y > Q->yTopLeft-Q->size/2) return QuadTreeContainPoint(x,y,Q->TopRight); // je suis en haut donc topright
-        else return QuadTreeContainPoint(x,y,Q->BottomRight); // je suis en bas donc bottomright
+        if (y > Q->yTopLeft-Q->size/2)
+          return QuadTreeContainPoint(x,y,Q->TopLeft); // je suis en haut donc topleft
+        else 
+          return QuadTreeContainPoint(x,y,Q->BottomLeft); // je suis en bas donc bottomleft
+    } else { // sinon je suis dans le côté droit
+        if (y > Q->yTopLeft-Q->size/2)
+          return QuadTreeContainPoint(x,y,Q->TopRight); // je suis en haut donc topright
+        else
+          return QuadTreeContainPoint(x,y,Q->BottomRight); // je suis en bas donc bottomright
     }
+}
+
+
+QuadTree searchQuadtrees(RectDecor R, QuadTree* Q, Map M) {
+
+    QuadTree QS = initRootFromMap(M);
+
+    createChildren(&QS);
+
+    float aX = R.x - R.w/2;
+    float aY = R.y + R.h/2;
+
+    float bX = R.x + R.w/2;
+    float bY = R.y + R.h/2;
+
+    float cX = R.x - R.w/2;
+    float cY = R.y - R.h/2;
+
+    float dX = R.x + R.w/2;
+    float dY = R.y - R.h/2;
+
+
+    QS.TopLeft=QuadTreeContainPoint(aX, aY, Q);
+    QS.TopRight=QuadTreeContainPoint(bX, bY, Q);
+    QS.BottomLeft= QuadTreeContainPoint(cX, cY, Q);
+    QS.BottomRight=QuadTreeContainPoint(dX, dY, Q);
+
+    return QS;
+
+
 }

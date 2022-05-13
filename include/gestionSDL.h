@@ -14,6 +14,7 @@
 #include <time.h>
 
 
+// Valeurs
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 1280;
 static const unsigned int WINDOW_HEIGHT = 1280;
@@ -26,10 +27,16 @@ static const float GL_VIEW_SIZE = 1280.;
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
+
+static float aspectRatio =1.0* WINDOW_WIDTH/WINDOW_HEIGHT;
+
+
+
+// Prototypage fonctions
+
 void onWindowResized(unsigned int width, unsigned int height);
 
-// Retourne textureID pour charger textures
-GLuint loadingRessources(char* adresse);
+GLuint loadingRessources(char* adresse); // Retourne textureID pour charger textures
 
 
 #endif

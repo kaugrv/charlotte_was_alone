@@ -13,7 +13,7 @@
 #include <time.h>
 
 
-float lerp (float a , float b, float coeff);
+float lerp(float a , float b, float coeff);
 
 void drawTexturedRect(float w, float h, float x, float y, char* adresse);
 

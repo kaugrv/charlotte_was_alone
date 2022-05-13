@@ -1,8 +1,5 @@
-
-
 /* Initialisation de la SDL */
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) 
-    {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         const char* error = SDL_GetError();
         fprintf(
             stderr, 
@@ -13,7 +10,7 @@
     }
 	
     /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
-    SDL_Window* window;
+    SDL_Window* window; 
     {
         window = SDL_CreateWindow(
         WINDOW_TITLE,
@@ -21,8 +18,7 @@
         WINDOW_WIDTH, WINDOW_HEIGHT,
         SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
-        if(NULL == window) 
-        {
+        if(NULL == window) {
             const char* error = SDL_GetError();
             fprintf(
                 stderr,
@@ -42,8 +38,7 @@
 
         context = SDL_GL_CreateContext(window);
     
-        if(NULL == context) 
-        {
+        if(NULL == context) {
             const char* error = SDL_GetError();
             fprintf(
                 stderr,

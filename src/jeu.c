@@ -13,6 +13,7 @@
 #include "design.h"
 #include "map.h"
 #include "quadtree.h"
+#include "menus.h"
 
 
 int main(int argc, char** argv) {
@@ -20,53 +21,48 @@ int main(int argc, char** argv) {
     #include "fenetre/createSDLwindowandcontext.c"
 
     /* Boucle principale */
+
     int loop = 1;
+
     int f = 5;
     float x;
     float y;
+
+
+
+    int currentline = 1;
     
-    int GAMESTATE = 1;
-    char* adresse;
-    
+    int GAMESTATE = 2;
+
     onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     Map M = createMap(1280,1280);
 
-    RectDecor R1 = createRectDecor(640,100,-320,-310,1,1,1);
-    RectDecor R2 = createRectDecor(200,250,100,-235,1,1,1);
-    RectDecor R3 = createRectDecor(150,200,285,200,1,1,1);
-    RectDecor R4 = createRectDecor(50,50,0,240,1,1,1);
-    RectDecor R5 = createRectDecor(100,100,-200,200,1,1,1);
+    RectDecor R1 = createRectDecor(640,100,-320,-310,253/255.0,108/255.0,158/255.0);
+    RectDecor R2 = createRectDecor(200,250,100,-235,253/255.0,108/255.0,158/255.0);
+    RectDecor R3 = createRectDecor(150,200,285,200,253/255.0,108/255.0,158/255.0);
+    RectDecor R4 = createRectDecor(50,50,0,240,253/255.0,108/255.0,158/255.0);
+    RectDecor R5 = createRectDecor(100,100,-200,200,253/255.0,108/255.0,158/255.0);
+    RectDecor R6 = createRectDecor(50,50,40,40,253/255.0,108/255.0,158/255.0);
+    RectDecor R7 = createRectDecor(50,50,80,80,253/255.0,108/255.0,158/255.0);
+    RectDecor R8 = createRectDecor(50,50,80,140,253/255.0,108/255.0,158/255.0);
 
-    RectDecor R6 = createRectDecor(50,50,40,40,1,1,1);
-    RectDecor R7 = createRectDecor(50,50,80,80,1,1,1);
-    RectDecor R8 = createRectDecor(50,50,80,140,1,1,1);
-
-
-    // RectDecor R1 = createRectDecor(50,50,0,0,1,1,1);
-    // RectDecor R2 = createRectDecor(50,50,-320,-310,1,1,1);
-    // RectDecor R3 = createRectDecor(50,50,320,-310,1,1,1);
-    // RectDecor R4 = createRectDecor(50,50,320,310,1,1,1);
-    // RectDecor R5 = createRectDecor(50,50,-320,310,1,1,1);
-
+    RectDecor Rcherche = createRectDecor(50,50,-600,600, 0,0,0);
 
     addRectDecorToMap(R1, &M);
     addRectDecorToMap(R2, &M);
     addRectDecorToMap(R3, &M);
     addRectDecorToMap(R4, &M);
     addRectDecorToMap(R5, &M);
-
     addRectDecorToMap(R6, &M);
     addRectDecorToMap(R7, &M);
     addRectDecorToMap(R8, &M);
 
+    addRectDecorToMap(Rcherche, &M);
+
     QuadTree Q = initRootFromMap(M);
 
     buildQuadTree(&Q);
-    printQ(&Q);
-
-    printf("le quadtree dans lequel se trouve le point : \n ");
-    printQ(QuadTreeContainPoint(1000,1000,&Q));
    
 
     while(loop) {
@@ -82,30 +78,74 @@ int main(int argc, char** argv) {
         glLoadIdentity();
         glPushMatrix();
 
-        switch (GAMESTATE) {
-            case 0:;
-                adresse = "doc/textures/menu.png";
+      
 
-                drawTexturedRect(1280,720,0,10, adresse);
+        switch (GAMESTATE) {
+
+            case 0:;
+                afficheMenu(currentline);
+                break;
+            
+            case 1:; // Bouger rectangle
+        
                 drawRect(60,90, x, y, 1.0,1.0,1.0,1);
                 switch(f) {
                     case 0:
                         x-=10;
                         break;
-                        
                     case 2:
                         x+=10;
                         break;
-
                     f=5; 
                 }
+
                 break;
 
-            case 1: ;
+            case 2: ; // QUADTREE
+                drawRect(1280,1280,0,0,1,1,1,1); //fond
                 drawMapFromQ(Q);
                 printQuadTree(&Q);
+
+                drawRect(60,90, x, y, 0,0,0,1);
+                RectDecor Rperso = createRectDecor(60,90,x,y,1,1,1);
+
+                QuadTree* Q1 = searchQuadtrees(Rperso, &Q,M).TopLeft;
+                QuadTree* Q2 = searchQuadtrees(Rperso, &Q,M).TopRight;
+                QuadTree* Q3 = searchQuadtrees(Rperso, &Q,M).BottomRight;
+                QuadTree* Q4 = searchQuadtrees(Rperso, &Q,M).BottomLeft;
+
+                printQ(Q1);
+                printQ(Q2);
+                printQ(Q3);
+                printQ(Q4);
+
+                drawQuadrillage(Q1->xTopLeft + Q1->size/2, Q1->yTopLeft - Q1->size/2, Q1->size, 0.0, 1.0, 0.0);
+                drawQuadrillage(Q2->xTopLeft + Q2->size/2, Q2->yTopLeft - Q2->size/2, Q2->size, 0.0, 1.0, 0.0);
+                drawQuadrillage(Q3->xTopLeft + Q3->size/2, Q3->yTopLeft - Q3->size/2, Q3->size, 0.0, 1.0, 0.0);
+                drawQuadrillage(Q4->xTopLeft + Q4->size/2, Q4->yTopLeft - Q4->size/2, Q4->size, 0.0, 1.0, 0.0);
+                
+
+
+
+                switch(f) {
+                    case 0:
+                        x-=10;
+                        break;
+                    case 1:
+                        y+=10;
+                        break;
+                    case 2:
+                        x+=10;
+                        break;
+                    case 3:
+                        y-=10;
+                        break;
+                    f=5; 
+                }
         
                 break;
+
+
         }
         glPopMatrix();
 
@@ -122,12 +162,17 @@ int main(int argc, char** argv) {
             
             switch(GAMESTATE) {
                 case 0:
-                    inputMenuPrincipal(e, &GAMESTATE, &f);
+                    inputMenuPrincipal(e, &GAMESTATE, &currentline, &loop);
                     break;
 
                 case 1:
-                    inputPause(e, &GAMESTATE);
+                    input1(e, &GAMESTATE, &f);
                     break;
+
+                case 2:
+                    input1(e, &GAMESTATE, &f);
+                    break;
+
             }
         }
 

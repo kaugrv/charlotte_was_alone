@@ -5,8 +5,7 @@ if(e.type == SDL_QUIT) {
     break;
 }
 
-if(	e.type == SDL_KEYDOWN 
-    && (e.key.keysym.sym == SDLK_q)) {
+if(	e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_q)) { // q = quitter le jeu
     loop = 0; 
     break;
 }
