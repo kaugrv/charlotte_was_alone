@@ -50,8 +50,7 @@ void inputMenuPrincipal(SDL_Event e, int* gameState, int* currentline, int* loop
 void afficheMenu(int currentline) {
     glColor3f(1,1,1);
     char * adresse;
-
-
+    
     if (currentline==1) {
         adresse = "doc/textures/menus/1.png";
     }

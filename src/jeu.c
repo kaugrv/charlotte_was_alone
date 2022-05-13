@@ -24,9 +24,12 @@ int main(int argc, char** argv) {
 
     int loop = 1;
 
+    //Player test
     int f = 5;
     float x;
     float y;
+    float wp=30;
+    float hp=45;
 
 
 
@@ -47,7 +50,6 @@ int main(int argc, char** argv) {
     RectDecor R7 = createRectDecor(50,50,80,80,253/255.0,108/255.0,158/255.0);
     RectDecor R8 = createRectDecor(50,50,80,140,253/255.0,108/255.0,158/255.0);
 
-    RectDecor Rcherche = createRectDecor(50,50,-600,600, 0,0,0);
 
     addRectDecorToMap(R1, &M);
     addRectDecorToMap(R2, &M);
@@ -58,11 +60,10 @@ int main(int argc, char** argv) {
     addRectDecorToMap(R7, &M);
     addRectDecorToMap(R8, &M);
 
-    addRectDecorToMap(Rcherche, &M);
-
     QuadTree Q = initRootFromMap(M);
-
     buildQuadTree(&Q);
+
+
    
 
     while(loop) {
@@ -102,28 +103,35 @@ int main(int argc, char** argv) {
                 break;
 
             case 2: ; // QUADTREE
-                drawRect(1280,1280,0,0,1,1,1,1); //fond
-                drawMapFromQ(Q);
-                printQuadTree(&Q);
-
-                drawRect(60,90, x, y, 0,0,0,1);
-                RectDecor Rperso = createRectDecor(60,90,x,y,1,1,1);
-
-                QuadTree* Q1 = searchQuadtrees(Rperso, &Q,M).TopLeft;
-                QuadTree* Q2 = searchQuadtrees(Rperso, &Q,M).TopRight;
-                QuadTree* Q3 = searchQuadtrees(Rperso, &Q,M).BottomRight;
-                QuadTree* Q4 = searchQuadtrees(Rperso, &Q,M).BottomLeft;
-
-                printQ(Q1);
-                printQ(Q2);
-                printQ(Q3);
-                printQ(Q4);
-
-                drawQuadrillage(Q1->xTopLeft + Q1->size/2, Q1->yTopLeft - Q1->size/2, Q1->size, 0.0, 1.0, 0.0);
-                drawQuadrillage(Q2->xTopLeft + Q2->size/2, Q2->yTopLeft - Q2->size/2, Q2->size, 0.0, 1.0, 0.0);
-                drawQuadrillage(Q3->xTopLeft + Q3->size/2, Q3->yTopLeft - Q3->size/2, Q3->size, 0.0, 1.0, 0.0);
-                drawQuadrillage(Q4->xTopLeft + Q4->size/2, Q4->yTopLeft - Q4->size/2, Q4->size, 0.0, 1.0, 0.0);
                 
+                drawRect(1280,1280,0,0,1,1,1,1); //fond
+                glPushMatrix();
+                    gestionCamera(x,y,wp,hp);
+                    drawMapFromQ(Q);
+                    printQuadTree(&Q);
+
+                    drawRect(wp,hp, x, y, 0,0,0,1);
+
+                    RectDecor Rperso = createRectDecor(wp,hp,x,y,1,1,1);
+
+                    QuadTree* Q1 = searchQuadtrees(Rperso, &Q,M).TopLeft;
+                    QuadTree* Q2 = searchQuadtrees(Rperso, &Q,M).TopRight;
+                    QuadTree* Q3 = searchQuadtrees(Rperso, &Q,M).BottomRight;
+                    QuadTree* Q4 = searchQuadtrees(Rperso, &Q,M).BottomLeft;
+
+                    // printQ(Q1);
+                    // printQ(Q2);
+                    // printQ(Q3);
+                    // printQ(Q4);
+
+                    printf("x=%f, y=%f \n", x,y);
+
+
+                    drawQuadrillage(Q1->xTopLeft + Q1->size/2, Q1->yTopLeft - Q1->size/2, Q1->size, 0.0, 1.0, 0.0);
+                    drawQuadrillage(Q2->xTopLeft + Q2->size/2, Q2->yTopLeft - Q2->size/2, Q2->size, 0.0, 1.0, 0.0);
+                    drawQuadrillage(Q3->xTopLeft + Q3->size/2, Q3->yTopLeft - Q3->size/2, Q3->size, 0.0, 1.0, 0.0);
+                    drawQuadrillage(Q4->xTopLeft + Q4->size/2, Q4->yTopLeft - Q4->size/2, Q4->size, 0.0, 1.0, 0.0);
+                glPopMatrix();
 
 
 

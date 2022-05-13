@@ -8,26 +8,19 @@ int isLeaf(QuadTree Q) {
     return 0;
 }
 
+// dessine une croix rgb de centre (x,y) et de largeur size
 void drawQuadrillage(float x, float y, float size, float r, float g, float b) {
 
     glPushMatrix();
-
     glTranslatef(x,y,0);
-
     glColor3f(r,g,b);
     glBegin(GL_LINES);
-        
-
         glVertex2f(-size/2,0.0);
         glVertex2f(size/2,0.0);
-        
         glColor3f(r,g,b);
         glVertex2f(0.0,-size/2);
         glVertex2f(0.0, size/2);
-
-       
     glEnd();
-    
     glPopMatrix();
 
 
@@ -119,19 +112,17 @@ void createChildren(QuadTree* Q) {
 
 }
 
-// remplit le quadtree enfant des rectdecors de la liste du parent qui s'y trouvent
+// remplit le quadtree enfant des RectDecors de la liste du parent qui s'y trouvent
 void heritedRectDecor(QuadTree* Q, RectDecor listeRectDecorParent[256], int nbRectDecorParent) {
-   
     for (int i=0; i<nbRectDecorParent; i++) {
         if (rectDecorInZone(listeRectDecorParent[i], Q->xTopLeft, Q->yTopLeft, Q->size)) {
-            
             Q->listeRectDecor[Q->nbRectDecor] = listeRectDecorParent[i];
             Q->nbRectDecor++;
         }
     }
 }
 
-// crée la racine du QuadTree depuis les rectangles de la Map
+// crée la racine du QuadTree depuis la liste des rectangles de la Map
 QuadTree initRootFromMap(Map M) {
     QuadTree Q;
 
@@ -186,7 +177,7 @@ void buildQuadTree(QuadTree* Q) {
     
     }
 
-    printf("Tree is built!\n");
+    //printf("Tree is built!\n");
 
 
 }
@@ -278,11 +269,10 @@ QuadTree* QuadTreeContainPoint(float x, float y, QuadTree* Q) {
     }
 }
 
-
+// On stocke dans un quadtree les quatre quadtree dans lesquels se trouvent les quatre coins de RectDecor
 QuadTree searchQuadtrees(RectDecor R, QuadTree* Q, Map M) {
 
     QuadTree QS = initRootFromMap(M);
-
     createChildren(&QS);
 
     float aX = R.x - R.w/2;
@@ -300,7 +290,7 @@ QuadTree searchQuadtrees(RectDecor R, QuadTree* Q, Map M) {
 
     QS.TopLeft=QuadTreeContainPoint(aX, aY, Q);
     QS.TopRight=QuadTreeContainPoint(bX, bY, Q);
-    QS.BottomLeft= QuadTreeContainPoint(cX, cY, Q);
+    QS.BottomLeft=QuadTreeContainPoint(cX, cY, Q);
     QS.BottomRight=QuadTreeContainPoint(dX, dY, Q);
 
     return QS;
