@@ -60,5 +60,8 @@ QuadTree* QuadTreeContainPoint (float x, float y, QuadTree* Q);
 
 QuadTree searchQuadtrees(RectDecor R, QuadTree* Q, Map M);
 
+void debugQuadTrees(QuadTree Q, RectDecor Rperso, Map M);
+
+
 
 #endif

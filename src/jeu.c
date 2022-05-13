@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
 
     int currentline = 1;
     
-    int GAMESTATE = 2;
+    int GAMESTATE = 0;
 
     onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -60,6 +60,8 @@ int main(int argc, char** argv) {
     addRectDecorToMap(R7, &M);
     addRectDecorToMap(R8, &M);
 
+
+
     QuadTree Q = initRootFromMap(M);
     buildQuadTree(&Q);
 
@@ -77,6 +79,7 @@ int main(int argc, char** argv) {
         glClear(GL_COLOR_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
+
         glPushMatrix();
 
       
@@ -110,27 +113,12 @@ int main(int argc, char** argv) {
                     drawMapFromQ(Q);
                     printQuadTree(&Q);
 
-                    drawRect(wp,hp, x, y, 0,0,0,1);
-
                     RectDecor Rperso = createRectDecor(wp,hp,x,y,1,1,1);
 
-                    QuadTree* Q1 = searchQuadtrees(Rperso, &Q,M).TopLeft;
-                    QuadTree* Q2 = searchQuadtrees(Rperso, &Q,M).TopRight;
-                    QuadTree* Q3 = searchQuadtrees(Rperso, &Q,M).BottomRight;
-                    QuadTree* Q4 = searchQuadtrees(Rperso, &Q,M).BottomLeft;
-
-                    // printQ(Q1);
-                    // printQ(Q2);
-                    // printQ(Q3);
-                    // printQ(Q4);
-
-                    printf("x=%f, y=%f \n", x,y);
+                    drawRect(wp,hp, x, y, 0,0,0,1);
+                    debugQuadTrees(Q, Rperso, M);
 
 
-                    drawQuadrillage(Q1->xTopLeft + Q1->size/2, Q1->yTopLeft - Q1->size/2, Q1->size, 0.0, 1.0, 0.0);
-                    drawQuadrillage(Q2->xTopLeft + Q2->size/2, Q2->yTopLeft - Q2->size/2, Q2->size, 0.0, 1.0, 0.0);
-                    drawQuadrillage(Q3->xTopLeft + Q3->size/2, Q3->yTopLeft - Q3->size/2, Q3->size, 0.0, 1.0, 0.0);
-                    drawQuadrillage(Q4->xTopLeft + Q4->size/2, Q4->yTopLeft - Q4->size/2, Q4->size, 0.0, 1.0, 0.0);
                 glPopMatrix();
 
 
@@ -153,6 +141,19 @@ int main(int argc, char** argv) {
         
                 break;
 
+            case 3:;
+               drawRect(3000,3000,0,0,1,1,1,1); //fond
+
+                glPushMatrix();
+                    gestionCamera(x,y,wp,hp);
+                    drawMapFromQ(Q);
+                    printQuadTree(&Q);
+                    drawRect(wp,hp, x, y, 0,0,0,1);
+                    debugQuadTrees(Q, Rperso, M);
+                glPopMatrix();
+
+                affichePause(currentline);
+                break;
 
         }
         glPopMatrix();
@@ -180,6 +181,8 @@ int main(int argc, char** argv) {
                 case 2:
                     input1(e, &GAMESTATE, &f);
                     break;
+                case 3:
+                    inputPause(e, &GAMESTATE, &currentline);
 
             }
         }

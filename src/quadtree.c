@@ -297,3 +297,16 @@ QuadTree searchQuadtrees(RectDecor R, QuadTree* Q, Map M) {
 
 
 }
+
+void debugQuadTrees(QuadTree Q, RectDecor Rperso, Map M) {
+
+    QuadTree* Q1 = searchQuadtrees(Rperso, &Q,M).TopLeft;
+    QuadTree* Q2 = searchQuadtrees(Rperso, &Q,M).TopRight;
+    QuadTree* Q3 = searchQuadtrees(Rperso, &Q,M).BottomRight;
+    QuadTree* Q4 = searchQuadtrees(Rperso, &Q,M).BottomLeft;
+
+    drawQuadrillage(Q1->xTopLeft + Q1->size/2, Q1->yTopLeft - Q1->size/2, Q1->size, 0.0, 1.0, 0.0);
+    drawQuadrillage(Q2->xTopLeft + Q2->size/2, Q2->yTopLeft - Q2->size/2, Q2->size, 0.0, 1.0, 0.0);
+    drawQuadrillage(Q3->xTopLeft + Q3->size/2, Q3->yTopLeft - Q3->size/2, Q3->size, 0.0, 1.0, 0.0);
+    drawQuadrillage(Q4->xTopLeft + Q4->size/2, Q4->yTopLeft - Q4->size/2, Q4->size, 0.0, 1.0, 0.0);
+}

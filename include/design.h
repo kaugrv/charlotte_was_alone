@@ -22,4 +22,5 @@ void drawSquare(int full);
 void drawRect(float w, float h, float x, float y, float r, float g, float b, int full);
 
 
+
 #endif
