@@ -33,7 +33,7 @@ typedef struct QuadTree {
     RectDecor listeRectDecor[256];
     int nbRectDecor;
 
-} QuadTree ;
+} QuadTree;
 
 int isLeaf(QuadTree Q);
 

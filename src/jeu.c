@@ -14,6 +14,7 @@
 #include "map.h"
 #include "quadtree.h"
 #include "menus.h"
+#include "perso.h"
 
 
 int main(int argc, char** argv) {
@@ -26,12 +27,7 @@ int main(int argc, char** argv) {
 
     //Player test
     int f = 5;
-    float x;
-    float y;
-    float wp=30;
-    float hp=45;
-
-
+    Perso persoTest = createPerso(60,90, 0.,0.,0., 20,20, 100,100, 10);
 
     int currentline = 1;
     
@@ -89,13 +85,13 @@ int main(int argc, char** argv) {
             
             case 1:; // Bouger rectangle
         
-                drawRect(60,90, x, y, 1.0,1.0,1.0,1);
+                showPerso(&persoTest);
                 switch(f) {
                     case 0:
-                        x-=10;
+                        persoTest.x += 10;
                         break;
                     case 2:
-                        x+=10;
+                        persoTest.x +=10;
                         break;
                     f=5; 
                 }
@@ -106,13 +102,15 @@ int main(int argc, char** argv) {
                 
                 drawRect(3000,3000,0,0,1,1,1,1); //fond
                 glPushMatrix();
-                    gestionCamera(x,y,wp,hp);
+                    gestionCamera(persoTest.x,persoTest.y,persoTest.width,persoTest.height);
                     drawMapFromQ(Q);
                     printQuadTree(&Q);
 
-                    drawRect(wp,hp, x, y, 0,0,0,1);
+                    showPerso(&persoTest);
+                    //drawRect(persoTest.width, persoTest.height, persoTest.x, persoTest.y, persoTest.r, persoTest.g, persoTest.b, 1);
+                    //drawRect(persoTest.width,persoTest.height, 0,0, 0,0,0, 1);
 
-                    RectDecor Rperso = createRectDecor(wp,hp,x,y,1,1,1);
+                    RectDecor Rperso = createRectDecor(persoTest.width, persoTest.height, persoTest.x, persoTest.y, persoTest.r, persoTest.g, persoTest.b);
 
                     QuadTree* Q1 = searchQuadtrees(Rperso, &Q,M).TopLeft;
                     QuadTree* Q2 = searchQuadtrees(Rperso, &Q,M).TopRight;
@@ -123,8 +121,6 @@ int main(int argc, char** argv) {
                     // printQ(Q2);
                     // printQ(Q3);
                     // printQ(Q4);
-
-                    printf("x=%f, y=%f \n", x,y);
 
 
                     drawQuadrillage(Q1->xTopLeft + Q1->size/2, Q1->yTopLeft - Q1->size/2, Q1->size, 0.0, 1.0, 0.0);
@@ -137,18 +133,21 @@ int main(int argc, char** argv) {
 
                 switch(f) {
                     case 0:
-                        x-=10;
+                        persoTest.dirX -= 1;
                         break;
                     case 1:
-                        y+=10;
+                        persoTest.dirY += 1;
                         break;
                     case 2:
-                        x+=10;
+                        persoTest.dirX += 1;
                         break;
                     case 3:
-                        y-=10;
+                        persoTest.dirY -= 1;
                         break;
-                    f=5; 
+                    case 5:
+                        persoTest.dirX = 0;
+                        persoTest.dirY = 0;
+                    f=5;
                 }
         
                 break;
@@ -189,6 +188,9 @@ int main(int argc, char** argv) {
         if(elapsedTime < FRAMERATE_MILLISECONDS) {
             SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
         }
+
+        updatePosPerso(&persoTest, elapsedTime);
+
     }
 
     #include "fenetre/freeSDLressources.c"
