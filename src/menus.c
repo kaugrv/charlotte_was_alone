@@ -3,7 +3,8 @@
 #include "gestionSDL.h"
 
 
-// Gamestate = 0
+// Gamestate = 0 = MENU
+
 void inputMenuPrincipal(SDL_Event e, int* gameState, int* currentline, int* loop) {
     
     int lastline = 3;
@@ -25,18 +26,18 @@ void inputMenuPrincipal(SDL_Event e, int* gameState, int* currentline, int* loop
             }
 
             if (e.key.keysym.sym == 13 || e.key.keysym.sym==1073741912) { // Entree : changement de gamestate
+
                 if (*currentline !=3) {
-                    *gameState=*currentline;   
+                    *gameState=*currentline;   // Jouer (1) ou Options ()
                     *currentline=1;
                 } 
 
-                else { // quitter jeu
+                else { // Quitter jeu
                     *loop = 0;
                     break;
                 }
             }
 
-            printf("touche pressee (code = %d)\n", e.key.keysym.sym);
             break;
 
         case SDL_KEYUP:
@@ -61,15 +62,15 @@ void afficheMenu(int currentline) {
     char * adresse;
     
     if (currentline==1) {
-        adresse = "doc/textures/menus/1.png";
+        adresse = "doc/textures/menus/1.png"; // Jouer
     }
 
     if (currentline==2) {
-        adresse = "doc/textures/menus/2.png";
+        adresse = "doc/textures/menus/2.png"; // Options
     }
 
     if (currentline==3) {
-        adresse = "doc/textures/menus/3.png";
+        adresse = "doc/textures/menus/3.png"; // Quitter
     }
 
 
@@ -88,11 +89,11 @@ void affichePause(int currentline) {
     char * adresse;
     
     if (currentline==1) {
-        adresse = "doc/textures/menus/pause1.png";
+        adresse = "doc/textures/menus/pause1.png"; // Reprendre
     }
 
     if (currentline==2) {
-        adresse = "doc/textures/menus/pause2.png";
+        adresse = "doc/textures/menus/pause2.png"; // Quitter
     }
 
     drawTexturedRect(1280,1280,0,0, adresse);
@@ -100,7 +101,8 @@ void affichePause(int currentline) {
 }
 
 
-// Gamestate = 1
+// Gamestate = 1 = JEU
+
 void input1(SDL_Event e, int* gameState, int * f, int* debug){
 
     switch(e.type) {
@@ -135,7 +137,7 @@ void input1(SDL_Event e, int* gameState, int * f, int* debug){
             }     
 
             if (e.key.keysym.sym == SDLK_ESCAPE){
-                *gameState=3;
+                *gameState=2;
             }
 
             break;
@@ -150,6 +152,7 @@ void input1(SDL_Event e, int* gameState, int * f, int* debug){
 }
 
 
+// GAMESTATE = 3 = PAUSE
 
 void inputPause(SDL_Event e, int* gameState, int* currentline) {
     
@@ -172,9 +175,8 @@ void inputPause(SDL_Event e, int* gameState, int* currentline) {
             }
 
             if (e.key.keysym.sym == 13 || e.key.keysym.sym==1073741912) { // Entree : changement de gamestate
-                if (*currentline==1) {*gameState=2;}  
-                if (*currentline==2) {*gameState=0;}
-
+                if (*currentline==1) {*gameState=1;}  // Reprendre 
+                if (*currentline==2) {*gameState=0;} // Quitter
                 *currentline=1;
             }
 
@@ -184,7 +186,6 @@ void inputPause(SDL_Event e, int* gameState, int* currentline) {
         case SDL_KEYUP:
             break;
 
-            
         default:
             break;
     }
