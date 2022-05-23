@@ -7,45 +7,35 @@
 // après y aura un player.c avec les inputs
 // \!/
 
-void inputPerso(SDL_Event e, int* gameState, Perso* perso){
-
+void inputPerso(SDL_Event e, int* gameState, Perso* perso, int* left, int* up, int* right){
     switch(e.type) {
-        
         case SDL_KEYDOWN:
-
             if (e.key.keysym.sym == 1073741904) { // Gauche
-                perso->dirX -= 1;
+                *left = 1;
             } 
-
             else if (e.key.keysym.sym == 1073741906) { // Haut
-                if (perso->onGround)
-                    perso->dirY += perso->jumpForce;
-            } 
-
+                *up = 1;
+            }
             else if (e.key.keysym.sym == 1073741903) { // Droite
-                perso->dirX += 1;
+                *right = 1;
             }
-
-            else if (e.key.keysym.sym == 1073741905) { // Bas
-                
-            }
-            
             else if (e.key.keysym.sym == SDLK_ESCAPE){
                 *gameState = 0;
             }
-            
-            /*else {
-                perso->dirX = 0;
-                perso->dirY = 0;
-            }*/
-
             break;
 
         case SDL_KEYUP:
-            perso->dirX = 0;
-            perso->dirY = 0;
+            if (e.key.keysym.sym == 1073741904) { // Gauche
+                *left = 0;
+            }
+            else if (e.key.keysym.sym == 1073741906) { // Haut
+                *up = 0;
+            }
+            else if (e.key.keysym.sym == 1073741903) { // Droite
+                *right = 0;
+            }
             break;
-            
+
         default:
             break;
     }
@@ -88,6 +78,29 @@ void showPerso(Perso* perso) {
     drawRect(perso->width, perso->height, perso->x, perso->y, perso->r, perso->g, perso->b, 1);
 }
 
+void handleInput(Perso* perso, int* left, int* up, int* right) {
+    //printf("left:%d, right:%d, up:%d\n", *left, *right, *up);
+
+    if (*left && *right) {
+        perso->dirX = 0;
+    }
+    else if (*left) {
+        perso->dirX -= 1;
+    }
+    else if (*right) {
+        perso->dirX += 1;
+    }
+    else
+        perso->dirX = 0;
+
+    if (*up) {
+        if (perso->onGround)
+            perso->dirY += perso->jumpForce;
+    }
+    else
+        perso->dirY = 0;
+}
+
 void updatePosPerso(Perso* perso, Uint32 elapsedTime) {
     int showDebug = 0;
     if (showDebug) {
@@ -107,7 +120,9 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime) {
     }
     
     if (!perso->onGround)
-        perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0);
+        perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0) * gravity;
+    else
+        perso->dirY = 0;
 
     // Calcul de la vitesse
     // X

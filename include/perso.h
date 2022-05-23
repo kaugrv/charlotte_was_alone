@@ -44,11 +44,13 @@ typedef struct Perso {
 } Perso;
 
 
-void inputPerso(SDL_Event e, int* gameState, Perso* perso);
+void inputPerso(SDL_Event e, int* gameState, Perso* perso, int* left, int* up, int* right);
 
 Perso createPerso(float width, float height, float r, float g, float b, float posStartX, float posStartY, float posGoalX, float posGoalY, float jumpForce);
 
 void showPerso(Perso* perso);
+
+void handleInput(Perso* perso, int* left, int* up, int* right);
 
 void updatePosPerso(Perso* perso, Uint32 elapsedTime);
 
