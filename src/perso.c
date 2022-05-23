@@ -7,44 +7,43 @@
 // après y aura un player.c avec les inputs
 // \!/
 
-void inputPerso(SDL_Event e, int* gameState, int * f){
+void inputPerso(SDL_Event e, int* gameState, Perso* perso){
 
     switch(e.type) {
-
-        /* Clic souris */
-        case SDL_MOUSEBUTTONUP:
-            printf("clic en (%d, %d)\n", e.button.x, e.button.y);
-            break;
         
-  
-        /* Touche clavier */
         case SDL_KEYDOWN:
 
             if (e.key.keysym.sym == 1073741904) { // Gauche
-                *f=0;
+                perso->dirX -= 1;
             } 
 
-            if (e.key.keysym.sym == 1073741906) { // Haut
-                *f=1;
+            else if (e.key.keysym.sym == 1073741906) { // Haut
+                if (perso->onGround)
+                    perso->dirY += perso->jumpForce;
             } 
-            
-            if (e.key.keysym.sym == 1073741903) { // Droite
-                *f=2;
+
+            else if (e.key.keysym.sym == 1073741903) { // Droite
+                perso->dirX += 1;
             }
 
             else if (e.key.keysym.sym == 1073741905) { // Bas
-                *f=3;
-            }            
+                
+            }
             
-
-            if (e.key.keysym.sym == SDLK_ESCAPE){
+            else if (e.key.keysym.sym == SDLK_ESCAPE){
                 *gameState = 0;
             }
+            
+            /*else {
+                perso->dirX = 0;
+                perso->dirY = 0;
+            }*/
 
             break;
 
         case SDL_KEYUP:
-            *f =5;
+            perso->dirX = 0;
+            perso->dirY = 0;
             break;
             
         default:
@@ -71,6 +70,7 @@ Perso createPerso(float width, float height, float r, float g, float b, float po
     //Valeur deduites
     createdPerso.x = posStartX;
     createdPerso.y = posStartY;
+    createdPerso.onGround = 0;
     createdPerso.fallForce = -jumpForce;
     // m/s
     createdPerso.vitesseX = 0;
@@ -89,27 +89,51 @@ void showPerso(Perso* perso) {
 }
 
 void updatePosPerso(Perso* perso, Uint32 elapsedTime) {
-    printf("x=%f, y=%f \n", perso->x, perso->y);
-    printf("Vx=%f, Vy=%f \n", perso->vitesseX, perso->vitesseY);
-    printf("Ax=%f, Ay=%f \n", perso->accelerationX, perso->accelerationY);
-    printf("dirX=%f, dirY=%f \n", perso->dirX, perso->dirY);
+    int showDebug = 0;
+    if (showDebug) {
+        printf("x=%f, y=%f \n", perso->x, perso->y);
+        printf("Vx=%f, Vy=%f \n", perso->vitesseX, perso->vitesseY);
+        printf("Ax=%f, Ay=%f \n", perso->accelerationX, perso->accelerationY);
+        printf("dirX=%f, dirY=%f \n", perso->dirX, perso->dirY);
+    }
 
-    float testFriction = 1;
+    float testFriction = 1.5;
+    float gravity = 0.9;
 
-    // Cap du sol de test
-    if (perso->y < 0)
-        perso->y = 0;
+    // Gestion chute
+    if (perso->dirY > 0) {
+        perso->onGround = 0;
+        //perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0);
+    }
+    
+    if (!perso->onGround)
+        perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0);
 
     // Calcul de la vitesse
+    // X
     perso->vitesseX = perso->vitesseX * (1 - testFriction * elapsedTime/100.0) + elapsedTime/100.0 * perso->dirX * perso->accelerationX;
 
+    // Y        
+    perso->vitesseY = perso->vitesseY * (1 - gravity * elapsedTime/100.0) + elapsedTime/100.0 * perso->dirY * perso->accelerationY;
+
     // Cap vitesse
+    // X+
     if (perso->vitesseX > 500)
         perso->vitesseX = 500;
-
+    // X-
     if (perso->vitesseX < -500)
         perso->vitesseX = -500;
+    // Y-
+    if (perso->vitesseY < -500)
+        perso->vitesseY = -500;
     
     // Calcul de la position
     perso->x += perso->vitesseX * elapsedTime/1000.0;
+    perso->y += perso->vitesseY * elapsedTime/1000.0;
+
+    // Cap du sol de test
+    if (perso->y < 0) {
+        perso->y = 0;
+        perso->onGround = 1;
+    }
 }

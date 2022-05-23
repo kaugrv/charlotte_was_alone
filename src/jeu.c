@@ -29,12 +29,12 @@ int main(int argc, char** argv) {
     int debug = 0;
 
     //Player test
-    int f = 5;
-    Perso persoTest = createPerso(60,90, 0.,0.,0., 20,20, 100,100, 10);
+    int f = 2;
+    Perso persoTest = createPerso(60,90, 0.,0.,0., 20,20, 100,100, 100);
 
-    // speed camera
-    float speedX = 0;
-    float speedY = 0;
+    // Position camera
+    float camX = persoTest.posStartX;
+    float camY = persoTest.posStartY;
 
     int currentline = 1;
     
@@ -79,12 +79,14 @@ int main(int argc, char** argv) {
     while(loop) {
         
         // réduction de la speed (test de la cam) // prochainement la speed physique du player
+        /*
         if (speedX >0) speedX = max (speedX-8,0.0);
         if (speedX <0) speedX = min (speedX+8,0.0);
         if (speedY >0) speedY = max (speedY-8,0.0);
         if (speedY <0) speedY = min (speedY+8,0.0);
 
         printf("speedX : %f // speedY : %f \n", speedX,speedY);
+        */
 
         /* Recuperation du temps au debut de la boucle */
         Uint32 startTime = SDL_GetTicks();
@@ -101,11 +103,11 @@ int main(int argc, char** argv) {
 
         switch (GAMESTATE) {
 
-            case 0:;
+            case 0:
                 afficheMenu(currentline);
                 break;
             
-            case 1:; // Bouger rectangle
+            case 1: // Bouger rectangle
         
                 showPerso(&persoTest);
                 switch(f) {
@@ -120,11 +122,11 @@ int main(int argc, char** argv) {
 
                 break;
 
-            case 2: ; // QUADTREE
+            case 2: // QUADTREE
                 
                 drawRect(3000,3000,0,0,1,1,1,1); //fond
                 glPushMatrix();
-                    gestionCamera(persoTest.x,persoTest.y,persoTest.width,persoTest.height,persoTest.vitesseX/10,persoTest.vitesseY/10,M);
+                    gestionCamera(camX, camY);
                     drawMap(M);
                     printQuadTree(&Q);
 
@@ -149,20 +151,17 @@ int main(int argc, char** argv) {
 
                 glPopMatrix();
 
-
-
+                /*
                 switch(f) {
                     case 0:
                         persoTest.dirX -= 1;
                         break;
                     case 1:
-                        persoTest.dirY += 1;
+                        if (persoTest.onGround)
+                            persoTest.dirY += persoTest.jumpForce;
                         break;
                     case 2:
                         persoTest.dirX += 1;
-                        break;
-                    case 3:
-                        persoTest.dirY -= 1;
                         break;
                     case 5:
                         persoTest.dirX = 0;
@@ -171,12 +170,13 @@ int main(int argc, char** argv) {
                 }
         
                 break;
+                */
 
-            case 3:;
+            case 3:
                drawRect(3000,3000,0,0,1,1,1,1); //fond
 
                 glPushMatrix();
-                    gestionCamera(persoTest.x,persoTest.y,persoTest.width,persoTest.height,speedX,speedY,M);
+                    //gestionCamera(persoTest.x,persoTest.y,persoTest.width,persoTest.height,speedX,speedY,M);
                     drawMapFromQ(Q);
                     
                     //drawRect(persoTest.width,persoTest.height, persoTest.x, persoTest.y, 0,0,0,1);
@@ -191,6 +191,7 @@ int main(int argc, char** argv) {
                 break;
 
         }
+        
         glPopMatrix();
 
         /* Echange du front et du back buffer : mise a jour de la fenetre */
@@ -208,17 +209,14 @@ int main(int argc, char** argv) {
                 case 0:
                     inputMenuPrincipal(e, &GAMESTATE, &currentline, &loop);
                     break;
-
                 case 1:
                     input1(e, &GAMESTATE, &f, &debug);
                     break;
-
                 case 2:
-                    input1(e, &GAMESTATE, &f, &debug);
+                    inputPerso(e, &GAMESTATE, &persoTest);
                     break;
                 case 3:
                     inputPause(e, &GAMESTATE, &currentline);
-
             }
         }
 

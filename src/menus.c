@@ -14,20 +14,21 @@ void inputMenuPrincipal(SDL_Event e, int* gameState, int* currentline, int* loop
         case SDL_KEYDOWN:
 
             if (e.key.keysym.sym == 1073741906) { // Haut
-                if (*currentline==1) *currentline=lastline;
-                else *currentline-=1;
+                if (*currentline == 1) 
+                    *currentline = lastline;
+                else *currentline -= 1;
             } 
             
             if (e.key.keysym.sym == 1073741905) { // Bas
-                if (*currentline==lastline) *currentline=1; 
-                else *currentline +=1;
-   
+                if (*currentline == lastline) 
+                    *currentline = 1; 
+                else *currentline += 1;
             }
 
             if (e.key.keysym.sym == 13 || e.key.keysym.sym==1073741912) { // Entree : changement de gamestate
-                if (*currentline !=3) {
-                    *gameState=*currentline;   
-                    *currentline=1;
+                if (*currentline != 3) {
+                    *gameState = *currentline;
+                    *currentline = 1;
                 } 
 
                 else { // quitter jeu
@@ -126,7 +127,7 @@ void input1(SDL_Event e, int* gameState, int * f, int* debug){
                 *f=2;
             }
 
-            else if (e.key.keysym.sym == 1073741905) { // Bas
+            if (e.key.keysym.sym == 1073741905) { // Bas
                 *f=3;
             }            
             

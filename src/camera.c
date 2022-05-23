@@ -9,10 +9,10 @@
 
 
 
-void gestionCamera(float x, float y, float wp, float hp, float speedX,float speedY,Map map) {
+void gestionCamera(float x, float y) {
     glScalef(2,2,0);
-    glTranslatef(-x+speedX,0,0);
-    glTranslatef(0,-y+speedY,0);
+    glTranslatef(-x,0,0);
+    glTranslatef(0,-y,0);
 }
 
 float max(float a, float b){
