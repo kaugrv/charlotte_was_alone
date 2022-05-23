@@ -7,7 +7,7 @@
 // après y aura un player.c avec les inputs
 // \!/
 
-void inputPerso(SDL_Event e, int* gameState, Perso* perso, int* left, int* up, int* right){
+void inputPerso(SDL_Event e, int* gameState, Perso* perso, int* left, int* up, int* right, int* debug){
     switch(e.type) {
         case SDL_KEYDOWN:
             if (e.key.keysym.sym == 1073741904) { // Gauche
@@ -20,8 +20,13 @@ void inputPerso(SDL_Event e, int* gameState, Perso* perso, int* left, int* up, i
                 *right = 1;
             }
             else if (e.key.keysym.sym == SDLK_ESCAPE){
-                *gameState = 0;
+                *gameState = 2;
             }
+
+            if (e.key.keysym.sym == 98) { // B
+                *debug=!*debug;
+            }     
+
             break;
 
         case SDL_KEYUP:

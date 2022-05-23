@@ -1,6 +1,6 @@
 #include "animation.h"
 
-// V
+// V 
 Animation createAnimation(char instruction, float value, float animSpeed){
     Animation res;
     res.instruction = instruction;

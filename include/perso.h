@@ -44,7 +44,7 @@ typedef struct Perso {
 } Perso;
 
 
-void inputPerso(SDL_Event e, int* gameState, Perso* perso, int* left, int* up, int* right);
+void inputPerso(SDL_Event e, int* gameState, Perso* perso, int* left, int* up, int* right, int* debug);
 
 Perso createPerso(float width, float height, float r, float g, float b, float posStartX, float posStartY, float posGoalX, float posGoalY, float jumpForce);
 
