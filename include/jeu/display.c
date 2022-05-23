@@ -7,7 +7,7 @@ if (speedX >0) speedX = max (speedX-8,0.0);
 if (speedX <0) speedX = min (speedX+8,0.0);
 if (speedY >0) speedY = max (speedY-8,0.0);
 if (speedY <0) speedY = min (speedY+8,0.0);
-printf("speedX : %f // speedY : %f \n", speedX,speedY);
+//printf("speedX : %f // speedY : %f \n", speedX,speedY);
 
 /* Recuperation du temps au debut de la boucle */
 Uint32 startTime = SDL_GetTicks();

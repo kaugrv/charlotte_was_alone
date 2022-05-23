@@ -1,90 +1,120 @@
 #include "animation.h"
 
-void playListeAnimation(float *dx, float *dy, ListeAnimation* LA){
-    Animation animActuelle = LA->listeAnim[LA->animActuelle];
-
-    float step = animActuelle.value/animActuelle.animSpeed;
-    LA->progress += step;
-
-    playAnimation(dx,dy,animActuelle,LA->progress);
-    
-    if(LA->progress >= 1.0){
-        LA->progress = 0.0;
-        LA->animActuelle++;
-    }
-
-}
-
-void playAnimation(float *dx, float *dy, Animation A, float progress){
-    switch (A.instruction)
-    {
-    case 'X':
-        *dx = A.value/A.animSpeed;
-        *dy = 0;
-        break;
-    
-    case 'Y':
-        *dx = 0;
-        *dy = A.value/A.animSpeed;
-
-    default:
-        *dx = 0;
-        *dy = 0;
-        break;
-    }
-
-
-}
-
-Animation createAnimationVide(){
-    Animation res;
-    res.instruction = '\0';
-    res.value = 0;
-    res.animSpeed = 0;
-    return res;
-}
-
-
-// cette fonction ne marche pas pour le moment...
-ListeAnimation initListe(){
-    ListeAnimation res;
-    res.animActuelle = 0;
-    res.isLoop = 0;
-    res.nbAnim = 0;
-    res.progress = 0;
-    Animation LA[256];
-    for (int i = 0; i<256; i++) {
-        LA[i] = createAnimationVide();
-    }
-    //res.listeAnim = LA;
-}
-
-
+// V
 Animation createAnimation(char instruction, float value, float animSpeed){
     Animation res;
-    //Animation* res = new Animation; (en c++)
     res.instruction = instruction;
     res.value = value;
     res.animSpeed = animSpeed;
     return res;
 }
 
-void Loop(int loop, ListeAnimation* LA){
+// V
+Animation createAnimationVide(){
+    return  createAnimation('\0', 0, 0);
+}
+
+
+// V
+ListeAnimation initListe(){
+    ListeAnimation res;
+    res.isLoop = 0;
+    res.nbAnim = 0;
+    res.animActuelle = 0;
+    res.progressAnimActuelle = 0;
+
+    
+    for (int i = 0; i<256; i++) {
+        res.listeAnim[i] = createAnimationVide();
+    }
+    return res;
+}
+
+// V
+void addAnimToList(Animation Anim, ListeAnimation* List) {
+    List->listeAnim[List->nbAnim] = Anim;
+    List->nbAnim++;
+}
+
+void listeLoop(int loop, ListeAnimation* LA){
     LA->isLoop = loop;
 }
 
+// V
 void printAnimation (Animation* anim){
     if (anim != NULL) printf("instruction : %c // value : %f // animSpeed : %f \n", anim->instruction, anim->value, anim->animSpeed);
     else printf("NULL \n");
 }   
 
+// V
 void printListeAnimation (ListeAnimation* liste){
     if (liste == NULL){
-        printf("liste NULL \n");
+        printf("Liste NULL \n");
         return;
     }
 
-    for (int i = 0; i<liste->nbAnim; i++){
+    for (int i=0; i<liste->nbAnim; i++){
+        printf("%d-ième animation : ", i);
         printAnimation(&liste->listeAnim[i]);
+
+        printf("Animation Actuelle : %d // progress : %f \n", liste->animActuelle, liste->progressAnimActuelle);
     }
 }
+
+// V
+void playAnimation(float *dx, float *dy, Animation A){
+    switch (A.instruction){
+        case 'X':
+                *dx = A.animSpeed; // avancée de position
+                break;
+        
+        case 'Y':
+                *dy = A.animSpeed;
+                break;
+            
+        default:
+            *dx = 0;
+            *dy = 0;
+            break;
+    }
+}
+
+
+
+void playListeAnimation(float *dx, float *dy, ListeAnimation* LA){
+    Animation animActuelle = LA->listeAnim[LA->animActuelle];
+    float delta = 0;
+
+    if (animActuelle.value !=0) delta = animActuelle.animSpeed/animActuelle.value;
+
+    LA->progressAnimActuelle += delta;
+
+    playAnimation(dx,dy,animActuelle);
+    
+    if(LA->progressAnimActuelle >= 1){ // si j'ai fini l'animActuelle
+            LA->progressAnimActuelle = 1.0; // passage à la suivante.
+
+        
+
+        if (LA->animActuelle < LA->nbAnim-1) {
+            LA->progressAnimActuelle = 0.0; // passage à la suivante.
+            LA->animActuelle++;
+
+        }
+
+        else  {
+            if (LA->isLoop) {
+                LA->progressAnimActuelle = 0.0; // passage à la suivante.
+                LA->animActuelle = 0;
+            }
+
+            else {
+                *dx = 0;
+                *dy = 0;
+                return;
+            }
+        }
+    }
+
+}
+

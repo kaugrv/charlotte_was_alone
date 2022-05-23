@@ -56,13 +56,37 @@ int main(int argc, char** argv) {
     /////////////// TEST DES ANIMATIONS INIT
     ///////////////
     ///////////////
+    
     Animation testAnimVide = createAnimationVide();
     Animation X20_2 = createAnimation('X',20,2);
+
+    float dx=0;
+    float dy=0;
+    printf ("avant anim 1 : dx : %f // dy : %f \n", dx, dy);
+
+    ListeAnimation Listetest = initListe();
+    addAnimToList(X20_2, &Listetest);
+    addAnimToList(X20_2, &Listetest);
+    addAnimToList(X20_2, &Listetest);
+
+
+    listeLoop(1, &Listetest);
+
+
+
+
 
    
     // Boucle principale 
 
     while(loop) {
+
+        playListeAnimation(&dx, &dy, &Listetest);
+        printListeAnimation(&Listetest);
+        printf("Loop = %d \n", Listetest.isLoop);
+
+
+        printf ("dx : %f // dy : %f \n", dx, dy);
 
         #include "jeu/display.c"
         #include "jeu/inputs.c"

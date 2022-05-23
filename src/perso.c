@@ -89,10 +89,10 @@ void showPerso(Perso* perso) {
 }
 
 void updatePosPerso(Perso* perso, Uint32 elapsedTime) {
-    printf("x=%f, y=%f \n", perso->x, perso->y);
-    printf("Vx=%f, Vy=%f \n", perso->vitesseX, perso->vitesseY);
-    printf("Ax=%f, Ay=%f \n", perso->accelerationX, perso->accelerationY);
-    printf("dirX=%f, dirY=%f \n", perso->dirX, perso->dirY);
+    // printf("x=%f, y=%f \n", perso->x, perso->y);
+    // printf("Vx=%f, Vy=%f \n", perso->vitesseX, perso->vitesseY);
+    // printf("Ax=%f, Ay=%f \n", perso->accelerationX, perso->accelerationY);
+    // printf("dirX=%f, dirY=%f \n", perso->dirX, perso->dirY);
 
     float testFriction = 1;
 
