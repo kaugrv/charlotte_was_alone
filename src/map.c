@@ -10,11 +10,29 @@ RectDecor createRectDecor(float w, float h, float x, float y, float r, float g, 
     R.r=r;
     R.g=g;
     R.b=b;
+
+    R.isAnimated=0;
+    
     return R;
 } 
 
+void animateRectDecor(RectDecor* R, ListeAnimation* LA) {
+    R->isAnimated=1;
+    R->animations= LA;
+}
+
 void drawRectDecor(RectDecor R) {
-    drawRect(R.w, R.h, R.x, R.y, R.r, R.g, R.b, 1);
+
+    float dx=0;
+    float dy=0;
+
+    if (R.isAnimated == 1) {
+        playListeAnimation(&dx, &dy, R.animations);
+        printf("dx : %f \n", dx);
+    }
+
+    drawRect(R.w, R.h, R.x+dx, R.y+dy, R.r, R.g, R.b, 1);
+
 }
 
 void drawRectDecorFin(RectDecorFin R) {

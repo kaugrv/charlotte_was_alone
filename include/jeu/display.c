@@ -34,6 +34,7 @@ switch (GAMESTATE) {
 
             showCamera(&camTest);
             drawMap(M);
+            // drawRectDecor(R6);
 
             showPerso(&persoTest);    
             
