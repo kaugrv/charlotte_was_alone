@@ -13,6 +13,7 @@
 #include <time.h>
 
 #include "design.h"
+#include "animation.h"
 
 typedef struct RectDecor {
     float x;
@@ -23,10 +24,16 @@ typedef struct RectDecor {
     float r;
     float g;
     float b;
+
+    int isAnimated;
+    ListeAnimation *animations;
+
 } RectDecor, RectDecorFin;
 
 RectDecor createRectDecor(float w, float h, float x, float y, float r, float g, float b);
-void drawRectDecor(RectDecor R);
+void animateRectDecor(RectDecor* R, ListeAnimation* LA);
+
+void drawRectDecor(RectDecor  R);
 void drawRectDecorFin(RectDecorFin R);
 
 

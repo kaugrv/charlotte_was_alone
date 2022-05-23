@@ -65,11 +65,11 @@ void printListeAnimation (ListeAnimation* liste){
 void playAnimation(float *dx, float *dy, Animation A){
     switch (A.instruction){
         case 'X':
-                *dx = A.animSpeed; // avancée de position
+                *dx = A.value; // avancée de position
                 break;
         
         case 'Y':
-                *dy = A.animSpeed;
+                *dy = A.value;
                 break;
             
         default:
@@ -90,6 +90,9 @@ void playListeAnimation(float *dx, float *dy, ListeAnimation* LA){
     LA->progressAnimActuelle += delta;
 
     playAnimation(dx,dy,animActuelle);
+    *dx *=LA->progressAnimActuelle;
+    *dy *=LA->progressAnimActuelle;
+
     
     if(LA->progressAnimActuelle >= 1){ // si j'ai fini l'animActuelle
             LA->progressAnimActuelle = 1.0; // passage à la suivante.

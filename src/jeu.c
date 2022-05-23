@@ -19,9 +19,33 @@ int main(int argc, char** argv) {
 
     int currentline = 1;
     
-    int GAMESTATE = 0;
+    int GAMESTATE = 1;
 
     onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    
+
+
+    ///////////////
+    ///////////////
+    /////////////// TEST DES ANIMATIONS INIT
+    ///////////////
+    ///////////////
+    
+    Animation testAnimVide = createAnimationVide();
+    Animation X20_2 = createAnimation('Y',300,1);
+
+    float dx=0;
+    float dy=0;
+    printf ("avant anim 1 : dx : %f // dy : %f \n", dx, dy);
+
+    ListeAnimation Listetest = initListe();
+    addAnimToList(X20_2, &Listetest);
+    listeLoop(1, &Listetest);
+
+
+
+
 
     Map M = createMap(1280,1280);
 
@@ -30,7 +54,10 @@ int main(int argc, char** argv) {
     RectDecor R3 = createRectDecor(150,200,285,200,253/255.0,108/255.0,158/255.0);
     RectDecor R4 = createRectDecor(50,50,0,240,253/255.0,108/255.0,158/255.0);
     RectDecor R5 = createRectDecor(100,100,-200,200,253/255.0,108/255.0,158/255.0);
-    RectDecor R6 = createRectDecor(50,50,40,40,253/255.0,108/255.0,158/255.0);
+    
+    RectDecor R6 = createRectDecor(50,50,40,40,108/255.0,108/255.0,108/255.0);
+    animateRectDecor(&R6, &Listetest);
+    
     RectDecor R7 = createRectDecor(50,50,80,80,253/255.0,108/255.0,158/255.0);
     RectDecor R8 = createRectDecor(50,50,80,140,253/255.0,108/255.0,158/255.0);
 
@@ -41,7 +68,9 @@ int main(int argc, char** argv) {
     addRectDecorToMap(R3, &M);
     addRectDecorToMap(R4, &M);
     addRectDecorToMap(R5, &M);
+
     addRectDecorToMap(R6, &M);
+
     addRectDecorToMap(R7, &M);
     addRectDecorToMap(R8, &M);
 
@@ -49,28 +78,6 @@ int main(int argc, char** argv) {
 
     QuadTree Q = initRootFromMap(M);
     buildQuadTree(&Q);
-
-
-    ///////////////
-    ///////////////
-    /////////////// TEST DES ANIMATIONS INIT
-    ///////////////
-    ///////////////
-    
-    Animation testAnimVide = createAnimationVide();
-    Animation X20_2 = createAnimation('X',20,2);
-
-    float dx=0;
-    float dy=0;
-    printf ("avant anim 1 : dx : %f // dy : %f \n", dx, dy);
-
-    ListeAnimation Listetest = initListe();
-    addAnimToList(X20_2, &Listetest);
-    addAnimToList(X20_2, &Listetest);
-    addAnimToList(X20_2, &Listetest);
-
-
-    listeLoop(1, &Listetest);
 
 
 
@@ -83,9 +90,8 @@ int main(int argc, char** argv) {
 
         playListeAnimation(&dx, &dy, &Listetest);
         printListeAnimation(&Listetest);
+
         printf("Loop = %d \n", Listetest.isLoop);
-
-
         printf ("dx : %f // dy : %f \n", dx, dy);
 
         #include "jeu/display.c"

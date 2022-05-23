@@ -34,6 +34,7 @@ switch (GAMESTATE) {
 
             gestionCamera(persoTest.x,persoTest.y,persoTest.width,persoTest.height,persoTest.vitesseX/10,persoTest.vitesseY/10,M);
             drawMap(M);
+            // drawRectDecor(R6);
 
             showPerso(&persoTest);    
             
