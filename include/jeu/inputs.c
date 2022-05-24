@@ -13,7 +13,7 @@ while(SDL_PollEvent(&e) != 0) {
             break;
 
         case 1: // UN NIVEAU
-            inputPerso(e, &GAMESTATE, &persoTest, &keyLeft, &keyUp, &keyRight, &debug);
+            inputPlayer(e, &GAMESTATE, &player, &keyLeft, &keyUp, &keyRight, &keySwitch, &debug);
             break;
 
         case 2: // MENU PAUSE

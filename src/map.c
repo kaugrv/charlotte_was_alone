@@ -28,7 +28,7 @@ void drawRectDecor(RectDecor R) {
 
     if (R.isAnimated == 1) {
         playListeAnimation(&dx, &dy, R.animations);
-        printf("dx : %f \n", dx);
+        //printf("dx : %f \n", dx);
     }
 
     drawRect(R.w, R.h, R.x+dx, R.y+dy, R.r, R.g, R.b, 1);

@@ -7,46 +7,6 @@
 // après y aura un player.c avec les inputs
 // \!/
 
-void inputPerso(SDL_Event e, int* gameState, Perso* perso, int* left, int* up, int* right, int* debug){
-    switch(e.type) {
-        case SDL_KEYDOWN:
-            if (e.key.keysym.sym == 1073741904) { // Gauche
-                *left = 1;
-            } 
-            else if (e.key.keysym.sym == 1073741906) { // Haut
-                *up = 1;
-            }
-            else if (e.key.keysym.sym == 1073741903) { // Droite
-                *right = 1;
-            }
-            else if (e.key.keysym.sym == SDLK_ESCAPE){
-                *gameState = 2;
-            }
-
-            if (e.key.keysym.sym == 98) { // B
-                *debug=!*debug;
-            }     
-
-            break;
-
-        case SDL_KEYUP:
-            if (e.key.keysym.sym == 1073741904) { // Gauche
-                *left = 0;
-            }
-            else if (e.key.keysym.sym == 1073741906) { // Haut
-                *up = 0;
-            }
-            else if (e.key.keysym.sym == 1073741903) { // Droite
-                *right = 0;
-            }
-            break;
-
-        default:
-            break;
-    }
-}
-
-
 Perso createPerso(float width, float height, float r, float g, float b, float posStartX, float posStartY, float posGoalX, float posGoalY, float jumpForce) {
     Perso createdPerso;
 
@@ -66,6 +26,7 @@ Perso createPerso(float width, float height, float r, float g, float b, float po
     createdPerso.x = posStartX;
     createdPerso.y = posStartY;
     createdPerso.onGround = 0;
+    createdPerso.canJumpAgain = 1;
     createdPerso.fallForce = -jumpForce;
     // m/s
     createdPerso.vitesseX = 0;
@@ -83,29 +44,6 @@ void showPerso(Perso* perso) {
     drawRect(perso->width, perso->height, perso->x, perso->y, perso->r, perso->g, perso->b, 1);
 }
 
-void handleInput(Perso* perso, int* left, int* up, int* right) {
-    //printf("left:%d, right:%d, up:%d\n", *left, *right, *up);
-
-    if (*left && *right) {
-        perso->dirX = 0;
-    }
-    else if (*left) {
-        perso->dirX -= 1;
-    }
-    else if (*right) {
-        perso->dirX += 1;
-    }
-    else
-        perso->dirX = 0;
-
-    if (*up) {
-        if (perso->onGround)
-            perso->dirY += perso->jumpForce;
-    }
-    else
-        perso->dirY = 0;
-}
-
 void updatePosPerso(Perso* perso, Uint32 elapsedTime) {
     int showDebug = 0;
     if (showDebug) {
@@ -113,21 +51,25 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime) {
         printf("Vx=%f, Vy=%f \n", perso->vitesseX, perso->vitesseY);
         printf("Ax=%f, Ay=%f \n", perso->accelerationX, perso->accelerationY);
         printf("dirX=%f, dirY=%f \n", perso->dirX, perso->dirY);
+        printf("canJumpAgain=%d\n", perso->canJumpAgain);
     }
 
     float testFriction = 1.5;
-    float gravity = 0.9;
-
-    // Gestion chute
-    if (perso->dirY > 0) {
-        perso->onGround = 0;
-        //perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0);
-    }
+    float gravity = 0.6;
     
-    if (!perso->onGround)
+    // Falling force if in air
+    if (!perso->onGround) {
         perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0) * gravity;
-    else
+    }
+    // Negates force if on ground
+    else {
         perso->dirY = 0;
+    }
+
+    // A REMPLACER PAR COLLISIONS PLUS TARD
+    // IF (collision verticale)
+    //     perso->dirX = 0;
+
 
     // Calcul de la vitesse
     // X
@@ -137,23 +79,22 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime) {
     perso->vitesseY = perso->vitesseY * (1 - gravity * elapsedTime/100.0) + elapsedTime/100.0 * perso->dirY * perso->accelerationY;
 
     // Cap vitesse
-    // X+
-    if (perso->vitesseX > 500)
+    if (perso->vitesseX > 500) // X+
         perso->vitesseX = 500;
-    // X-
-    if (perso->vitesseX < -500)
+    if (perso->vitesseX < -500) // X-
         perso->vitesseX = -500;
-    // Y-
-    if (perso->vitesseY < -500)
+    if (perso->vitesseY < -500) // Y-
         perso->vitesseY = -500;
+    if (perso->vitesseY > 1000) // Y+
+        perso->vitesseY = 1000;
     
     // Calcul de la position
     perso->x += perso->vitesseX * elapsedTime/1000.0;
     perso->y += perso->vitesseY * elapsedTime/1000.0;
 
-    // Cap du sol de test
-    if (perso->y < 0) {
-        perso->y = 0;
+    // A REMPLACER PAR COLLISIONS PLUS TARD
+    if (perso->y < 0 + perso->height/2) {
+        perso->y = 0 + perso->height/2;
         perso->onGround = 1;
     }
 }

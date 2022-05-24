@@ -10,12 +10,23 @@ int main(int argc, char** argv) {
     int debug = 0;
 
     //Player test
-    Perso persoTest = createPerso(60,90, 0.,0.,0., 20,20, 100,100, 100);
+    Perso persoTest = createPerso(60,90, 0.,1.,0., 20,100, 100,100, 200);
+    Perso Wooly = createPerso(90,60, 1.,0.,1., 300,100, 500,100, 100);
+    Perso Charlie = createPerso(50,120, 0.,1.,1., 200,100, 600,100, 500);
+    Perso Arthur = createPerso(200,200, 0.,0.,1., -200,500, 900,100, 30);
+
+    Perso* team[6];
+    team[0] = &persoTest;
+    team[1] = &Wooly;
+    team[2] = &Charlie;
+    team[3] = &Arthur;
+    
+    Player player = createPlayer(team, 4);
     // Variable d'input
-    int keyLeft = 0, keyUp = 0, keyRight = 0;
+    int keyLeft = 0, keyUp = 0, keyRight = 0, keySwitch = 0;
 
     // Position camera
-    Camera camTest = createCamera(persoTest.posStartX, persoTest.posStartY, 2, 2);
+    Camera camTest = createCamera(player.team[player.activePerso]->posStartX, player.team[player.activePerso]->posStartY, 1.5, 1.5);
 
     int currentline = 1;
     
@@ -87,8 +98,8 @@ int main(int argc, char** argv) {
         playListeAnimation(&dx, &dy, &Listetest);
         printListeAnimation(&Listetest);
 
-        printf("Loop = %d \n", Listetest.isLoop);
-        printf ("dx : %f // dy : %f \n", dx, dy);
+        //printf("Loop = %d \n", Listetest.isLoop);
+        //printf ("dx : %f // dy : %f \n", dx, dy);
 
         #include "jeu/display.c"
         #include "jeu/inputs.c"
@@ -99,10 +110,16 @@ int main(int argc, char** argv) {
             SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
         }
 
-        handleInput(&persoTest, &keyLeft, &keyUp, &keyRight);        
-        updatePosCamera(&camTest, &persoTest, elapsedTime);
-        updatePosPerso(&persoTest, elapsedTime);
 
+        // On gere les inputs du perso actif
+        handlePlayerInput(&player, &keyLeft, &keyUp, &keyRight, &keySwitch);
+        
+        // On update la position de la camera sur le perso actif
+        updatePosCamera(&camTest, player.team[player.activePerso], elapsedTime);
+        
+        // On update la position de tous les persos
+        for (int i = 0; i < player.nbPersos; i++)
+            updatePosPerso(player.team[i], elapsedTime);
     }
 
     #include "fenetre/freeSDLressources.c"

@@ -14,6 +14,7 @@
 #include "design.h"
 #include "map.h"
 #include "quadtree.h"
-#include "menus.h"
 #include "perso.h"
+#include "player.h"
+#include "menus.h"
 #include "animation.h"

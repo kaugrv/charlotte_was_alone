@@ -36,7 +36,7 @@ switch (GAMESTATE) {
             drawMap(M);
             // drawRectDecor(R6);
 
-            showPerso(&persoTest);    
+            showPersos(&player);    
             
             RectDecor Rperso = createRectDecor(persoTest.width, persoTest.height, persoTest.x, persoTest.y, persoTest.r, persoTest.g, persoTest.b);
 
@@ -68,7 +68,7 @@ switch (GAMESTATE) {
             drawMapFromQ(Q);
             
             //drawRect(persoTest.width,persoTest.height, persoTest.x, persoTest.y, 0,0,0,1);
-            showPerso(&persoTest);
+            showPersos(&player);
             if (debug) {
                 printQuadTree(&Q);
                 debugQuadTrees(Q, Rperso, M);
