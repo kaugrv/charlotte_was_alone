@@ -18,3 +18,4 @@
 #include "player.h"
 #include "menus.h"
 #include "animation.h"
+#include "niveau.h"

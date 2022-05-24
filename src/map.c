@@ -21,18 +21,26 @@ void animateRectDecor(RectDecor* R, ListeAnimation* LA) {
     R->animations= LA;
 }
 
-void drawRectDecor(RectDecor R) {
+
+// les rectdecor normaux sont justes dessinés, ceux qui sont animés vont bougés du coup
+void drawRectDecorAnim(RectDecor *R) {
 
     float dx=0;
     float dy=0;
 
-    if (R.isAnimated == 1) {
-        playListeAnimation(&dx, &dy, R.animations);
+    if (R->isAnimated == 1) {
+        playListeAnimation(&dx, &dy, R->animations);
         //printf("dx : %f \n", dx);
     }
+    //printf ("dx : %f // dy  // x : %f // y : %f: %f \n", dx, dy,R->x,R->y);
+    R->x+=dx;
+    R->y+=dy;
+    drawRect(R->w, R->h, R->x, R->y, R->r, R->g, R->b, 1);
 
-    drawRect(R.w, R.h, R.x+dx, R.y+dy, R.r, R.g, R.b, 1);
+}
 
+void drawRectDecor(RectDecor R){
+    drawRect(R.w, R.h, R.x, R.y, R.r, R.g, R.b, 1);
 }
 
 void drawRectDecorFin(RectDecorFin R) {
@@ -45,6 +53,7 @@ Map createMap(float w, float h) {
     M.h=h;
     M.nbRectDecor=0;
     M.nbRectDecorFin=0;
+    M.nbRectDecorAnim = 0;
     return M;
 }
 
@@ -58,12 +67,21 @@ void addRectDecorFinToMap(RectDecorFin R, Map* M) {
     M->nbRectDecorFin++;    
 }
 
+void addRectDecorAnimToMap(RectDecor *R, Map* M) {
+    M->listeRectDecorAnim[M->nbRectDecorAnim] = R;
+    M->nbRectDecorAnim++;    
+}
 
 void drawMap(Map M) {
     for (int i=0; i<M.nbRectDecor; i++) {
         drawRectDecor(M.listeRectDecor[i]);
     }
+
     for (int i=0; i<M.nbRectDecorFin; i++) {
         drawRectDecorFin(M.listeRectDecorFin[i]);
+    }
+
+    for (int i=0; i<M.nbRectDecorAnim; i++) {
+        drawRectDecorAnim(M.listeRectDecorAnim[i]);
     }
 }

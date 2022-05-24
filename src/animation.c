@@ -1,4 +1,5 @@
 #include "animation.h"
+#include <math.h>
 
 // V 
 Animation createAnimation(char instruction, float value, float animSpeed){
@@ -69,11 +70,11 @@ void printListeAnimation (ListeAnimation* liste){
 void playAnimation(float *dx, float *dy, Animation A){
     switch (A.instruction){
         case 'X':
-                *dx = A.value; // avancée de position
+                *dx = A.animSpeed; // avancée de position
                 break;
         
         case 'Y':
-                *dy = A.value;
+                *dy = A.animSpeed;
                 break;
             
         default:
@@ -90,13 +91,11 @@ void playListeAnimation(float *dx, float *dy, ListeAnimation* LA){
     float delta = 0;
 
     if (animActuelle.value !=0) delta = animActuelle.animSpeed/animActuelle.value;
+    LA->progressAnimActuelle += fabs(delta);
 
-    LA->progressAnimActuelle += delta;
+    //LA->progressAnimActuelle = fabs(LA->progressAnimActuelle);
 
     playAnimation(dx,dy,animActuelle);
-    *dx *=LA->progressAnimActuelle;
-    *dy *=LA->progressAnimActuelle;
-
     
     if(LA->progressAnimActuelle >= 1){ // si j'ai fini l'animActuelle
             LA->progressAnimActuelle = 1.0; // passage à la suivante.

@@ -101,57 +101,6 @@ void affichePause(int currentline) {
 }
 
 
-// Gamestate = 1 = JEU
-
-void input1(SDL_Event e, int* gameState, int * f, int* debug){
-
-    switch(e.type) {
-
-        /* Clic souris */
-        case SDL_MOUSEBUTTONUP:
-            printf("clic en (%d, %d)\n", e.button.x, e.button.y);
-            break;
-        
-  
-        /* Touche clavier */
-        case SDL_KEYDOWN:
-
-            if (e.key.keysym.sym == 1073741904) { // Gauche
-                *f=0;
-            } 
-
-            if (e.key.keysym.sym == 1073741906) { // Haut
-                *f=1;
-            } 
-            
-            if (e.key.keysym.sym == 1073741903) { // Droite
-                *f=2;
-            }
-
-            if (e.key.keysym.sym == 1073741905) { // Bas
-                *f=3;
-            }            
-            
-            if (e.key.keysym.sym == 98) { // B
-                *debug=!*debug;
-            }     
-
-            if (e.key.keysym.sym == SDLK_ESCAPE){
-                *gameState=2;
-            }
-
-            break;
-
-        case SDL_KEYUP:
-            *f =5;
-            break;
-            
-        default:
-            break;
-    }
-}
-
-
 // GAMESTATE = 3 = PAUSE
 
 void inputPause(SDL_Event e, int* gameState, int* currentline) {
