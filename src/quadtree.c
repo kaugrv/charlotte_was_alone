@@ -48,7 +48,7 @@ void createChildren(QuadTree* Q) {
     struct QuadTree *BL = malloc(sizeof(struct QuadTree));
     struct QuadTree *BR = malloc(sizeof(struct QuadTree));
 
-    printf("malloc success\n");
+    //printf("malloc success\n");
 
     TL->size = Q->size/2;
     TR->size = Q->size/2;
@@ -135,7 +135,7 @@ QuadTree initRootFromMap(Map M) {
 // Remplit le quadtree final
 void buildQuadTree(QuadTree* Q) {
 
-    printf("nbRectDecor=%d\n", Q->nbRectDecor);
+    //printf("nbRectDecor=%d\n", Q->nbRectDecor);
 
     createChildren(Q);
     
@@ -241,6 +241,7 @@ void drawMapFromQ(QuadTree Q) {
 
 // Renvoie le quadtree dans lequel se trouve (x,y)
 QuadTree* QuadTreeContainPoint(float x, float y, QuadTree* Q) {
+    
     if (isLeaf(*Q)) 
       return Q;
     if (x < Q->xTopLeft+Q->size/2){ // ici je suis à gauche
@@ -296,4 +297,5 @@ void debugQuadTrees(QuadTree Q, RectDecor Rperso, Map M) {
     drawQuadrillage(Q2->xTopLeft + Q2->size/2, Q2->yTopLeft - Q2->size/2, Q2->size, 0.0, 1.0, 0.0);
     drawQuadrillage(Q3->xTopLeft + Q3->size/2, Q3->yTopLeft - Q3->size/2, Q3->size, 0.0, 1.0, 0.0);
     drawQuadrillage(Q4->xTopLeft + Q4->size/2, Q4->yTopLeft - Q4->size/2, Q4->size, 0.0, 1.0, 0.0);
+    
 }

@@ -17,3 +17,4 @@
 #include "menus.h"
 #include "perso.h"
 #include "animation.h"
+#include "niveau.h"

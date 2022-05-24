@@ -30,9 +30,9 @@ void drawRectDecorAnim(RectDecor *R) {
 
     if (R->isAnimated == 1) {
         playListeAnimation(&dx, &dy, R->animations);
-        printf("dx : %f \n", dx);
+        //printf("dx : %f \n", dx);
     }
-    printf ("dx : %f // dy  // x : %f // y : %f: %f \n", dx, dy,R->x,R->y);
+    //printf ("dx : %f // dy  // x : %f // y : %f: %f \n", dx, dy,R->x,R->y);
     R->x+=dx;
     R->y+=dy;
     drawRect(R->w, R->h, R->x, R->y, R->r, R->g, R->b, 1);
@@ -66,7 +66,6 @@ void addRectDecorFinToMap(RectDecorFin R, Map* M) {
     M->listeRectDecorFin[M->nbRectDecorFin] = R;
     M->nbRectDecorFin++;    
 }
-
 
 void addRectDecorAnimToMap(RectDecor *R, Map* M) {
     M->listeRectDecorAnim[M->nbRectDecorAnim] = R;

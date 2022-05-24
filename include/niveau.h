@@ -15,8 +15,30 @@
 #include "map.h"
 #include "quadtree.h"
 #include "perso.h"
+#include "camera.h"
+#include "animation.h"
+#include "collisions.h"
 
 
+typedef struct Niveau {
+    int n;
+
+    Map M;
+    QuadTree Q;
+
+    Perso P;
+    Camera C;
+    
+} Niveau;
+
+
+Niveau createNiveau(int n, Map M, QuadTree Q, Perso P, Camera C);
+
+Niveau createNiveau1();
+Niveau createNiveau2();
+Niveau createNiveau3();
+
+void displayNiveau(Niveau* N, int debug);
 
 
 
