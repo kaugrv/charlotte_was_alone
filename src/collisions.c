@@ -1,15 +1,32 @@
 #include "collisions.h"
 
 
-// To be continued
-int isNearX(Perso P, RectDecor R) {
-    float dx = P.vitesseX/1000.0;
-    
-    if ((R.x - R.w/2)-(P.x + P.width/2) <= dx && dx >=0 && P.x <= R.x) return 1; // gauche
 
-    if ((P.x + P.width/2) - (R.x + R.w/2) >= -dx && dx <=0 ) return -1; // gauche
+int collides(float x, float y, float width, float height, RectDecor R) {
+
+    // Bords horiz du perso
+    int Pg = x - width/2;
+    int Pd = x + width/2;
+
+    // Bords vertic du perso
+    int Ph = y + height/2;
+    int Pb = y - height/2;
+
+    // Bords horiz de R
+    int Rg = R.x - R.w/2;
+    int Rd = R.x + R.w/2;
+
+    // Bords vertic de R
+    int Rh = R.y + R.h/2;
+    int Rb = R.y - R.h/2;
 
 
-    else return 0;
+    if (Pg>Rd || Pd<Rg || Ph<Rb || Pb>Rh) {
+        return 0;
+    }
+
+   else return 1;
+
 }
+
 

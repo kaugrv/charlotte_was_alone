@@ -58,7 +58,7 @@ Niveau createNiveau1() {
 
     RectDecorFin R9 = createRectDecor(persoTest.width,persoTest.height,-300,0, 0.8,0,0);
 
-    RectDecor R10 = createRectDecor(50,50,20,40,253/255.0,108/255.0,158/255.0);
+    RectDecor R10 = createRectDecor(50,50,20,20,253/255.0,108/255.0,158/255.0);
 
 
     addRectDecorToMap(R1, &M);
@@ -94,7 +94,7 @@ Niveau createNiveau3();
 
 void displayNiveau(Niveau* N, int debug) {
 
-drawRect(3000,3000,0,0,1,1,1,1); //fond
+    drawRect(3000,3000,0,0,1,1,1,1); //fond
 
     glPushMatrix();
 
@@ -111,6 +111,7 @@ drawRect(3000,3000,0,0,1,1,1,1); //fond
         else { // Perso pas dans sa case
             drawRect(N->player.team[N->player.activePerso]->width, N->player.team[N->player.activePerso]->height, N->player.team[N->player.activePerso]->x, N->player.team[N->player.activePerso]->y, N->player.team[N->player.activePerso]->r, N->player.team[N->player.activePerso]->g, N->player.team[N->player.activePerso]->b,1);
         }
+
 
 
         if (debug) { // Mode debug : affichage QUADTREE (si B a été pressé)

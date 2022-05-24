@@ -44,7 +44,7 @@ void showPerso(Perso* perso) {
     drawRect(perso->width, perso->height, perso->x, perso->y, perso->r, perso->g, perso->b, 1);
 }
 
-void updatePosPerso(Perso* perso, Uint32 elapsedTime) {
+void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q) {
     int showDebug = 0;
     if (showDebug) {
         printf("x=%f, y=%f \n", perso->x, perso->y);
@@ -57,18 +57,25 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime) {
     float testFriction = 1.5;
     float gravity = 0.6;
     
-    // Falling force if in air
-    if (!perso->onGround) {
-        perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0) * gravity;
-    }
-    // Negates force if on ground
-    else {
-        perso->dirY = 0;
-    }
+    perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0) * gravity;
+
 
     // A REMPLACER PAR COLLISIONS PLUS TARD
     // IF (collision verticale)
     //     perso->dirX = 0;
+
+    for (int i = 0; i<Q.nbRectDecor; i++ ) {
+        if (collides(perso->x+perso->vitesseX*elapsedTime/1000.0, perso->y, perso->width, perso->height, Q.listeRectDecor[i])) {
+
+            if (perso->vitesseX > 0) perso->x = - perso->width/2 + Q.listeRectDecor[i].x - Q.listeRectDecor[i].w/2 - 1;
+            if (perso->vitesseX < 0) perso->x =  perso->width/2 + Q.listeRectDecor[i].x + Q.listeRectDecor[i].w/2 + 1 ;
+
+            perso->vitesseX=0;
+            perso->dirX=0;
+        }
+
+    }
+   
 
 
     // Calcul de la vitesse
@@ -92,9 +99,49 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime) {
     perso->x += perso->vitesseX * elapsedTime/1000.0;
     perso->y += perso->vitesseY * elapsedTime/1000.0;
 
-    // A REMPLACER PAR COLLISIONS PLUS TARD
-    if (perso->y < 0 + perso->height/2) {
-        perso->y = 0 + perso->height/2;
-        perso->onGround = 1;
+    // // A REMPLACER PAR COLLISIONS PLUS TARD
+    // if (perso->y < 0 + perso->height/2) {
+    //     perso->y = 0 + perso->height/2;
+    //     perso->onGround = 1;
+    // }
+
+    for (int i = 0; i<Q.nbRectDecor; i++ ) {
+
+        // int c1 = (perso->y+perso->height/2) > (Q.listeRectDecor[i].y -  Q.listeRectDecor[i].h/2);
+        // int c2 = (perso->y+perso->height/2) < (Q.listeRectDecor[i].y +  Q.listeRectDecor[i].h/2);
+        // // Haut du P entre le haut et le bas
+
+        // int c3 = (perso->y-perso->height/2) > (Q.listeRectDecor[i].y - Q.listeRectDecor[i].h/2);
+        // int c4 = (perso->y-perso->height/2) < (Q.listeRectDecor[i].y +  Q.listeRectDecor[i].h/2);
+        // // Bas du P entre le haut et le bas
+
+        // int c5 = (perso->y+perso->height/2) > (Q.listeRectDecor[i].y +  Q.listeRectDecor[i].h/2);
+        // int c6 = (perso->y-perso->height/2) < (Q.listeRectDecor[i].y -  Q.listeRectDecor[i].h/2);
+        // // Haut au dessus du haut, bas en dessous du bas
+
+
+        // int C = (c1&&c2) || (c3&&c4) || (c5&&c6);
+
+        int C = (perso->y-perso->height/2) < (Q.listeRectDecor[i].y + Q.listeRectDecor[i].h/2 - 10);
+
+        int C2 = (perso->y+perso->height/2) > (Q.listeRectDecor[i].y - Q.listeRectDecor[i].h/2 + 10);
+
+
+
+
+        if (collides(perso->x, perso->y+perso->vitesseY*elapsedTime/1000.0, perso->width, perso->height, Q.listeRectDecor[i])) {
+
+            if (perso->vitesseY > 0 && !C2) perso->y = - perso->height/2 + Q.listeRectDecor[i].y - Q.listeRectDecor[i].h/2 - 1;
+            if (perso->vitesseY < 0 && !C) perso->y =  perso->height/2 + Q.listeRectDecor[i].y + Q.listeRectDecor[i].h/2 + 1 ;
+            
+            perso->vitesseY=0;
+            perso->dirY=0;
+            if (perso->y>Q.listeRectDecor[i].y) perso->onGround = 1;
+        }
+
     }
+
+
+    printf("%d\n", perso->onGround);
+    printf("%f\n", perso->vitesseY);
 }

@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
         
         // On update la position de tous les persos
         for (int i = 0; i < N1.player.nbPersos; i++)
-            updatePosPerso(N1.player.team[i], elapsedTime);
+            updatePosPerso(N1.player.team[i], elapsedTime, N1.Q);
     }
 
     #include "fenetre/freeSDLressources.c"

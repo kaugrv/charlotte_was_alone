@@ -6,9 +6,6 @@
 #include "perso.h"
 
 
-
-int isNearX(Perso P, RectDecor R);
-
-
+int collides(float x, float y, float width, float height, RectDecor R);
 
 #endif 

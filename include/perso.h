@@ -12,6 +12,8 @@
 #include <time.h>
 
 #include "design.h"
+#include "collisions.h"
+#include "quadtree.h"
 
 typedef struct Perso {
     ///////////////Caractéristiques
@@ -48,6 +50,7 @@ typedef struct Perso {
 
 Perso createPerso(float width, float height, float r, float g, float b, float posStartX, float posStartY, float posGoalX, float posGoalY, float jumpForce);
 void showPerso(Perso* perso);
-void updatePosPerso(Perso* perso, Uint32 elapsedTime);
+
+void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q);
 
 #endif
