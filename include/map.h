@@ -13,19 +13,28 @@
 #include <time.h>
 
 #include "design.h"
+#include "animation.h"
 
 typedef struct RectDecor {
     float x;
     float y;
+    
     float w;
     float h;
     float r;
     float g;
     float b;
+
+    int isAnimated;
+    ListeAnimation *animations;
+
 } RectDecor, RectDecorFin;
 
 RectDecor createRectDecor(float w, float h, float x, float y, float r, float g, float b);
-void drawRectDecor(RectDecor R);
+void animateRectDecor(RectDecor* R, ListeAnimation* LA);
+
+void drawRectDecor(RectDecor  R);
+void drawRectDecorAnim(RectDecor *R);
 void drawRectDecorFin(RectDecorFin R);
 
 
@@ -39,12 +48,19 @@ typedef struct Map {
     RectDecorFin listeRectDecorFin[256];
     int nbRectDecorFin;
 
+    RectDecor* listeRectDecorAnim[256];
+    int nbRectDecorAnim;
+
 } Map ;
 
 
 
 Map createMap(float w, float h);
 void addRectDecorToMap(RectDecor R, Map* M);
+
+
+void addRectDecorAnimToMap(RectDecor *R, Map* M);
+
 
 void addRectDecorFinToMap(RectDecorFin R, Map* M);
 
