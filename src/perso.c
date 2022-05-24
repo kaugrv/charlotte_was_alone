@@ -10,6 +10,7 @@
 void inputPerso(SDL_Event e, int* gameState, Perso* perso, int* left, int* up, int* right, int* debug){
     
     switch(e.type) {
+        
         case SDL_KEYDOWN:
             if (e.key.keysym.sym == 1073741904) { // Gauche
                 *left = 1;
