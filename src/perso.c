@@ -125,10 +125,7 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q) {
         // int C = (c1&&c2) || (c3&&c4) || (c5&&c6);
 
         int C = (perso->y-perso->height/2) < (Q.listeRectDecor[i].y + Q.listeRectDecor[i].h/2 - 10);
-
         int C2 = (perso->y+perso->height/2) > (Q.listeRectDecor[i].y - Q.listeRectDecor[i].h/2 + 10);
-
-
 
 
         if (collides(perso->x, perso->y+perso->vitesseY*elapsedTime/1000.0, perso->width, perso->height, Q.listeRectDecor[i])) {
@@ -138,7 +135,8 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q) {
             
             perso->vitesseY=0;
             perso->dirY=0;
-            if (perso->y>Q.listeRectDecor[i].y) perso->onGround = 1;
+            //if (perso->y>Q.listeRectDecor[i].y) perso->onGround = 1;
+            perso->onGround = !C;
         }
 
     }
