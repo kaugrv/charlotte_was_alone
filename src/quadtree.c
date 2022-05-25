@@ -257,23 +257,23 @@ QuadTree* QuadTreeContainPoint(float x, float y, QuadTree* Q) {
     }
 }
 
-// On stocke dans un quadtree les quatre quadtree dans lesquels se trouvent les quatre coins de RectDecor
-QuadTree searchQuadtrees(RectDecor R, QuadTree* Q, Map M) {
+// On stocke dans un quadtree les quatre quadtree dans lesquels se trouvent les quatre coins d'un perso (x,y,w,h)
+QuadTree searchQuadtrees(float x, float y, float w, float h, QuadTree* Q, Map M) {
 
     QuadTree QS = initRootFromMap(M);
     createChildren(&QS);
 
-    float aX = R.x - R.w/2;
-    float aY = R.y + R.h/2;
+    float aX = x - w/2;
+    float aY = y + h/2;
 
-    float bX = R.x + R.w/2;
-    float bY = R.y + R.h/2;
+    float bX = x + w/2;
+    float bY = y + h/2;
 
-    float cX = R.x - R.w/2;
-    float cY = R.y - R.h/2;
+    float cX = x - w/2;
+    float cY = y - h/2;
 
-    float dX = R.x + R.w/2;
-    float dY = R.y - R.h/2;
+    float dX = x + w/2;
+    float dY = y - h/2;
 
 
     QS.TopLeft=QuadTreeContainPoint(aX, aY, Q);
@@ -283,19 +283,20 @@ QuadTree searchQuadtrees(RectDecor R, QuadTree* Q, Map M) {
 
     return QS;
 
-
 }
 
-void debugQuadTrees(QuadTree Q, RectDecor Rperso, Map M) {
 
-    QuadTree* Q1 = searchQuadtrees(Rperso, &Q,M).TopLeft;
-    QuadTree* Q2 = searchQuadtrees(Rperso, &Q,M).TopRight;
-    QuadTree* Q3 = searchQuadtrees(Rperso, &Q,M).BottomRight;
-    QuadTree* Q4 = searchQuadtrees(Rperso, &Q,M).BottomLeft;
 
-    drawQuadrillage(Q1->xTopLeft + Q1->size/2, Q1->yTopLeft - Q1->size/2, Q1->size, 0.0, 1.0, 0.0);
-    drawQuadrillage(Q2->xTopLeft + Q2->size/2, Q2->yTopLeft - Q2->size/2, Q2->size, 0.0, 1.0, 0.0);
-    drawQuadrillage(Q3->xTopLeft + Q3->size/2, Q3->yTopLeft - Q3->size/2, Q3->size, 0.0, 1.0, 0.0);
-    drawQuadrillage(Q4->xTopLeft + Q4->size/2, Q4->yTopLeft - Q4->size/2, Q4->size, 0.0, 1.0, 0.0);
+// void debugQuadTrees(QuadTree Q, RectDecor Rperso, Map M) {
+
+//     QuadTree* Q1 = searchQuadtrees(Rperso, &Q,M).TopLeft;
+//     QuadTree* Q2 = searchQuadtrees(Rperso, &Q,M).TopRight;
+//     QuadTree* Q3 = searchQuadtrees(Rperso, &Q,M).BottomRight;
+//     QuadTree* Q4 = searchQuadtrees(Rperso, &Q,M).BottomLeft;
+
+//     drawQuadrillage(Q1->xTopLeft + Q1->size/2, Q1->yTopLeft - Q1->size/2, Q1->size, 0.0, 1.0, 0.0);
+//     drawQuadrillage(Q2->xTopLeft + Q2->size/2, Q2->yTopLeft - Q2->size/2, Q2->size, 0.0, 1.0, 0.0);
+//     drawQuadrillage(Q3->xTopLeft + Q3->size/2, Q3->yTopLeft - Q3->size/2, Q3->size, 0.0, 1.0, 0.0);
+//     drawQuadrillage(Q4->xTopLeft + Q4->size/2, Q4->yTopLeft - Q4->size/2, Q4->size, 0.0, 1.0, 0.0);
     
-}
+// }

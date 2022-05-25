@@ -42,7 +42,7 @@ Niveau createNiveau1() {
     listeLoop(1, &Listetest);
 
 
-    Map M = createMap(1280,1280);
+    Map M = createMap(1280,1280); // taille de la map et creation de la map
 
     RectDecor R1 = createRectDecor(640,100,-320,-310,253/255.0,108/255.0,158/255.0);
     RectDecor R2 = createRectDecor(200,250,100,-235,253/255.0,108/255.0,158/255.0);
@@ -88,7 +88,98 @@ Niveau createNiveau1() {
 
 
 
-Niveau createNiveau2();
+Niveau createNiveau2(){
+    Perso persoTest = createPerso(60,90, 0.,1.,0., 20-1000,-1200, 100,100, 200);
+    Perso Wooly = createPerso(90,60, 1.,0.,1., 300-1000,-1200, 500,100, 100);
+    Perso Charlie = createPerso(50,120, 0.,1.,1., 200-1000,-1200, 600,100, 500);
+    Perso Arthur = createPerso(200,200, 0.,0.,1., -200-1000,-1200, 900,100, 30);
+
+    Perso* team[6];
+    team[0] = &persoTest;
+    team[1] = &Wooly;
+    team[2] = &Charlie;
+    team[3] = &Arthur;
+    
+    Player player = createPlayer(team, 4);
+
+    Camera camTest = createCamera(player.team[player.activePerso]->posStartX, player.team[player.activePerso]->posStartY, 1.5, 1.5);
+
+///////////////////////////////////////
+    Animation testAnimVide = createAnimationVide();
+    Animation X20_2 = createAnimation('Y',300,3);
+    Animation oppoX20_2 = createAnimation('Y',300,-1);
+
+    float dx=0;
+    float dy=0;
+
+    ListeAnimation Listetest = initListe();
+    addAnimToList(X20_2, &Listetest);
+    addAnimToList(oppoX20_2, &Listetest);
+    listeLoop(1, &Listetest);
+
+///////////////////////////////////////
+
+    // défintion de la couleur du décors
+    float r = 253/255.0;
+    float g = 108/255.0;
+    float b = 158/255.0;
+    
+    
+    Map M = createMap(3000,3000); // taille de la map et creation de la map
+
+    
+    
+    // création du contour de la map
+    RectDecor R1 = createRectDecor(3000,50,0,-1475,r,g,b);
+    addRectDecorToMap(R1, &M);
+
+    RectDecor R2 = createRectDecor(3000,50,0,1475,r,g,b);
+    addRectDecorToMap(R2, &M);
+
+    RectDecor R3 = createRectDecor(50,3000,1475,0,r,g,b);
+    addRectDecorToMap(R3, &M);
+
+    RectDecor R4 = createRectDecor(50,3000,-1475,0,r,g,b);
+    addRectDecorToMap(R4, &M);
+    //////////////////
+
+
+
+    RectDecor R5 = createRectDecor(200,50,-500,R1.y+R1.h/2+25,r,g,b);
+    addRectDecorToMap(R5, &M);
+
+    RectDecor R6 = createRectDecor(200,200,-500+R5.w,R1.y+R1.h/2+100,r,g,b);
+    addRectDecorToMap(R6, &M);
+
+    RectDecor R7 = createRectDecor(200,200,-100+R5.w,R1.y+R1.h/2+100,r,g,b);
+    addRectDecorToMap(R7, &M);
+
+    // Perso persoTest = createPerso(60,90, 0.,1.,0., 20-1000,-1200, 100,100, 200);
+    // Perso Wooly = createPerso(90,60, 1.,0.,1., 300-1000,-1200, 500,100, 100);
+    // Perso Charlie = createPerso(50,120, 0.,1.,1., 200-1000,-1200, 600,100, 500);
+    // Perso Arthur = createPerso(200,200, 0.,0.,1., -200-1000,-1200, 900,100, 30);
+
+    RectDecorFin RpersoTest = createRectDecor(persoTest.width, persoTest.height, -persoTest.posStartX,R1.y+R1.h/2+persoTest.height/2, 0.8,0,0);
+    addRectDecorFinToMap(RpersoTest, &M);
+
+    RectDecorFin RWooly = createRectDecor(Wooly.width, Wooly.height, -Wooly.posStartX,R1.y+R1.h/2+Wooly.height/2, 0.8,0,0);
+    addRectDecorFinToMap(RWooly, &M);
+
+    RectDecorFin RCharlie = createRectDecor(Charlie.width, Charlie.height, -Charlie.posStartX,R1.y+R1.h/2+Charlie.height/2, 0.8,0,0);
+    addRectDecorFinToMap(RCharlie, &M);
+
+    RectDecorFin RArthur = createRectDecor(Arthur.width, Arthur.height, -Arthur.posStartX,R1.y+R1.h/2+Arthur.height/2, 0.8,0,0);
+    addRectDecorFinToMap(RArthur, &M);
+
+
+    QuadTree Q = initRootFromMap(M);
+    buildQuadTree(&Q);
+
+
+    return createNiveau(2, M, Q, player, camTest);
+}
+
+
 Niveau createNiveau3();
 
 
@@ -103,15 +194,30 @@ void displayNiveau(Niveau* N, int debug) {
         
         showPersos(&N->player);    
         
-        RectDecor Rperso = createRectDecor(N->player.team[N->player.activePerso]->width, N->player.team[N->player.activePerso]->height, N->player.team[N->player.activePerso]->x, N->player.team[N->player.activePerso]->y, N->player.team[N->player.activePerso]->r, N->player.team[N->player.activePerso]->g, N->player.team[N->player.activePerso]->b);
+        drawRect(N->player.team[N->player.activePerso]->width, N->player.team[N->player.activePerso]->height, N->player.team[N->player.activePerso]->x, N->player.team[N->player.activePerso]->y, N->player.team[N->player.activePerso]->r, N->player.team[N->player.activePerso]->g, N->player.team[N->player.activePerso]->b,1);
+
+        int levelFinished = 1;
         
-        if (distance(N->M.listeRectDecorFin[0].x, N->M.listeRectDecorFin[0].y, N->player.team[N->player.activePerso]->x, N->player.team[N->player.activePerso]->y) <= N->M.listeRectDecorFin[0].w/2) { // Perso dans sa case RectDecorFin = rouge
-            drawRect(N->player.team[N->player.activePerso]->width, N->player.team[N->player.activePerso]->height, N->player.team[N->player.activePerso]->x, N->player.team[N->player.activePerso]->y, 0.8, 0,0,1);
+        for (int i=0; i<N->player.nbPersos;i++) {
+
+
+            if (distance(N->M.listeRectDecorFin[i].x, N->M.listeRectDecorFin[i].y, N->player.team[i]->x, N->player.team[i]->y) <= N->M.listeRectDecorFin[i].w/2) { // Perso dans sa case RectDecorFin = rouge
+                //printf("%f\n", distance(N->M.listeRectDecorFin[i].x, N->M.listeRectDecorFin[i].y, N->player.team[i]->x, N->player.team[i]->y));
+                drawRect(N->player.team[i]->width, N->player.team[i]->height, N->player.team[i]->x, N->player.team[i]->y, 0.8, 0,0,1);
+            
+            }else{
+                levelFinished = 0;
+            }
+
+            
+
         }
 
-        else { // Perso pas dans sa case
-            drawRect(N->player.team[N->player.activePerso]->width, N->player.team[N->player.activePerso]->height, N->player.team[N->player.activePerso]->x, N->player.team[N->player.activePerso]->y, N->player.team[N->player.activePerso]->r, N->player.team[N->player.activePerso]->g, N->player.team[N->player.activePerso]->b,1);
+        if (levelFinished){
+            printf("FINITO C: \n");
         }
+
+
 
 
         if (debug) { // Mode debug : affichage QUADTREE (si B a été pressé)

@@ -20,7 +20,7 @@ switch (GAMESTATE) {
         break;
 
     case 1:; // UN NIVEAU
-        displayNiveau(&N1, debug);
+        displayNiveau(N, debug);
         if (pause) {
             affichePause(currentline);
         }

@@ -30,6 +30,16 @@ typedef struct RectDecor {
 
 } RectDecor, RectDecorFin;
 
+
+
+typedef struct ListeRectDecor{
+    RectDecor* liste;
+    int nbRectDecor;
+} ListeRectDecor;
+
+
+
+
 RectDecor createRectDecor(float w, float h, float x, float y, float r, float g, float b);
 void animateRectDecor(RectDecor* R, ListeAnimation* LA);
 

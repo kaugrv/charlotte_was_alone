@@ -2,11 +2,6 @@
 #include "gestionSDL.h"
 
 
-// /!\
-// Pour l'instant les input sont dans le perso mais
-// après y aura un player.c avec les inputs
-// \!/
-
 Perso createPerso(float width, float height, float r, float g, float b, float posStartX, float posStartY, float posGoalX, float posGoalY, float jumpForce) {
     Perso createdPerso;
 
@@ -44,7 +39,42 @@ void showPerso(Perso* perso) {
     drawRect(perso->width, perso->height, perso->x, perso->y, perso->r, perso->g, perso->b, 1);
 }
 
-void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q) {
+
+
+
+
+int collidesP(float x, float y, float width, float height, Perso P) {
+
+    // Bords horiz du perso
+    int Pg = x - width/2;
+    int Pd = x + width/2;
+
+    // Bords vertic du perso
+    int Ph = y + height/2;
+    int Pb = y - height/2;
+
+    // Bords horiz de R
+    int Rg = P.x - P.width/2;
+    int Rd = P.x + P.width/2;
+
+    // Bords vertic de R
+    int Rh = P.y + P.height/2;
+    int Rb = P.y - P.height/2;
+
+
+    if (Pg>Rd || Pd<Rg || Ph<Rb || Pb>Rh) {
+        return 0;
+    }
+
+   else return 1;
+
+}
+
+
+
+
+
+void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6], int nbPersos, int k, int activePerso, Map M) {
     int showDebug = 0;
     if (showDebug) {
         printf("x=%f, y=%f \n", perso->x, perso->y);
@@ -59,21 +89,37 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q) {
     
     perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0) * gravity;
 
+    // QuadTree currentQ = searchQuadtrees(perso->x,perso->y,perso->width,perso->height,&Q,M);
+    // QuadTree* Q0 = currentQ.TopLeft;
+    // QuadTree* Q1 = currentQ.TopRight;
+    // QuadTree* Q2 = currentQ.BottomRight;
+    // QuadTree* Q3 = currentQ.BottomLeft;
 
-    // A REMPLACER PAR COLLISIONS PLUS TARD
-    // IF (collision verticale)
-    //     perso->dirX = 0;
 
-    for (int i = 0; i<Q.nbRectDecor; i++ ) {
-        if (collides(perso->x+perso->vitesseX*elapsedTime/1000.0, perso->y, perso->width, perso->height, Q.listeRectDecor[i])) {
+    //Collisions X avec les RectDecor du QuadTree
+        for (int i = 0; i<Q.nbRectDecor; i++ ) {
+                
+            if (collides(perso->x+perso->vitesseX*elapsedTime/1000.0, perso->y, perso->width, perso->height, Q.listeRectDecor[i])) {
 
-            if (perso->vitesseX > 0) perso->x = - perso->width/2 + Q.listeRectDecor[i].x - Q.listeRectDecor[i].w/2 - 1;
-            if (perso->vitesseX < 0) perso->x =  perso->width/2 + Q.listeRectDecor[i].x + Q.listeRectDecor[i].w/2 + 1 ;
+                if (perso->vitesseX > 0) perso->x = - perso->width/2 + Q.listeRectDecor[i].x - Q.listeRectDecor[i].w/2 - 1;
+                if (perso->vitesseX < 0) perso->x =  perso->width/2 + Q.listeRectDecor[i].x + Q.listeRectDecor[i].w/2 + 1 ;
+
+                perso->vitesseX=0;
+                perso->dirX=0;
+            }
+    }
+
+
+    // Collisions X avec les persos de la team
+    for (int i = 0; i<nbPersos; i++) {
+        if (i!=k && collidesP(perso->x+perso->vitesseX*elapsedTime/1000.0, perso->y, perso->width, perso->height, *team[i])) {
+
+            if (perso->vitesseX > 0) perso->x = - perso->width/2 + team[i]->x - team[i]->width/2 - 1;
+            if (perso->vitesseX < 0) perso->x =  perso->width/2 + team[i]->x + team[i]->width/2 + 1 ;
 
             perso->vitesseX=0;
             perso->dirX=0;
         }
-
     }
 
 
@@ -101,47 +147,43 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q) {
     perso->x += perso->vitesseX * elapsedTime/1000.0;
     perso->y += perso->vitesseY * elapsedTime/1000.0;
 
-    // // A REMPLACER PAR COLLISIONS PLUS TARD
-    // if (perso->y < 0 + perso->height/2) {
-    //     perso->y = 0 + perso->height/2;
-    //     perso->onGround = 1;
-    // }
 
+    // Collisions Y avec les RectDecor du QuadTree
     for (int i = 0; i<Q.nbRectDecor; i++ ) {
-
-        // int c1 = (perso->y+perso->height/2) > (Q.listeRectDecor[i].y -  Q.listeRectDecor[i].h/2);
-        // int c2 = (perso->y+perso->height/2) < (Q.listeRectDecor[i].y +  Q.listeRectDecor[i].h/2);
-        // // Haut du P entre le haut et le bas
-
-        // int c3 = (perso->y-perso->height/2) > (Q.listeRectDecor[i].y - Q.listeRectDecor[i].h/2);
-        // int c4 = (perso->y-perso->height/2) < (Q.listeRectDecor[i].y +  Q.listeRectDecor[i].h/2);
-        // // Bas du P entre le haut et le bas
-
-        // int c5 = (perso->y+perso->height/2) > (Q.listeRectDecor[i].y +  Q.listeRectDecor[i].h/2);
-        // int c6 = (perso->y-perso->height/2) < (Q.listeRectDecor[i].y -  Q.listeRectDecor[i].h/2);
-        // // Haut au dessus du haut, bas en dessous du bas
-
-
-        // int C = (c1&&c2) || (c3&&c4) || (c5&&c6);
-
         int C = (perso->y-perso->height/2) < (Q.listeRectDecor[i].y + Q.listeRectDecor[i].h/2 - 10);
         int C2 = (perso->y+perso->height/2) > (Q.listeRectDecor[i].y - Q.listeRectDecor[i].h/2 + 10);
-
-
         if (collides(perso->x, perso->y+perso->vitesseY*elapsedTime/1000.0, perso->width, perso->height, Q.listeRectDecor[i])) {
 
             if (perso->vitesseY > 0 && !C2) perso->y = - perso->height/2 + Q.listeRectDecor[i].y - Q.listeRectDecor[i].h/2 - 1;
             if (perso->vitesseY < 0 && !C) perso->y =  perso->height/2 + Q.listeRectDecor[i].y + Q.listeRectDecor[i].h/2 + 1 ;
-            
             perso->vitesseY=0;
             perso->dirY=0;
             //if (perso->y>Q.listeRectDecor[i].y) perso->onGround = 1;
             perso->onGround = !C;
         }
-
     }
 
+    // Collisions Y avec les persos de la team 
+    for (int i = 0; i<nbPersos; i++) {
+        int C = (perso->y-perso->height/2) < (team[i]->y + team[i]->height/2 - 10);
+        int C2 = (perso->y+perso->height/2) > (team[i]->y - team[i]->height/2 + 10);
+        if (i!=k && collidesP(perso->x, perso->y+perso->vitesseY*elapsedTime/1000.0, perso->width, perso->height, *team[i])) {
 
-    printf("%d\n", perso->onGround);
-    printf("%f\n", perso->vitesseY);
+            if (perso->vitesseY > 0 && !C2) {
+                perso->y = - perso->height/2 + team[i]->y - team[i]->height/2 - 1;
+            }
+            if (perso->vitesseY < 0 && !C) {
+                perso->y =  perso->height/2 + team[i]->y + team[i]->height/2 + 1 ;
+                if (k != activePerso){
+                    perso->vitesseX = team[i]->vitesseX;
+                    perso->accelerationX = team[i]->accelerationX;
+                    perso->dirX = team[i]->dirX;
+                }
+            }
+            perso->vitesseY=0;
+            perso->dirY=0;
+            perso->onGround = !C;
+        }
+    }
+
 }

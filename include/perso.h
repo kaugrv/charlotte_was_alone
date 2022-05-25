@@ -51,6 +51,10 @@ typedef struct Perso {
 Perso createPerso(float width, float height, float r, float g, float b, float posStartX, float posStartY, float posGoalX, float posGoalY, float jumpForce);
 void showPerso(Perso* perso);
 
-void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q);
+int collidesP(float x, float y, float width, float height, Perso P);
+
+
+void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6], int nbPersos, int k, int activePerso, Map M);
+
 
 #endif
