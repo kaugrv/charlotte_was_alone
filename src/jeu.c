@@ -8,6 +8,7 @@ int main(int argc, char** argv) {
 
     int loop = 1;
     int debug = 0;
+    int pause = 0;
 
     int currentline = 1;
     int GAMESTATE = 1;
@@ -17,7 +18,11 @@ int main(int argc, char** argv) {
 
     onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
 
+
     Niveau N1 = createNiveau1();
+
+    Niveau* N = &N1; 
+    // Niveau actuel !
 
    
     // Boucle principale 
@@ -36,17 +41,20 @@ int main(int argc, char** argv) {
         }
 
         // On gere les inputs du perso actif
-        handlePlayerInput(&N1.player, &keyLeft, &keyUp, &keyRight, &keySwitch);
+        handlePlayerInput(&N->player, &keyLeft, &keyUp, &keyRight, &keySwitch);
         
         // On update la position de la camera sur le perso actif
-        updatePosCamera(&N1.C, N1.player.team[N1.player.activePerso], elapsedTime);
+        updatePosCamera(&N->C, N->player.team[N->player.activePerso], elapsedTime);
         
-        // On update la position de tous les persos
-        for (int i = 0; i < N1.player.nbPersos; i++)
-            updatePosPerso(N1.player.team[i], elapsedTime, N1.Q);
+        // On update la position de tous les persos si en jeu
+        if (!pause){
+                for (int i = 0; i < N->player.nbPersos; i++) {
+                updatePosPerso(N->player.team[i], elapsedTime, N->Q);
+            }
+        }
     }
 
     #include "fenetre/freeSDLressources.c"
     
-}
 
+}

@@ -19,14 +19,11 @@ switch (GAMESTATE) {
         afficheMenu(currentline);
         break;
 
-
     case 1:; // UN NIVEAU
         displayNiveau(&N1, debug);
-        break;
-
-    case 2:; // MENU PAUSE
-        displayNiveau(&N1, debug);
-        affichePause(currentline);
+        if (pause) {
+            affichePause(currentline);
+        }
         break;
 
         }

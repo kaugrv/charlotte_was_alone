@@ -21,7 +21,7 @@ void affichePause(int currentline);
 
 void input1(SDL_Event e, int* gameState, int* f, int* debug);
 
-void inputPause(SDL_Event e, int* gameState, int* currentline);
+void inputPause(SDL_Event e, int* gameState, int* currentline, int* pause);
 
 
 

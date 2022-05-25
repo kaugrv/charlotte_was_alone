@@ -100,6 +100,7 @@ void displayNiveau(Niveau* N, int debug) {
 
         showCamera(&N->C);
         drawMap(N->M);
+        
         showPersos(&N->player);    
         
         RectDecor Rperso = createRectDecor(N->player.team[N->player.activePerso]->width, N->player.team[N->player.activePerso]->height, N->player.team[N->player.activePerso]->x, N->player.team[N->player.activePerso]->y, N->player.team[N->player.activePerso]->r, N->player.team[N->player.activePerso]->g, N->player.team[N->player.activePerso]->b);
@@ -113,10 +114,9 @@ void displayNiveau(Niveau* N, int debug) {
         }
 
 
-
         if (debug) { // Mode debug : affichage QUADTREE (si B a été pressé)
             printQuadTree(&N->Q);
-            debugQuadTrees(N->Q, Rperso, N->M);
+            //debugQuadTrees(N->Q, Rperso, N->M);
         }
 
 

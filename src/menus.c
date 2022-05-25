@@ -103,7 +103,7 @@ void affichePause(int currentline) {
 
 // GAMESTATE = 3 = PAUSE
 
-void inputPause(SDL_Event e, int* gameState, int* currentline) {
+void inputPause(SDL_Event e, int* gameState, int* currentline, int* pause) {
     
     int lastline = 2;
 
@@ -124,8 +124,11 @@ void inputPause(SDL_Event e, int* gameState, int* currentline) {
             }
 
             if (e.key.keysym.sym == 13 || e.key.keysym.sym==1073741912) { // Entree : changement de gamestate
-                if (*currentline==1) {*gameState=1;}  // Reprendre 
-                if (*currentline==2) {*gameState=0;} // Quitter
+                if (*currentline==1) {*pause=0;}  // Reprendre 
+                if (*currentline==2) {
+                    *pause=0;
+                    *gameState=0;
+                } // Quitter
                 *currentline=1;
             }
 

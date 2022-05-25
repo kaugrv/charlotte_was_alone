@@ -75,6 +75,8 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q) {
         }
 
     }
+
+
    
 
 

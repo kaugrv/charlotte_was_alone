@@ -19,6 +19,7 @@ Camera createCamera(float x, float y, float scaleX, float scaleY) {
 }
 
 void showCamera(Camera* cam) {
+    glScalef(0.5,0.5,0);
     glScalef(cam->scaleX, cam->scaleY, 0);
     glTranslatef(-cam->x, 0, 0);
     glTranslatef(0, -cam->y, 0);

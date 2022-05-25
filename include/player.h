@@ -24,7 +24,7 @@ Player createPlayer(Perso* team[], int nbPersos);
 Perso* getPerso(Player* player, int n);
 void showPersos(Player* player);
 
-void inputPlayer(SDL_Event e, int* gameState, Player* player, int* leftKey, int* upKey, int* rightKey, int* switchKey, int* debug);
+void inputPlayer(SDL_Event e, int* gameState, Player* player, int* leftKey, int* upKey, int* rightKey, int* switchKey, int* debug, int* pause);
 void handlePlayerInput(Player* player, int* leftKey, int* upKey, int* rightKey, int* switchKey);
 
 #endif

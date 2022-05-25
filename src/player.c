@@ -38,7 +38,7 @@ void showPersos(Player* player) {
 #define RIGHT 1073741903
 #define SWITCH 9
 
-void inputPlayer(SDL_Event e, int* gameState, Player* player, int* leftKey, int* upKey, int* rightKey, int* switchKey, int* debug) {
+void inputPlayer(SDL_Event e, int* gameState, Player* player, int* leftKey, int* upKey, int* rightKey, int* switchKey, int* debug, int* pause) {
     switch(e.type) {
         case SDL_KEYDOWN: {
             if (e.key.keysym.sym == LEFT) // Gauche
@@ -50,7 +50,7 @@ void inputPlayer(SDL_Event e, int* gameState, Player* player, int* leftKey, int*
             if (e.key.keysym.sym == SWITCH) // Switch key (tab)
                 *switchKey = 1;
             if (e.key.keysym.sym == SDLK_ESCAPE)
-                *gameState = 2;
+                *pause = 1;
             if (e.key.keysym.sym == 98) // B
                 *debug=!*debug;
             break;

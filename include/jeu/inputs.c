@@ -13,11 +13,10 @@ while(SDL_PollEvent(&e) != 0) {
             break;
 
         case 1: // UN NIVEAU
-            inputPlayer(e, &GAMESTATE, &N1.player, &keyLeft, &keyUp, &keyRight, &keySwitch, &debug);
+            if (!pause) inputPlayer(e, &GAMESTATE, &N1.player, &keyLeft, &keyUp, &keyRight, &keySwitch, &debug, &pause);
+            if (pause) inputPause(e, &GAMESTATE, &currentline, &pause);
             break;
 
-        case 2: // MENU PAUSE
-            inputPause(e, &GAMESTATE, &currentline);
 
     }
 }
