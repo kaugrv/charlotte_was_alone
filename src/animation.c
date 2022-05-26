@@ -43,26 +43,21 @@ void listeLoop(int loop, ListeAnimation* LA){
 
 // V
 void printAnimation (Animation* anim){
-    if (anim != NULL) 
-        ;
-        //printf("instruction : %c // value : %f // animSpeed : %f \n", anim->instruction, anim->value, anim->animSpeed);
-    else 
-        ;
-        //printf("NULL \n");
+    if (anim != NULL) printf("instruction : %c // value : %f // animSpeed : %f \n", anim->instruction, anim->value, anim->animSpeed);
+    else printf("NULL \n");
 }   
 
 // V
 void printListeAnimation (ListeAnimation* liste){
     if (liste == NULL){
-        //printf("Liste NULL \n");
+        printf("Liste NULL \n");
         return;
     }
-
     for (int i=0; i<liste->nbAnim; i++){
-        //printf("%d-ième animation : ", i);
+        printf("%d-ième animation : ", i);
         printAnimation(&liste->listeAnim[i]);
 
-        //printf("Animation Actuelle : %d // progress : %f \n", liste->animActuelle, liste->progressAnimActuelle);
+        printf("Animation Actuelle : %d // progress : %f \n", liste->animActuelle, liste->progressAnimActuelle);
     }
 }
 
@@ -89,6 +84,7 @@ void playAnimation(float *dx, float *dy, Animation A){
 void playListeAnimation(float *dx, float *dy, ListeAnimation* LA){
     Animation animActuelle = LA->listeAnim[LA->animActuelle];
     float delta = 0;
+    printListeAnimation(LA);
 
     if (animActuelle.value !=0) delta = animActuelle.animSpeed/animActuelle.value;
     LA->progressAnimActuelle += fabs(delta);

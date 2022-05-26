@@ -69,10 +69,11 @@ void addRectDecorFinToMap(RectDecorFin R, Map* M) {
 
 void addRectDecorAnimToMap(RectDecor *R, Map* M) {
     M->listeRectDecorAnim[M->nbRectDecorAnim] = R;
-    M->nbRectDecorAnim++;    
+    M->nbRectDecorAnim++;
 }
 
 void drawMap(Map M) {
+
     for (int i=0; i<M.nbRectDecor; i++) {
         drawRectDecor(M.listeRectDecor[i]);
     }

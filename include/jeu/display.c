@@ -20,7 +20,8 @@ switch (GAMESTATE) {
         break;
 
     case 1:; // UN NIVEAU
-        displayNiveau(N, debug);
+        //printf("nb anim dans liste luluu2222uuu: %d\n",N->M.listeRectDecorAnim[0]->animations->nbAnim);
+        win = displayNiveau(N, debug);
         if (pause) {
             affichePause(currentline);
         }

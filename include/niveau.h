@@ -32,6 +32,11 @@ typedef struct Niveau {
     
 } Niveau;
 
+typedef struct Niveaux {
+    int nbNiveaux;
+    int NiveauActuel;
+    Niveau* liste[256];
+} Niveaux;
 
 Niveau createNiveau(int n, Map M, QuadTree Q, Player player, Camera C);
 
@@ -39,7 +44,13 @@ Niveau createNiveau1();
 Niveau createNiveau2();
 Niveau createNiveau3();
 
-void displayNiveau(Niveau* N, int debug);
+Niveaux createJeu();
+void addNiveautoJeu(Niveau* N, Niveaux* L);
+
+void restartNiveau(Niveau* N);
+int displayNiveau(Niveau* N, int debug);
+
+void switchNiveau(Niveaux* J, int* win);
 
 
 

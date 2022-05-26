@@ -37,10 +37,13 @@ void showPersos(Player* player) {
 #define LEFT 1073741904
 #define RIGHT 1073741903
 #define SWITCH 9
+#define B 98
+
 
 void inputPlayer(SDL_Event e, int* gameState, Player* player, int* leftKey, int* upKey, int* rightKey, int* switchKey, int* debug, int* pause) {
     switch(e.type) {
         case SDL_KEYDOWN: {
+        
             if (e.key.keysym.sym == LEFT) // Gauche
                 *leftKey = 1;
             if (e.key.keysym.sym == UP) // Haut
