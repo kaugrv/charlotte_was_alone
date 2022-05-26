@@ -22,6 +22,7 @@ switch (GAMESTATE) {
     case 1:; // UN NIVEAU
 
         win = displayNiveau(N, debug);
+
         
         
         if (pause) {

@@ -159,7 +159,7 @@ Niveau createNiveau3() {
 
     Map M = createMap(3000,3000); // taille de la map et creation de la map
 
-    float r = 0;
+    float r = 1;
     float g = 0;
     float b = 1;
 
@@ -222,6 +222,9 @@ int displayNiveau(Niveau* N, int debug) {
 
 
         showCamera(&N->C);
+        // affichenumNiveau(N->n, 1,0,1);
+        // selectActivePlayer(N->player.team[N->player.activePerso]->x, N->player.team[N->player.activePerso]->y, N->player.team[N->player.activePerso]->height,N->player.team[N->player.activePerso]->r, N->player.team[N->player.activePerso]->g, N->player.team[N->player.activePerso]->b);
+
 
         drawMap(N->M);
 

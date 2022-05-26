@@ -73,10 +73,13 @@ void afficheMenu(int currentline) {
         adresse = "doc/textures/menus/3.png"; // Quitter
     }
 
-
     drawTexturedRect(WINDOW_WIDTH,WINDOW_HEIGHT,0,0, adresse);
 
 }
+
+
+
+
 
 
 void affichePause(int currentline) {

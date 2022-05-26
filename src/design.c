@@ -81,3 +81,37 @@ void drawRect(float w, float h, float x, float y, float r, float g, float b, int
     glPopMatrix();
 }
 
+
+void affichenumNiveau(int NiveauActuel, float r, float g, float b) {
+    glColor3f(r,g,b);
+
+    char * adresse;
+    
+    if (NiveauActuel==1) {
+        adresse = "doc/textures/n1.png"; 
+    }
+
+    drawTexturedRect(216,43,-1500,-1700, adresse);
+
+    char * adresse2;
+    adresse2 = "doc/textures/commandes.png"; 
+    
+    
+    drawTexturedRect(1.1*216,1.1*134,-1500,-1700-150, adresse2);
+
+    
+
+}
+
+
+void selectActivePlayer(float x, float y, float h, float r, float g, float b) {
+    
+    glColor3f(r,g,b);
+
+    char * adresse;
+    adresse = "doc/textures/select.png"; 
+    
+
+    drawTexturedRect(16,16,x,y+h/2+15,adresse);
+
+}

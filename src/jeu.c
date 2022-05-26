@@ -39,6 +39,11 @@ int main(int argc, char** argv) {
 
     while(loop) {
 
+        printf("y perso 0 : %f\n", N->player.team[0]->y);
+        printf("y perso 1 : %f\n", N->player.team[1]->y);
+        printf("y perso 2 : %f\n", N->player.team[2]->accelerationY);
+        printf("y perso 3 : %f\n", N->player.team[3]->y);
+
         #include "jeu/display.c"
         #include "jeu/inputs.c"
         #include "jeu/update.c"
@@ -58,7 +63,6 @@ int main(int argc, char** argv) {
 
             case 1:; // UN NIVEAU
                 N = J.liste[J.NiveauActuel]; 
-                 printf("%d\n", J.NiveauActuel);
 
                 // A-t-on fini le niveau actuel ?
                 switchNiveau(&J, &win);

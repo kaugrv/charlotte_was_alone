@@ -24,5 +24,10 @@ void drawSquare(int full);
 void drawRect(float w, float h, float x, float y, float r, float g, float b, int full);
 
 
+void affichenumNiveau(int NiveauActuel, float r, float g, float b);
+
+void selectActivePlayer(float x, float y, float h, float r, float g, float b);
+
+
 
 #endif
