@@ -23,10 +23,8 @@
 
 typedef struct Niveau {
     int n;
-
     Map M;
     QuadTree Q;
-
     Player player;
     Camera C;
     

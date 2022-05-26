@@ -26,7 +26,7 @@ typedef struct RectDecor {
     float b;
 
     int isAnimated;
-    ListeAnimation *animations;
+    ListeAnimation* animations;
 
 } RectDecor, RectDecorFin;
 
@@ -43,7 +43,7 @@ typedef struct ListeRectDecor{
 RectDecor createRectDecor(float w, float h, float x, float y, float r, float g, float b);
 void animateRectDecor(RectDecor* R, ListeAnimation* LA);
 
-void drawRectDecor(RectDecor  R);
+void drawRectDecor(RectDecor R);
 void drawRectDecorAnim(RectDecor *R);
 void drawRectDecorFin(RectDecorFin R);
 
@@ -69,8 +69,7 @@ Map createMap(float w, float h);
 void addRectDecorToMap(RectDecor R, Map* M);
 
 
-void addRectDecorAnimToMap(RectDecor *R, Map* M);
-
+void addRectDecorAnimToMap(RectDecor* R, Map* M);
 
 void addRectDecorFinToMap(RectDecorFin R, Map* M);
 

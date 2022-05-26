@@ -1,7 +1,7 @@
 #include "animation.h"
 #include <math.h>
 
-// V 
+ 
 Animation createAnimation(char instruction, float value, float animSpeed){
     Animation res;
     res.instruction = instruction;
@@ -10,13 +10,12 @@ Animation createAnimation(char instruction, float value, float animSpeed){
     return res;
 }
 
-// V
+
 Animation createAnimationVide(){
-    return  createAnimation('\0', 0, 0);
+    return createAnimation('\0', 0, 0);
 }
 
 
-// V
 ListeAnimation initListe(){
     ListeAnimation res;
     res.isLoop = 0;
@@ -24,14 +23,13 @@ ListeAnimation initListe(){
     res.animActuelle = 0;
     res.progressAnimActuelle = 0;
 
-    
     for (int i = 0; i<256; i++) {
         res.listeAnim[i] = createAnimationVide();
     }
     return res;
 }
 
-// V
+
 void addAnimToList(Animation Anim, ListeAnimation* List) {
     List->listeAnim[List->nbAnim] = Anim;
     List->nbAnim++;
@@ -41,18 +39,21 @@ void listeLoop(int loop, ListeAnimation* LA){
     LA->isLoop = loop;
 }
 
-// V
 void printAnimation (Animation* anim){
     if (anim != NULL) printf("instruction : %c // value : %f // animSpeed : %f \n", anim->instruction, anim->value, anim->animSpeed);
     else printf("NULL \n");
 }   
 
-// V
 void printListeAnimation (ListeAnimation* liste){
+
     if (liste == NULL){
         printf("Liste NULL \n");
         return;
     }
+
+    printf("nbAnim : %d\n  ", liste->nbAnim);
+    printf("isLoop : %d\n  ", liste->isLoop);
+
     for (int i=0; i<liste->nbAnim; i++){
         printf("%d-ième animation : ", i);
         printAnimation(&liste->listeAnim[i]);
@@ -61,9 +62,11 @@ void printListeAnimation (ListeAnimation* liste){
     }
 }
 
-// V
+
 void playAnimation(float *dx, float *dy, Animation A){
+
     switch (A.instruction){
+
         case 'X':
                 *dx = A.animSpeed; // avancée de position
                 break;
@@ -77,31 +80,36 @@ void playAnimation(float *dx, float *dy, Animation A){
             *dy = 0;
             break;
     }
+
+    //printf ("dx : %f // dy : %f \n", A.animSpeed, A.animSpeed);
+
+
 }
 
 
 
 void playListeAnimation(float *dx, float *dy, ListeAnimation* LA){
-    Animation animActuelle = LA->listeAnim[LA->animActuelle];
-    float delta = 0;
-    printListeAnimation(LA);
 
+
+
+    Animation animActuelle = LA->listeAnim[LA->animActuelle];
+
+    float delta = 0;
+
+   
     if (animActuelle.value !=0) delta = animActuelle.animSpeed/animActuelle.value;
     LA->progressAnimActuelle += fabs(delta);
 
-    //LA->progressAnimActuelle = fabs(LA->progressAnimActuelle);
 
-    playAnimation(dx,dy,animActuelle);
+    playAnimation(dx, dy, animActuelle);
+    
     
     if(LA->progressAnimActuelle >= 1){ // si j'ai fini l'animActuelle
-            LA->progressAnimActuelle = 1.0; // passage à la suivante.
-
-        
+        LA->progressAnimActuelle = 1.0; // passage à la suivante.
 
         if (LA->animActuelle < LA->nbAnim-1) {
             LA->progressAnimActuelle = 0.0; // passage à la suivante.
             LA->animActuelle++;
-
         }
 
         else  {

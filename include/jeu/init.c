@@ -1,0 +1,1 @@
+// initialisation des variables globales et création des niveaux

@@ -40,9 +40,6 @@ void showPerso(Perso* perso) {
 }
 
 
-
-
-
 int collidesP(float x, float y, float width, float height, Perso P) {
 
     // Bords horiz du perso
@@ -72,9 +69,7 @@ int collidesP(float x, float y, float width, float height, Perso P) {
 
 
 
-
-
-void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6], int nbPersos, int k, int activePerso, Map M) {
+void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6], int nbPersos, int k, int activePerso) {
     int showDebug = 0;
     if (showDebug) {
         printf("x=%f, y=%f \n", perso->x, perso->y);
@@ -89,11 +84,6 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
     
     perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0) * gravity;
 
-    // QuadTree currentQ = searchQuadtrees(perso->x,perso->y,perso->width,perso->height,&Q,M);
-    // QuadTree* Q0 = currentQ.TopLeft;
-    // QuadTree* Q1 = currentQ.TopRight;
-    // QuadTree* Q2 = currentQ.BottomRight;
-    // QuadTree* Q3 = currentQ.BottomLeft;
 
 
     //Collisions X avec les RectDecor du QuadTree
@@ -109,6 +99,7 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
             }
     }
 
+   
 
     // Collisions X avec les persos de la team
     for (int i = 0; i<nbPersos; i++) {
@@ -123,7 +114,6 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
     }
 
 
-   
 
 
     // Calcul de la vitesse
@@ -162,6 +152,7 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
             perso->onGround = !C;
         }
     }
+
 
     // Collisions Y avec les persos de la team 
     for (int i = 0; i<nbPersos; i++) {

@@ -10,7 +10,6 @@ typedef struct Animation{
     char instruction; // R pour rotate ; X pour translate X ; Y pour translate Y
     float value;
     float animSpeed;
-
 } Animation;
 
 
@@ -20,12 +19,11 @@ typedef struct ListeAnimation{
     int nbAnim; // nb d'anim dans la liste
     int animActuelle;
     float progressAnimActuelle; // entre 0 et value de l'animation actuelle
-
 } ListeAnimation;
 
 
 Animation createAnimation(char instruction, float value, float animSpeed);
-Animation createAnimationVide(); // cette fonction marche !!
+Animation createAnimationVide(); 
 ListeAnimation initListe();
 void addAnimToList(Animation Anim, ListeAnimation* List);
 
