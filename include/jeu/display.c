@@ -23,8 +23,6 @@ switch (GAMESTATE) {
 
         win = displayNiveau(N, debug);
 
-        
-        
         if (pause) {
             affichePause(currentline);
         }

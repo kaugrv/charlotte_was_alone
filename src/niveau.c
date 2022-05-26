@@ -222,9 +222,8 @@ int displayNiveau(Niveau* N, int debug) {
 
 
         showCamera(&N->C);
-        // affichenumNiveau(N->n, 1,0,1);
-        // selectActivePlayer(N->player.team[N->player.activePerso]->x, N->player.team[N->player.activePerso]->y, N->player.team[N->player.activePerso]->height,N->player.team[N->player.activePerso]->r, N->player.team[N->player.activePerso]->g, N->player.team[N->player.activePerso]->b);
-
+        affichenumNiveau(N->n, 1,0,1);
+     
 
         drawMap(N->M);
 
@@ -232,6 +231,8 @@ int displayNiveau(Niveau* N, int debug) {
 
         // Perso actif devant 
         drawRect(N->player.team[N->player.activePerso]->width, N->player.team[N->player.activePerso]->height, N->player.team[N->player.activePerso]->x, N->player.team[N->player.activePerso]->y, N->player.team[N->player.activePerso]->r, N->player.team[N->player.activePerso]->g, N->player.team[N->player.activePerso]->b,1);
+
+        selectActivePlayer(N->player.team[N->player.activePerso]->x, N->player.team[N->player.activePerso]->y, N->player.team[N->player.activePerso]->height,N->player.team[N->player.activePerso]->r, N->player.team[N->player.activePerso]->g, N->player.team[N->player.activePerso]->b);
 
         // Gestion fin du niveau
         int levelFinished = 1;

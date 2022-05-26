@@ -48,6 +48,7 @@ void drawTexturedRect(float w, float h, float x, float y, char* adresse) {
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
     glDeleteTextures(1, &textID);
+    
 }
 
 
@@ -97,7 +98,7 @@ void affichenumNiveau(int NiveauActuel, float r, float g, float b) {
     adresse2 = "doc/textures/commandes.png"; 
     
     
-    drawTexturedRect(1.1*216,1.1*134,-1500,-1700-150, adresse2);
+    drawTexturedRect(1.2*216,1.2*134,-1500,-1700-150, adresse2);
 
     
 

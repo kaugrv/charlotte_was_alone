@@ -105,8 +105,8 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
     for (int i = 0; i<nbPersos; i++) {
         if (i!=k && collidesP(perso->x+perso->vitesseX*elapsedTime/1000.0, perso->y, perso->width, perso->height, *team[i])) {
 
-            if (perso->vitesseX > 0) perso->x = - perso->width/2 + team[i]->x - team[i]->width/2 - 1;
-            if (perso->vitesseX < 0) perso->x =  perso->width/2 + team[i]->x + team[i]->width/2 + 1 ;
+            if (perso->vitesseX > 0) perso->x = - perso->width/2 + team[i]->x - team[i]->width/2 - 2;
+            if (perso->vitesseX < 0) perso->x =  perso->width/2 + team[i]->x + team[i]->width/2 + 2;
 
             perso->vitesseX=0;
             perso->dirX=0;
@@ -140,8 +140,8 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
 
     // Collisions Y avec les RectDecor du QuadTree
     for (int i = 0; i<Q.nbRectDecor; i++ ) {
-        int C = (perso->y-perso->height/2) < (Q.listeRectDecor[i].y + Q.listeRectDecor[i].h/2 - 10);
-        int C2 = (perso->y+perso->height/2) > (Q.listeRectDecor[i].y - Q.listeRectDecor[i].h/2 + 10);
+        int C = (perso->y-perso->height/2) < (Q.listeRectDecor[i].y + Q.listeRectDecor[i].h/2 - 20);
+        int C2 = (perso->y+perso->height/2) > (Q.listeRectDecor[i].y - Q.listeRectDecor[i].h/2 + 20);
         if (collides(perso->x, perso->y+perso->vitesseY*elapsedTime/1000.0, perso->width, perso->height, Q.listeRectDecor[i])) {
 
             if (perso->vitesseY > 0 && !C2) perso->y = - perso->height/2 + Q.listeRectDecor[i].y - Q.listeRectDecor[i].h/2 - 1;
@@ -156,8 +156,8 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
 
     // Collisions Y avec les persos de la team 
     for (int i = 0; i<nbPersos; i++) {
-        int C = (perso->y-perso->height/2) < (team[i]->y + team[i]->height/2 - 10);
-        int C2 = (perso->y+perso->height/2) > (team[i]->y - team[i]->height/2 + 10);
+        int C = (perso->y-perso->height/2) < (team[i]->y + team[i]->height/2 - 20);
+        int C2 = (perso->y+perso->height/2) > (team[i]->y - team[i]->height/2 + 20);
         if (i!=k && collidesP(perso->x, perso->y+perso->vitesseY*elapsedTime/1000.0, perso->width, perso->height, *team[i])) {
 
             if (perso->vitesseY > 0 && !C2) {
