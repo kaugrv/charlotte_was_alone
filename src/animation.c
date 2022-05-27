@@ -24,10 +24,10 @@ ListeAnimation initListe(){
     res.animActuelle = 0;
     res.progressAnimActuelle = 0;
 
-    
-    for (int i = 0; i<256; i++) {
+    for(int i = 0;i < 256; i++){
         res.listeAnim[i] = createAnimationVide();
     }
+
     return res;
 }
 
@@ -84,7 +84,7 @@ void playAnimation(float *dx, float *dy, Animation A){
 void playListeAnimation(float *dx, float *dy, ListeAnimation* LA){
     Animation animActuelle = LA->listeAnim[LA->animActuelle];
     float delta = 0;
-    printListeAnimation(LA);
+    // printListeAnimation(LA);
 
     if (animActuelle.value !=0) delta = animActuelle.animSpeed/animActuelle.value;
     LA->progressAnimActuelle += fabs(delta);

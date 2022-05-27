@@ -88,6 +88,8 @@ void affichenumNiveau(int NiveauActuel, float r, float g, float b) {
     glColor3f(r,g,b);
     char * adresse;
 
+    NiveauActuel++;
+
 
     if (NiveauActuel==1) {
         adresse = "doc/textures/n1.png"; 

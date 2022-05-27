@@ -69,7 +69,7 @@ int collidesP(float x, float y, float width, float height, Perso P) {
 
 
 
-void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6], int nbPersos, int k, int activePerso) {
+void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6], int nbPersos, int k, int activePerso,RectDecor* listeRectDecorAnim[256], int nbRectDecorAnim) {
     int showDebug = 0;
     if (showDebug) {
         printf("x=%f, y=%f \n", perso->x, perso->y);
@@ -88,7 +88,6 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
 
     //Collisions X avec les RectDecor du QuadTree
         for (int i = 0; i<Q.nbRectDecor; i++ ) {
-                
             if (collides(perso->x+perso->vitesseX*elapsedTime/1000.0, perso->y, perso->width, perso->height, Q.listeRectDecor[i])) {
 
                 if (perso->vitesseX > 0) perso->x = - perso->width/2 + Q.listeRectDecor[i].x - Q.listeRectDecor[i].w/2 - 1;
@@ -112,6 +111,27 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
             perso->dirX=0;
         }
     }
+
+
+    // Collisions X avec RectDecorAnim
+    for (int i = 0; i<nbRectDecorAnim; i++) {
+        if (collides(perso->x+perso->vitesseX*elapsedTime/1000.0, perso->y, perso->width, perso->height, *listeRectDecorAnim[i])) {
+            float speedRect = 0;
+            if (listeRectDecorAnim[i]->animations->listeAnim[listeRectDecorAnim[i]->animations->animActuelle].instruction == 'X') {
+                speedRect = listeRectDecorAnim[i]->animations->listeAnim[listeRectDecorAnim[i]->animations->animActuelle].animSpeed;
+            }
+
+            printf("diff speed : %f\n",perso->vitesseX-speedRect);
+            if (perso->vitesseX+speedRect <= 0 && perso->x <listeRectDecorAnim[i]->x) perso->x = - perso->width/2 + listeRectDecorAnim[i]->x - listeRectDecorAnim[i]->w/2 - 5;
+            if (perso->vitesseX+speedRect >= 0&& perso->x >listeRectDecorAnim[i]->x) perso->x =  perso->width/2 + listeRectDecorAnim[i]->x + listeRectDecorAnim[i]->w/2 + 5;
+
+            perso->vitesseX=0;
+            perso->dirX=0;
+        }
+    }
+
+
+
 
 
 
@@ -169,6 +189,35 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
                     perso->vitesseX = team[i]->vitesseX;
                     perso->accelerationX = team[i]->accelerationX;
                     perso->dirX = team[i]->dirX;
+                }
+            }
+            perso->vitesseY=0;
+            perso->dirY=0;
+            perso->onGround = !C;
+        }
+    }
+
+
+    // Collisions Y avec RectDecorAnim
+    for (int i = 0; i<nbRectDecorAnim; i++) {
+
+        float speedRectX = 0;
+        if (listeRectDecorAnim[i]->animations->listeAnim[listeRectDecorAnim[i]->animations->animActuelle].instruction == 'X') {
+            speedRectX = listeRectDecorAnim[i]->animations->listeAnim[listeRectDecorAnim[i]->animations->animActuelle].animSpeed;
+        }
+        int C = (perso->y-perso->height/2) < (listeRectDecorAnim[i]->y + listeRectDecorAnim[i]->h/2 - 20);
+        int C2 = (perso->y+perso->height/2) > (listeRectDecorAnim[i]->y - listeRectDecorAnim[i]->h/2 + 20);
+        if (collides(perso->x, perso->y+perso->vitesseY*elapsedTime/1000.0, perso->width, perso->height, *listeRectDecorAnim[i])) {
+
+            if (perso->vitesseY > 0 && !C2) {
+                perso->y = - perso->height/2 + listeRectDecorAnim[i]->y - listeRectDecorAnim[i]->h/2 - 1;
+            }
+            if (perso->vitesseY < 0 && !C) {
+                perso->y =  perso->height/2 + listeRectDecorAnim[i]->y + listeRectDecorAnim[i]->h/2 + 1 ;
+                if (k != activePerso){
+                    perso->vitesseX += speedRectX;
+                    //perso->accelerationX = listeRectDecorAnim[i]->accelerationX;
+                    //perso->dirX = listeRectDecorAnim[i]->dirX;
                 }
             }
             perso->vitesseY=0;

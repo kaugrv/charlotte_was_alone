@@ -28,7 +28,7 @@
                 // On update la position de tous les persos
                 if (!pause){
                         for (int i = 0; i < N->player.nbPersos; i++) {
-                        updatePosPerso(N->player.team[i], elapsedTime, N->Q, N->player.team, N->player.nbPersos, i,N->player.activePerso);
+                        updatePosPerso(N->player.team[i], elapsedTime, N->Q, N->player.team, N->player.nbPersos, i,N->player.activePerso,N->M.listeRectDecorAnim,N->M.nbRectDecorAnim);
                     }
                 }
 

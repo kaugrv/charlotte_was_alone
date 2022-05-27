@@ -13,7 +13,7 @@ Niveau createNiveau(int n, Map M, QuadTree Q, Player player, Camera C) {
 
 
 // Rose avec plateforme qui bouge
-Niveau createNiveau1() {
+Niveau createNiveau0() {
     Perso persoTest = createPerso(60,90, 0.,1.,0., 20-1000,-1200, 100,100, 200);
     Perso Wooly = createPerso(90,60, 1.,0.,1., 300-1000,-1200, 500,100, 100);
     Perso Charlie = createPerso(50,120, 0.,1.,1., 200-1000,-1200, 600,100, 500);
@@ -35,16 +35,21 @@ Niveau createNiveau1() {
     float b = 204/255.0;
 
 
-    Animation A1 = createAnimation('X',300,10);
-    Animation A2 = createAnimation('X',300,-10);
-    ListeAnimation Listetest = initListe();
-    addAnimToList(A1, &Listetest);
-    addAnimToList(A2, &Listetest);
+    Animation A1 = createAnimation('X',500,15);
+    Animation A2 = createAnimation('X',500,-15);
+
+    struct ListeAnimation *Listetest = malloc(sizeof(struct ListeAnimation));
+    *Listetest = initListe();
+    addAnimToList(A1, Listetest);
+    addAnimToList(A2, Listetest);
     
-    listeLoop(1, &Listetest);
+    listeLoop(1, Listetest);
     RectDecor Ranim = createRectDecor(300,50,0,-1400,1.0,0,0);
 
-    animateRectDecor(&Ranim,&Listetest);
+    animateRectDecor(&Ranim,Listetest);
+
+
+
     addRectDecorAnimToMap(&Ranim,&M);
 
 
@@ -78,13 +83,12 @@ Niveau createNiveau1() {
     buildQuadTree(&Q);
 
 
-    return createNiveau(1, M, Q, player, camTest);
+    return createNiveau(0, M, Q, player, camTest);
 }
 
 
 // Rose avec obstacles
-Niveau createNiveau2(){
-
+Niveau createNiveau1(){
 
     Perso persoTest = createPerso(60,90, 0.,1.,0., 20-1000,-1200, 100,100, 200);
     Perso Wooly = createPerso(90,60, 1.,0.,1., 300-1000,-1200, 500,100, 100);
@@ -100,56 +104,66 @@ Niveau createNiveau2(){
     Camera camTest = createCamera(player.team[player.activePerso]->posStartX, player.team[player.activePerso]->posStartY, 1.5, 1.5);
 
 
-    Map M = createMap(3000,3000); // taille de la map et creation de la map
+    Map M2 = createMap(3000,3000); // taille de la map et creation de la map
 
     // défintion de la couleur du décors
-    float r = 253/255.0;
-    float g = 108/255.0;
-    float b = 158/255.0;
+    float r = 00/255.0;
+    float g = 00/255.0;
+    float b = 0/255.0;
 
-    Animation A1 = createAnimation('X',300,10);
-    Animation A2 = createAnimation('X',300,-10);
-    ListeAnimation Listetest = initListe();
-    addAnimToList(A1, &Listetest);
-    addAnimToList(A2, &Listetest);
+
+
+
+    Animation A3 = createAnimation('X',500,2);
+    Animation A4 = createAnimation('X',500,-2);
+
+    struct ListeAnimation *Listetest = malloc(sizeof(struct ListeAnimation));
+
+    *Listetest = initListe();
+
+    addAnimToList(A3, Listetest);
+    addAnimToList(A4, Listetest);
     
-    listeLoop(1, &Listetest);
+    listeLoop(1, Listetest);
     RectDecor Ranim = createRectDecor(300,50,0,-1400,1.0,0,0);
 
-    animateRectDecor(&Ranim,&Listetest);
-    //addRectDecorAnimToMap(&Ranim,&M);
+
+    animateRectDecor(&Ranim,Listetest);
 
 
+    addRectDecorAnimToMap(&Ranim,&M2);
 
 
 
     // Contours de la map
     RectDecor R1 = createRectDecor(3000,50,0,-1475,r,g,b);
-    addRectDecorToMap(R1, &M);
+    addRectDecorToMap(R1,&M2);
     RectDecor R2 = createRectDecor(3000,50,0,1475,r,g,b);
-    addRectDecorToMap(R2, &M);
+    addRectDecorToMap(R2,&M2);
     RectDecor R3 = createRectDecor(50,3000,1475,0,r,g,b);
-    addRectDecorToMap(R3, &M);
+    addRectDecorToMap(R3,&M2);
     RectDecor R4 = createRectDecor(50,3000,-1475,0,r,g,b);
-    addRectDecorToMap(R4, &M);
+    addRectDecorToMap(R4,&M2);
 
 
     // Les 4 cases de fin
     RectDecorFin RpersoTest = createRectDecor(persoTest.width, persoTest.height, -persoTest.posStartX,R1.y+R1.h/2+persoTest.height/2, 0.8,0,0);
-    addRectDecorFinToMap(RpersoTest, &M);
+    addRectDecorFinToMap(RpersoTest,&M2);
     RectDecorFin RWooly = createRectDecor(Wooly.width, Wooly.height, -Wooly.posStartX,R1.y+R1.h/2+Wooly.height/2, 0.8,0,0);
-    addRectDecorFinToMap(RWooly, &M);
+    addRectDecorFinToMap(RWooly,&M2);
     RectDecorFin RCharlie = createRectDecor(Charlie.width, Charlie.height, -Charlie.posStartX,R1.y+R1.h/2+Charlie.height/2, 0.8,0,0);
-    addRectDecorFinToMap(RCharlie, &M);
+    addRectDecorFinToMap(RCharlie,&M2);
     RectDecorFin RArthur = createRectDecor(Arthur.width, Arthur.height, -Arthur.posStartX,R1.y+R1.h/2+Arthur.height/2, 0.8,0,0);
-    addRectDecorFinToMap(RArthur, &M);
+    addRectDecorFinToMap(RArthur,&M2);
 
 
     // Quadtree shit
-    QuadTree Q = initRootFromMap(M);
+    QuadTree Q = initRootFromMap(M2);
     buildQuadTree(&Q);
 
-    return createNiveau(2, M, Q, player, camTest);
+
+
+    return createNiveau(1, M2, Q, player, camTest);
 }
 
 

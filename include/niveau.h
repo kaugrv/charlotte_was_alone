@@ -38,8 +38,8 @@ typedef struct Niveaux {
 
 Niveau createNiveau(int n, Map M, QuadTree Q, Player player, Camera C);
 
+Niveau createNiveau0();
 Niveau createNiveau1();
-Niveau createNiveau2();
 
 Niveaux createJeu();
 void addNiveautoJeu(Niveau* N, Niveaux* L);

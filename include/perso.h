@@ -54,7 +54,6 @@ void showPerso(Perso* perso);
 int collidesP(float x, float y, float width, float height, Perso P);
 
 
-void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6], int nbPersos, int k, int activePerso);
-
+void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6], int nbPersos, int k, int activePerso,RectDecor* listeRectDecorAnim[256], int nbRectDecorAnim);
 
 #endif
