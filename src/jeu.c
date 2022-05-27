@@ -49,14 +49,13 @@ int main(int argc, char** argv) {
         #include "jeu/update.c"
          /* Calcul du temps ecoule */
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
-        
+
         if(elapsedTime < FRAMERATE_MILLISECONDS) {
             SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
             elapsedTime = SDL_GetTicks() - startTime;
         }
 
         switch (GAMESTATE) {
-
             
             case 0:; // MENU PRINCIPAL
                 break;
