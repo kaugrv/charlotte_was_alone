@@ -2,6 +2,7 @@
     "files.associations": {
         "string.h": "c",
         "gl.h": "c",
-        "perso.h": "c"
+        "perso.h": "c",
+        "jeu.h": "c"
     }
 }

@@ -40,7 +40,6 @@ Niveau createNiveau(int n, Map M, QuadTree Q, Player player, Camera C);
 
 Niveau createNiveau1();
 Niveau createNiveau2();
-Niveau createNiveau3();
 
 Niveaux createJeu();
 void addNiveautoJeu(Niveau* N, Niveaux* L);

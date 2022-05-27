@@ -48,6 +48,7 @@ void drawTexturedRect(float w, float h, float x, float y, char* adresse) {
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
     glDeleteTextures(1, &textID);
+    
 }
 
 
@@ -83,23 +84,60 @@ void drawRect(float w, float h, float x, float y, float r, float g, float b, int
 
 
 void affichenumNiveau(int NiveauActuel, float r, float g, float b) {
-    glColor3f(r,g,b);
-
-    char * adresse;
     
+    glColor3f(r,g,b);
+    char * adresse;
+
+
     if (NiveauActuel==1) {
         adresse = "doc/textures/n1.png"; 
     }
 
-    drawTexturedRect(216,43,-1500,-1700, adresse);
+    if (NiveauActuel==2) {
+        adresse = "doc/textures/n2.png"; 
+    }
 
-    char * adresse2;
-    adresse2 = "doc/textures/commandes.png"; 
-    
-    
-    drawTexturedRect(1.1*216,1.1*134,-1500,-1700-150, adresse2);
+    if (NiveauActuel==3) {
+        adresse = "doc/textures/n3.png"; 
+    }
 
+    if (NiveauActuel==4) {
+        adresse = "doc/textures/n4.png"; 
+    }
+
+    if (NiveauActuel==5) {
+        adresse = "doc/textures/n5.png"; 
+    }
+
+    if (NiveauActuel==6) {
+        adresse = "doc/textures/n6.png"; 
+    }
+
+    if (NiveauActuel==7) {
+        adresse = "doc/textures/n7.png"; 
+    }
+
+    if (NiveauActuel==8) {
+        adresse = "doc/textures/n8.png"; 
+    }
+
+    if (NiveauActuel==9) {
+        adresse = "doc/textures/n9.png"; 
+    }
+
+    if (NiveauActuel==10) {
+        adresse = "doc/textures/n10.png"; 
+    }
+
+    drawTexturedRect(165,174,-1500,-1700, adresse);
     
+
+    if (NiveauActuel<=3) {
+        char * adresse2;
+        adresse2 = "doc/textures/commandes.png"; 
+        drawTexturedRect(238,174, -1500+300,-1700, adresse2);
+    }
+
 
 }
 
