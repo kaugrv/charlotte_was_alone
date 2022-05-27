@@ -3,8 +3,7 @@
 #include "gestionSDL.h"
 
 
-// Gamestate = 0 = MENU
-
+// GAMESTATE = 0 = MENU
 void inputMenuPrincipal(SDL_Event e, int* gameState, int* currentline, int* loop) {
     
     int lastline = 3;
@@ -28,7 +27,7 @@ void inputMenuPrincipal(SDL_Event e, int* gameState, int* currentline, int* loop
 
             if (e.key.keysym.sym == 13 || e.key.keysym.sym==1073741912) { // Entree : changement de gamestate
                 if (*currentline != 3) {
-                    *gameState = *currentline; // Jouer (1) ou Options ()
+                    *gameState = *currentline; // Jouer (1) ou Options (2)
                     *currentline = 1;
                 } 
 
@@ -49,28 +48,27 @@ void inputMenuPrincipal(SDL_Event e, int* gameState, int* currentline, int* loop
     }
 }
 
-
 void afficheMenu(int currentline) {
 
     glColor3f(1,1,1);
 
     char * fond;
-    fond = "doc/textures/menus/rose.png";
+    fond = "doc/textures/menus/fondroseetoiles.png";
     drawTexturedRect(3000,3000,0,0, fond);
 
 
     char * adresse;
     
     if (currentline==1) {
-        adresse = "doc/textures/menus/1.png"; // Jouer
+        adresse = "doc/textures/menus/jouer.png"; // Jouer
     }
 
     if (currentline==2) {
-        adresse = "doc/textures/menus/2.png"; // Options
+        adresse = "doc/textures/menus/options.png"; // Options
     }
 
     if (currentline==3) {
-        adresse = "doc/textures/menus/3.png"; // Quitter
+        adresse = "doc/textures/menus/quitter.png"; // Quitter
     }
 
     drawTexturedRect(WINDOW_WIDTH,WINDOW_HEIGHT,0,0, adresse);
@@ -79,33 +77,7 @@ void afficheMenu(int currentline) {
 
 
 
-
-
-
-void affichePause(int currentline) {
-    glColor3f(1,1,1);
-
-    char * fond;
-    fond = "doc/textures/menus/roseT.png";
-    drawTexturedRect(3000,3000,0,0, fond);
-
-    char * adresse;
-    
-    if (currentline==1) {
-        adresse = "doc/textures/menus/pause1.png"; // Reprendre
-    }
-
-    if (currentline==2) {
-        adresse = "doc/textures/menus/pause2.png"; // Quitter
-    }
-
-    drawTexturedRect(1280,1280,0,0, adresse);
-
-}
-
-
-// GAMESTATE = 3 = PAUSE
-
+// GAMESTATE = 1 = JEU && PAUSE==1
 void inputPause(SDL_Event e, int* gameState, int* currentline, int* pause) {
     
     int lastline = 2;
@@ -144,4 +116,25 @@ void inputPause(SDL_Event e, int* gameState, int* currentline, int* pause) {
         default:
             break;
     }
+}
+
+void affichePause(int currentline) {
+    glColor3f(1,1,1);
+
+    char * fond;
+    fond = "doc/textures/menus/fondroseT.png";
+    drawTexturedRect(3000,3000,0,0, fond);
+
+    char * adresse;
+    
+    if (currentline==1) {
+        adresse = "doc/textures/menus/pausereprendre.png"; // Reprendre
+    }
+
+    if (currentline==2) {
+        adresse = "doc/textures/menus/pausequitter.png"; // Quitter
+    }
+
+    drawTexturedRect(1280,1280,0,0, adresse);
+
 }
