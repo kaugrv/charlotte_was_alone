@@ -33,9 +33,6 @@ Perso createPerso(float width, float height, float r, float g, float b, float po
     createdPerso.dirX = 0;
     createdPerso.dirY = 0;
 
-    createdPerso.innerVitesseX = 0.0;
-    createdPerso.innerVitesseY = 0.0;
-
     return createdPerso;
 }
 
@@ -81,11 +78,10 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
         printf("Ax=%f, Ay=%f \n", perso->accelerationX, perso->accelerationY);
         printf("dirX=%f, dirY=%f \n", perso->dirX, perso->dirY);
         printf("canJumpAgain=%d\n", perso->canJumpAgain);
-        printf("innerVitesseX=%f\n", perso->innerVitesseX);
     }
 
     float testFriction = 1.5;
-    float gravity = 0.6;
+    float gravity = 0.8;
     
     perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0) * gravity;
 
@@ -155,8 +151,8 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
         perso->vitesseX = -500;
     if (perso->vitesseY < -500) // Y-
         perso->vitesseY = -500;
-    if (perso->vitesseY > 1000) // Y+
-        perso->vitesseY = 1000;
+    if (perso->vitesseY > 3000) // Y+
+        perso->vitesseY = 3000;
     
     // Calcul de la position
     perso->x += perso->vitesseX * elapsedTime/1000.0;

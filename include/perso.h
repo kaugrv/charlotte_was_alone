@@ -44,8 +44,6 @@ typedef struct Perso {
     //Informations
     int onGround;
     int canJumpAgain;
-    float innerVitesseX;
-    float innerVitesseY;
 
 } Perso;
 

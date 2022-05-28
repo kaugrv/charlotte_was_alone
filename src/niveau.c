@@ -22,10 +22,10 @@ Niveau createNiveau0() {
     struct Perso* Arthur = malloc(sizeof(struct Perso));
 
 
-    *persoTest = createPerso(60,90, 0.,1.,0., 20-1000,-1200, 100,100, 200);
-    *Wooly = createPerso(90,60, 1.,0.,1., 300-1000,-1200, 500,100, 100);
-    *Charlie = createPerso(50,120, 0.,1.,1., 200-1000,-1200, 600,100, 500);
-    *Arthur = createPerso(200,200, 0.,0.,1., -200-1000,-1200, 900,100, 30);
+    *persoTest = createPerso(60,90, 0.,1.,0., 20-1000,-1200, 100,100, 100);
+    *Wooly = createPerso(90,100, 1.,0.,1., 300-1000,-1200, 500,100, 400);
+    *Charlie = createPerso(50,120, 0.,1.,1., 200-1000,-1200, 600,100, 100);
+    *Arthur = createPerso(200,200, 0.,0.,1., -200-1000,-1200, 900,100, 50);
 
     struct Perso** team = malloc(6*sizeof(struct Perso));
 
@@ -47,30 +47,21 @@ Niveau createNiveau0() {
 
 
     Animation A1 = createAnimation('X',300,5);
-    Animation A2 = createAnimation('X',300,-5);
+    Animation A2 = createAnimation('Y',300,5);
+    Animation A3 = createAnimation('X',300, -5);
+    Animation A4 = createAnimation('Y', 300, -5);
+
     struct ListeAnimation *L1 = malloc(sizeof(struct ListeAnimation));
     *L1 = initListe();
     addAnimToList(A1, L1);
     addAnimToList(A2, L1);
+    addAnimToList(A3, L1);
+    addAnimToList(A4, L1);
     listeLoop(1, L1);
     struct RectDecor* Ranim = malloc(sizeof(struct RectDecor));
     *Ranim = createRectDecor(300,50,-400,-1400,r,g,b);
     animateRectDecor(Ranim,L1);
     addRectDecorAnimToMap(Ranim,&M);
-
-
-    Animation A3 = createAnimation('Y',50,5);
-    Animation A4 = createAnimation('Y',50,-5);
-    struct ListeAnimation *L2 = malloc(sizeof(struct ListeAnimation));
-    *L2 = initListe();
-    addAnimToList(A3, L2);
-    addAnimToList(A4, L2);
-    listeLoop(1, L2);
-    struct RectDecor* Ranim2 = malloc(sizeof(struct RectDecor));
-    *Ranim2 = createRectDecor(300,50,200,-1300,r,g,b);
-    animateRectDecor(Ranim2,L2);
-    addRectDecorAnimToMap(Ranim2,&M);
-
 
 
 

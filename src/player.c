@@ -18,7 +18,7 @@ Player createPlayer(Perso* team[], int nbPersos) {
         createdPlayer.team[i] = team[i];
     }
     createdPlayer.nbPersos = nbPersos;
-    createdPlayer.activePerso = 1;
+    createdPlayer.activePerso = 0;
     createdPlayer.hasSwitched = 0;
 
     return createdPlayer;

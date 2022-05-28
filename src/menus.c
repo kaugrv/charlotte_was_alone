@@ -127,17 +127,17 @@ void affichePause(int currentline) {
     fond = "doc/textures/menus/fondroseT.png";
     drawTexturedRect(3000,3000,0,0, fond);
 
-    // char * adresse;
+    char * adresse;
     
-    // if (currentline==1) {
-    //     adresse = "doc/textures/menus/pausereprendre.png"; // Reprendre
-    // }
+    if (currentline==1) {
+        adresse = "doc/textures/menus/pausereprendre.png"; // Reprendre
+    }
 
-    // if (currentline==2) {
-    //     adresse = "doc/textures/menus/pausequitter.png"; // Quitter
-    // }
+    if (currentline==2) {
+        adresse = "doc/textures/menus/pausequitter.png"; // Quitter
+    }
 
-    // drawTexturedRect(1280,1280,0,0, adresse);
+    drawTexturedRect(1280,1280,0,0, adresse);
 
 }
 
