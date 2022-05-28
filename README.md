@@ -1,13 +1,15 @@
 # IMAC_Thomas2
 
-Charlotte Was Alone
-OPEN GL x PROG IMAC1
+![alt text](https://www.zupimages.net/up/22/21/0yma.png)
 
 
-**Bike Mihell Team**  
-Debeaune Tristan  
-Gervais Wendy  
-Huet Quentin  
+**OPEN GL x PROG IMAC1**
+
+> Debeaune Tristan  
+> Gervais Wendy  
+> Huet Quentin  
+
+
 
 ## Lancer le jeu
 
