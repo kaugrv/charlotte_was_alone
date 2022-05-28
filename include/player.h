@@ -12,6 +12,7 @@
 #include <time.h>
 
 #include "perso.h"
+#include "gestionSDL.h"
 
 typedef struct Player {
     Perso* team[6];
@@ -26,5 +27,7 @@ void showPersos(Player* player);
 
 void inputPlayer(SDL_Event e, int* gameState, Player* player, int* leftKey, int* upKey, int* rightKey, int* switchKey, int* debug, int* pause);
 void handlePlayerInput(Player* player, int* leftKey, int* upKey, int* rightKey, int* switchKey);
+
+void displayTeam(Player P);
 
 #endif

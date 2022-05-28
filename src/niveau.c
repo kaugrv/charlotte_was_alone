@@ -46,15 +46,15 @@ Niveau createNiveau0() {
     float b = 204/255.0;
 
 
-    Animation A1 = createAnimation('X',500,15);
-    Animation A2 = createAnimation('X',500,-15);
+    Animation A1 = createAnimation('X',300,5);
+    Animation A2 = createAnimation('X',300,-5);
     struct ListeAnimation *L1 = malloc(sizeof(struct ListeAnimation));
     *L1 = initListe();
     addAnimToList(A1, L1);
     addAnimToList(A2, L1);
     listeLoop(1, L1);
     struct RectDecor* Ranim = malloc(sizeof(struct RectDecor));
-    *Ranim = createRectDecor(300,50,0,-1400,r,g,b);
+    *Ranim = createRectDecor(300,50,-400,-1400,r,g,b);
     animateRectDecor(Ranim,L1);
     addRectDecorAnimToMap(Ranim,&M);
 
@@ -67,7 +67,7 @@ Niveau createNiveau0() {
     addAnimToList(A4, L2);
     listeLoop(1, L2);
     struct RectDecor* Ranim2 = malloc(sizeof(struct RectDecor));
-    *Ranim2 = createRectDecor(300,50,-200,-1400,r,g,b);
+    *Ranim2 = createRectDecor(300,50,200,-1300,r,g,b);
     animateRectDecor(Ranim2,L2);
     addRectDecorAnimToMap(Ranim2,&M);
 
@@ -268,8 +268,8 @@ void addNiveautoJeu(Niveau* N, Niveaux* L) {
 void switchNiveau(Niveaux* J, int *win) {
     if (*win==0) return;
     else if (J->NiveauActuel < J->nbNiveaux-1) {
-        *win=0;
         restartNiveau(J->liste[J->NiveauActuel]);
+        *win=0;
         J->NiveauActuel++;
         return;
     }

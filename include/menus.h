@@ -19,6 +19,9 @@ void afficheMenu(int currentline);
 void inputPause(SDL_Event e, int* gameState, int* currentline, int* pause);
 void affichePause(int currentline);
 
+void afficheFin();
+void inputFin(SDL_Event e, int* gameState);
+
 
 
 
