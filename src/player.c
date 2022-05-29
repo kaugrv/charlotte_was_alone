@@ -18,7 +18,7 @@ Player createPlayer(Perso* team[], int nbPersos) {
         createdPlayer.team[i] = team[i];
     }
     createdPlayer.nbPersos = nbPersos;
-    createdPlayer.activePerso = 1;
+    createdPlayer.activePerso = 0;
     createdPlayer.hasSwitched = 0;
 
     return createdPlayer;
@@ -118,4 +118,32 @@ void handlePlayerInput(Player* player, int* leftKey, int* upKey, int* rightKey, 
     }
     else if (!*switchKey && player->hasSwitched)
         player->hasSwitched = 0;
+}
+
+
+
+
+
+void displayTeam(Player P) {
+    glPushMatrix();
+
+    for (int i=0; i<P.nbPersos; i++) {
+        drawRect(50,50,100+ 1280/2-50*i, -550, P.team[i]->r,P.team[i]->g, P.team[i]->b, 1);
+    
+    }
+
+    glColor3f(P.team[P.activePerso]->r, P.team[P.activePerso]->g, P.team[P.activePerso]->b);
+
+    char * adresse;
+    adresse = "doc/textures/select.png"; 
+    
+
+    drawTexturedRect(15,15,100+1280/2-50*P.activePerso,-500,adresse);
+
+    
+    
+
+
+    glPopMatrix();
+    
 }

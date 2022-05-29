@@ -131,13 +131,13 @@ void affichenumNiveau(int NiveauActuel, float r, float g, float b) {
         adresse = "doc/textures/n10.png"; 
     }
 
-    drawTexturedRect(165,174,-1500,-1700, adresse);
+    drawTexturedRect(165,174,-1500,-1750, adresse);
     
 
     if (NiveauActuel<=3) {
         char * adresse2;
         adresse2 = "doc/textures/commandes.png"; 
-        drawTexturedRect(238,174, -1500+300,-1700, adresse2);
+        drawTexturedRect(2*238,2*174, -1500+350,-1800, adresse2);
     }
 
 

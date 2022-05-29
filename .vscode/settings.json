@@ -4,6 +4,8 @@
         "gl.h": "c",
         "perso.h": "c",
         "jeu.h": "c",
-        "player.h": "c"
+        "player.h": "c",
+        "*.tcc": "c",
+        "limits": "c"
     }
 }

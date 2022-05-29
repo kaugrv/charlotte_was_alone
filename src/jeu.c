@@ -59,9 +59,22 @@ glPushMatrix();
 
             win = displayNiveau(N, debug);
 
+            displayTeam(N->player);
+            // printf("Niveau Actuel : %d\n", N->n);
+            // printf("Win : %d\n", win);
+            // printf("Gamestate: %d\n", GAMESTATE);
+
+
             if (pause) {
                 affichePause(currentline);
             }
+
+
+
+            break;
+
+        case 2: // Fin
+            afficheFin();
             break;
     }
 
@@ -104,6 +117,10 @@ while(SDL_PollEvent(&e) != 0) {
             }
 
             break;
+        
+        case 2:
+            inputFin(e, &GAMESTATE);
+            break;
     }
 }
         #include "jeu/update.c"
@@ -118,16 +135,27 @@ while(SDL_PollEvent(&e) != 0) {
 
         switch (GAMESTATE) {
 
-            
             case 0:; // MENU PRINCIPAL
                 break;
 
             case 1:; // UN NIVEAU
                 N = J.liste[J.NiveauActuel]; 
 
+                if (win && N->n==J.nbNiveaux-1) {
+                    printf("suiv\n");
+                    GAMESTATE=2;
+                    win = 0;
+
+                    J.NiveauActuel = 0;
+                    N = J.liste[0];
+
+                    restartNiveau(&N);
+                    break;
+                }
+
                 // A-t-on fini le niveau actuel ?
                 switchNiveau(&J, &win);
-
+                
                 // On gere les inputs du perso actif
                 handlePlayerInput(&N->player, &keyLeft, &keyUp, &keyRight, &keySwitch);
                 
@@ -143,6 +171,9 @@ while(SDL_PollEvent(&e) != 0) {
 
                 
                 break;
+
+      
+
 
         }
 
