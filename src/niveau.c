@@ -17,26 +17,26 @@ Niveau createNiveau(int n, Map M, QuadTree Q, Player player, Camera C) {
 
 // Niveau createNiveau0() {
 
-//     struct Perso* persoTest = malloc(sizeof(struct Perso));
-//     struct Perso* Wooly = malloc(sizeof(struct Perso));
-//     struct Perso* Charlie = malloc(sizeof(struct Perso));
-//     struct Perso* Arthur = malloc(sizeof(struct Perso));
+    // struct Perso* persoTest = malloc(sizeof(struct Perso));
+    // struct Perso* Wooly = malloc(sizeof(struct Perso));
+    // struct Perso* Charlie = malloc(sizeof(struct Perso));
+    // struct Perso* Arthur = malloc(sizeof(struct Perso));
 
 
-//     *persoTest = createPerso(60,90, 0.,1.,0., 20-1000,-1200, 100,100, 100);
-//     *Wooly = createPerso(90,100, 1.,0.,1., 300-1000,-1200, 500,100, 400);
-//     *Charlie = createPerso(50,120, 0.,1.,1., 200-1000,-1200, 600,100, 100);
-//     *Arthur = createPerso(200,200, 0.,0.,1., -200-1000,-1200, 900,100, 50);
+    // *persoTest = createPerso(60,90, 0.,1.,0., 20-1000,-1200, 100,100, 100);
+    // *Wooly = createPerso(90,100, 1.,0.,1., 300-1000,-1200, 500,100, 400);
+    // *Charlie = createPerso(50,120, 0.,1.,1., 200-1000,-1200, 600,100, 100);
+    // *Arthur = createPerso(200,200, 0.,0.,1., -200-1000,-1200, 900,100, 50);
 
-//     struct Perso** team = malloc(6*sizeof(struct Perso));
+    // struct Perso** team = malloc(6*sizeof(struct Perso));
 
-//     team[0] = persoTest;
-//     team[1] = Wooly;
-//     team[2] = Charlie;
-//     team[3] = Arthur;
+    // team[0] = persoTest;
+    // team[1] = Wooly;
+    // team[2] = Charlie;
+    // team[3] = Arthur;
 
-//     struct Player* player = malloc(sizeof(struct Player));
-//     *player = createPlayer(team, 4);
+    // struct Player* player = malloc(sizeof(struct Player));
+    // *player = createPlayer(team, 4);
 
 //     Camera camTest = createCamera(player->team[player->activePerso]->posStartX, player->team[player->activePerso]->posStartY, 1.5, 1.5);
 
@@ -80,15 +80,15 @@ Niveau createNiveau(int n, Map M, QuadTree Q, Player player, Camera C) {
 //     addRectDecorToMap(R4, &M);
 
 
-//     // Les 4 cases de fin
-//     RectDecorFin RpersoTest = createRectDecor(persoTest->width, persoTest->height, -persoTest->posStartX,R1.y+R1.h/2+persoTest->height/2, 1,1,1);
-//     addRectDecorFinToMap(RpersoTest, &M);
-//     RectDecorFin RWooly = createRectDecor(Wooly->width, Wooly->height, -Wooly->posStartX,R1.y+R1.h/2+Wooly->height/2, 1,1,1);
-//     addRectDecorFinToMap(RWooly, &M);
-//     RectDecorFin RCharlie = createRectDecor(Charlie->width, Charlie->height, -Charlie->posStartX,R1.y+R1.h/2+Charlie->height/2, 1,1,1);
-//     addRectDecorFinToMap(RCharlie, &M);
-//     RectDecorFin RArthur = createRectDecor(Arthur->width, Arthur->height, -Arthur->posStartX,R1.y+R1.h/2+Arthur->height/2, 1,1,1);
-//     addRectDecorFinToMap(RArthur, &M);
+    // // Les 4 cases de fin
+    // RectDecorFin RpersoTest = createRectDecor(persoTest->width, persoTest->height, -persoTest->posStartX,R1.y+R1.h/2+persoTest->height/2, 1,1,1);
+    // addRectDecorFinToMap(RpersoTest, &M);
+    // RectDecorFin RWooly = createRectDecor(Wooly->width, Wooly->height, -Wooly->posStartX,R1.y+R1.h/2+Wooly->height/2, 1,1,1);
+    // addRectDecorFinToMap(RWooly, &M);
+    // RectDecorFin RCharlie = createRectDecor(Charlie->width, Charlie->height, -Charlie->posStartX,R1.y+R1.h/2+Charlie->height/2, 1,1,1);
+    // addRectDecorFinToMap(RCharlie, &M);
+    // RectDecorFin RArthur = createRectDecor(Arthur->width, Arthur->height, -Arthur->posStartX,R1.y+R1.h/2+Arthur->height/2, 1,1,1);
+    // addRectDecorFinToMap(RArthur, &M);
 
 
 //     // Quadtree shit
@@ -104,15 +104,25 @@ Niveau createNiveau(int n, Map M, QuadTree Q, Player player, Camera C) {
 Niveau createNiveau0(){
 
     struct Perso* persoTest = malloc(sizeof(struct Perso));
+    struct Perso* Wooly = malloc(sizeof(struct Perso));
+    struct Perso* Charlie = malloc(sizeof(struct Perso));
+    struct Perso* Arthur = malloc(sizeof(struct Perso));
 
-    *persoTest = createPerso(60,90, 1.,1.,0., 20-1000,-1200, 100,100, 200);
+
+    *persoTest = createPerso(60,90, 0.,1.,0., 20-1000,-1200, 100,100, 100);
+    *Wooly = createPerso(90,100, 1.,0.,1., 300-1000,-1200, 500,100, 400);
+    *Charlie = createPerso(50,120, 0.,1.,1., 200-1000,-1200, 600,100, 100);
+    *Arthur = createPerso(200,200, 0.,0.,1., -200-1000,-1200, 900,100, 50);
 
     struct Perso** team = malloc(6*sizeof(struct Perso));
 
     team[0] = persoTest;
+    team[1] = Wooly;
+    team[2] = Charlie;
+    team[3] = Arthur;
 
     struct Player* player = malloc(sizeof(struct Player));
-    *player = createPlayer(team, 1);
+    *player = createPlayer(team, 4);
 
     Camera camTest = createCamera(player->team[player->activePerso]->posStartX, player->team[player->activePerso]->posStartY, 1.5, 1.5);
 
@@ -164,8 +174,16 @@ Niveau createNiveau0(){
 
 
     // Cases de fin
+
     RectDecorFin RpersoTest = createRectDecor(persoTest->width, persoTest->height, -persoTest->posStartX,R1.y+R1.h/2+persoTest->height/2, 1,1,1);
     addRectDecorFinToMap(RpersoTest, &M);
+    RectDecorFin RWooly = createRectDecor(Wooly->width, Wooly->height, -Wooly->posStartX,R1.y+R1.h/2+Wooly->height/2, 1,1,1);
+    addRectDecorFinToMap(RWooly, &M);
+    RectDecorFin RCharlie = createRectDecor(Charlie->width, Charlie->height, -Charlie->posStartX,R1.y+R1.h/2+Charlie->height/2, 1,1,1);
+    addRectDecorFinToMap(RCharlie, &M);
+    RectDecorFin RArthur = createRectDecor(Arthur->width, Arthur->height, -Arthur->posStartX,R1.y+R1.h/2+Arthur->height/2, 1,1,1);
+    addRectDecorFinToMap(RArthur, &M);
+
 
 
     // Quadtree shit
