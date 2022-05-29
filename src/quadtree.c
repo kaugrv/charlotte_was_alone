@@ -48,8 +48,6 @@ void createChildren(QuadTree* Q) {
     struct QuadTree *BL = malloc(sizeof(struct QuadTree));
     struct QuadTree *BR = malloc(sizeof(struct QuadTree));
 
-    //printf("malloc success\n");
-
     TL->size = Q->size/2;
     TR->size = Q->size/2;
     BL->size = Q->size/2;
@@ -170,7 +168,7 @@ void buildQuadTree(QuadTree* Q) {
 }
 
 
-// Affichage du QuadTree + dessin quadrillages sur écran
+// Affichage du QuadTree (dessin quadrillages) sur écran
 void printQuadTree(QuadTree* Q) {
 
     if (Q!=NULL) {
@@ -193,7 +191,7 @@ void printQuadTree(QuadTree* Q) {
     return;
 }
 
-
+// Affichage du QuadTree dans la console
 void printQ(QuadTree* Q) {
     printf("TL Nul? %d \n", Q->TopLeft==NULL);
     printf("TR Nul? %d \n", Q->TopRight==NULL);
@@ -232,6 +230,7 @@ void printQ(QuadTree* Q) {
 }
 
 
+// Dessine la Map depuis le QuadTree (inutile avec rectanimés et niveau)
 void drawMapFromQ(QuadTree Q) {
     for (int i=0; i<Q.nbRectDecor; i++) {
         drawRectDecor(Q.listeRectDecor[i]);
@@ -244,7 +243,7 @@ QuadTree* QuadTreeContainPoint(float x, float y, QuadTree* Q) {
     
     if (isLeaf(*Q)) 
       return Q;
-    if (x < Q->xTopLeft+Q->size/2){ // ici je suis à gauche
+    if (x <= Q->xTopLeft+Q->size/2){ // ici je suis à gauche
         if (y > Q->yTopLeft-Q->size/2)
           return QuadTreeContainPoint(x,y,Q->TopLeft); // je suis en haut donc topleft
         else 
@@ -257,7 +256,7 @@ QuadTree* QuadTreeContainPoint(float x, float y, QuadTree* Q) {
     }
 }
 
-// On stocke dans un quadtree les quatre quadtree dans lesquels se trouvent les quatre coins d'un perso (x,y,w,h)
+// On stocke dans un Quadtree les quatre Quadtree dans lesquels se trouvent les quatre coins d'un perso (x,y,w,h)
 QuadTree searchQuadtrees(float x, float y, float w, float h, QuadTree* Q, Map M) {
 
     QuadTree QS = initRootFromMap(M);
@@ -286,17 +285,75 @@ QuadTree searchQuadtrees(float x, float y, float w, float h, QuadTree* Q, Map M)
 }
 
 
+// Dessine le QuadTree dans lequel se trouve le personnages (x,y,w,h)
+void debugQuadTrees(QuadTree Q, float x, float y, float w, float h, Map M) {
 
-// void debugQuadTrees(QuadTree Q, RectDecor Rperso, Map M) {
 
-//     QuadTree* Q1 = searchQuadtrees(Rperso, &Q,M).TopLeft;
-//     QuadTree* Q2 = searchQuadtrees(Rperso, &Q,M).TopRight;
-//     QuadTree* Q3 = searchQuadtrees(Rperso, &Q,M).BottomRight;
-//     QuadTree* Q4 = searchQuadtrees(Rperso, &Q,M).BottomLeft;
+    QuadTree* Q1 = searchQuadtrees(x,y,w,h, &Q,M).TopLeft;
+    QuadTree* Q2 = searchQuadtrees(x,y,w,h, &Q,M).TopRight;
+    QuadTree* Q3 = searchQuadtrees(x,y,w,h, &Q,M).BottomRight;
+    QuadTree* Q4 = searchQuadtrees(x,y,w,h, &Q,M).BottomLeft;
 
-//     drawQuadrillage(Q1->xTopLeft + Q1->size/2, Q1->yTopLeft - Q1->size/2, Q1->size, 0.0, 1.0, 0.0);
-//     drawQuadrillage(Q2->xTopLeft + Q2->size/2, Q2->yTopLeft - Q2->size/2, Q2->size, 0.0, 1.0, 0.0);
-//     drawQuadrillage(Q3->xTopLeft + Q3->size/2, Q3->yTopLeft - Q3->size/2, Q3->size, 0.0, 1.0, 0.0);
-//     drawQuadrillage(Q4->xTopLeft + Q4->size/2, Q4->yTopLeft - Q4->size/2, Q4->size, 0.0, 1.0, 0.0);
+    drawQuadrillage(Q1->xTopLeft + Q1->size/2, Q1->yTopLeft - Q1->size/2, Q1->size, 0.0, 1.0, 0.0);
+    drawQuadrillage(Q2->xTopLeft + Q2->size/2, Q2->yTopLeft - Q2->size/2, Q2->size, 0.0, 1.0, 0.0);
+    drawQuadrillage(Q3->xTopLeft + Q3->size/2, Q3->yTopLeft - Q3->size/2, Q3->size, 0.0, 1.0, 0.0);
+    drawQuadrillage(Q4->xTopLeft + Q4->size/2, Q4->yTopLeft - Q4->size/2, Q4->size, 0.0, 1.0, 0.0);
     
-// }
+}
+
+// Enfin, on met dans un grand QuadTree tous les RectDecor des 4 enfants de SearchQuadTree
+// Cela permettra de ne passer qu'un QuadTree à updatePosPerso (et non pas 4) pour tester les collisions ; mais celui-ci correspond bien 
+// au plus petit QuadTree dans lequel se trouve le perso
+QuadTree fillQuadTreeFromSearch(QuadTree Q, float x, float y, float w, float h, Map M) {
+
+    QuadTree QS ;
+
+    struct QuadTree *Q1 = malloc(sizeof(struct QuadTree));
+    struct QuadTree *Q2 = malloc(sizeof(struct QuadTree));
+    struct QuadTree *Q3 = malloc(sizeof(struct QuadTree));
+    struct QuadTree *Q4 = malloc(sizeof(struct QuadTree));
+
+    Q1 = searchQuadtrees(x,y,w,h, &Q,M).TopLeft;
+    Q2 = searchQuadtrees(x,y,w,h, &Q,M).TopRight;
+    Q3 = searchQuadtrees(x,y,w,h, &Q,M).BottomRight;
+    Q4 = searchQuadtrees(x,y,w,h, &Q,M).BottomLeft;
+
+
+    int k = 0;
+    for (int i=0; i<Q1->nbRectDecor; i++) {
+        QS.listeRectDecor[i] = Q1->listeRectDecor[i];
+    }
+
+    k = Q1->nbRectDecor;
+    printf("k:%d\n", k);
+
+
+    for (int i=0; i<Q2->nbRectDecor; i++) {
+        QS.listeRectDecor[i+k] = Q2->listeRectDecor[i];
+    }
+
+    k+=Q2->nbRectDecor;
+
+    for (int i=0; i<Q3->nbRectDecor; i++) {
+        QS.listeRectDecor[i+k] = Q3->listeRectDecor[i];
+    }  
+
+    k+=Q3->nbRectDecor;
+
+    for (int i=0; i<Q4->nbRectDecor; i++) {
+        QS.listeRectDecor[i+k+1] = Q4->listeRectDecor[i];
+        k++;
+    }   
+    k+=Q4->nbRectDecor;
+
+    QS.nbRectDecor = k;
+
+    return QS;
+
+}
+
+void debugRectQ(QuadTree Q) {
+    for (int i=0; i<Q.nbRectDecor; i++) {
+        drawRect(Q.listeRectDecor[i].w,Q.listeRectDecor[i].h,Q.listeRectDecor[i].x,Q.listeRectDecor[i].y, 0,1,0,1);
+    }
+}

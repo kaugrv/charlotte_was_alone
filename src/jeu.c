@@ -23,10 +23,28 @@ int main(int argc, char** argv) {
 
     Niveau N0 = createNiveau0();
     Niveau N1 = createNiveau1();
+    // Niveau N2 = createNiveau2();
+    // Niveau N3 = createNiveau3();
+    // Niveau N4 = createNiveau4();
+    // Niveau N5 = createNiveau5();
+    // Niveau N6 = createNiveau6();
+    // Niveau N7 = createNiveau7();
+    // Niveau N8 = createNiveau8();
+    // Niveau N9 = createNiveau9();
 
 
     addNiveautoJeu(&N0, &J);
     addNiveautoJeu(&N1, &J);
+    // addNiveautoJeu(&N2, &J);
+    // addNiveautoJeu(&N3, &J);
+    // addNiveautoJeu(&N4, &J);
+    // addNiveautoJeu(&N5, &J);
+    // addNiveautoJeu(&N6, &J);
+    // addNiveautoJeu(&N7, &J);
+    // addNiveautoJeu(&N8, &J);
+
+
+
 
 
     Niveau* N = J.liste[J.NiveauActuel];
@@ -58,16 +76,14 @@ glPushMatrix();
         case 1:; // UN NIVEAU
 
             win = displayNiveau(N, debug);
-
             displayTeam(N->player);
-            // printf("Niveau Actuel : %d\n", N->n);
-            // printf("Win : %d\n", win);
-            // printf("Gamestate: %d\n", GAMESTATE);
 
 
             if (pause) {
                 affichePause(currentline);
             }
+
+            
 
 
 
@@ -120,6 +136,7 @@ while(SDL_PollEvent(&e) != 0) {
         
         case 2:
             inputFin(e, &GAMESTATE);
+            keyLeft = 0, keyUp = 0, keyRight = 0, keySwitch = 0;
             break;
     }
 }
@@ -165,9 +182,12 @@ while(SDL_PollEvent(&e) != 0) {
                 // On update la position de tous les persos
                 if (!pause){
                         for (int i = 0; i < N->player.nbPersos; i++) {
-                        updatePosPerso(N->player.team[i], elapsedTime, N->Q, N->player.team, N->player.nbPersos, i,N->player.activePerso,N->M.listeRectDecorAnim,N->M.nbRectDecorAnim);
+                        // updatePosPerso(N->player.team[i], elapsedTime, fillQuadTreeFromSearch(N->Q, N->player.team[i]->x, N->player.team[i]->y, N->player.team[i]->width, N->player.team[i]->height, N->M), N->player.team, N->player.nbPersos, i,N->player.activePerso,N->M.listeRectDecorAnim,N->M.nbRectDecorAnim);
+                        updatePosPerso(N->player.team[i], elapsedTime, N->Q, N->player.team, N->player.nbPersos, i,N->player.activePerso,N->M.listeRectDecorAnim,N->M.nbRectDecorAnim);                       
+            
                     }
                 }
+
 
                 
                 break;
