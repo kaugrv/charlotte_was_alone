@@ -301,7 +301,7 @@ void debugQuadTrees(QuadTree Q, float x, float y, float w, float h, Map M) {
     
 }
 
-// Enfin, on met dans un grand QuadTree tous les RectDecor des 4 enfants de SearchQuadTree
+// Enfin, on met dans un grand QuadTree tous les RectDecor des 4 enfants de searchQuadTrees
 // Cela permettra de ne passer qu'un QuadTree à updatePosPerso (et non pas 4) pour tester les collisions ; mais celui-ci correspond bien 
 // au plus petit QuadTree dans lequel se trouve le perso
 QuadTree fillQuadTreeFromSearch(QuadTree Q, float x, float y, float w, float h, Map M) {
@@ -325,8 +325,6 @@ QuadTree fillQuadTreeFromSearch(QuadTree Q, float x, float y, float w, float h, 
     }
 
     k = Q1->nbRectDecor;
-    printf("k:%d\n", k);
-
 
     for (int i=0; i<Q2->nbRectDecor; i++) {
         QS.listeRectDecor[i+k] = Q2->listeRectDecor[i];
@@ -352,6 +350,8 @@ QuadTree fillQuadTreeFromSearch(QuadTree Q, float x, float y, float w, float h, 
 
 }
 
+
+// Affiche en vert les rectangles du Quadtree
 void debugRectQ(QuadTree Q) {
     for (int i=0; i<Q.nbRectDecor; i++) {
         drawRect(Q.listeRectDecor[i].w,Q.listeRectDecor[i].h,Q.listeRectDecor[i].x,Q.listeRectDecor[i].y, 0,1,0,1);

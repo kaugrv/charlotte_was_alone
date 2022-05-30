@@ -13,7 +13,7 @@ Niveau createNiveau(int n, Map M, QuadTree Q, Player player, Camera C) {
 
 
 
-// Template 4 persos + rectangle qui bouge
+// Template avec 4 persos + rectangle qui bouge
 
 // Niveau createNiveau0() {
 
@@ -112,7 +112,6 @@ Niveau createNiveau0(){
     *persoTest = createPerso(60,90, 0.,1.,0., 20-1000,-1200, 100,100, 100);
     *Wooly = createPerso(90,100, 1.,0.,1., 300-1000,-1200, 500,100, 400);
     *Charlie = createPerso(50,120, 0.,1.,1., 200-1000,-1200, 600,100, 100);
-    *Arthur = createPerso(200,200, 0.,0.,1., -200-1000,-1200, 900,100, 50);
 
     struct Perso** team = malloc(6*sizeof(struct Perso));
 
@@ -122,7 +121,7 @@ Niveau createNiveau0(){
     team[3] = Arthur;
 
     struct Player* player = malloc(sizeof(struct Player));
-    *player = createPlayer(team, 4);
+    *player = createPlayer(team, 3);
 
     Camera camTest = createCamera(player->team[player->activePerso]->posStartX, player->team[player->activePerso]->posStartY, 1.5, 1.5);
 
@@ -181,8 +180,6 @@ Niveau createNiveau0(){
     addRectDecorFinToMap(RWooly, &M);
     RectDecorFin RCharlie = createRectDecor(Charlie->width, Charlie->height, -Charlie->posStartX,R1.y+R1.h/2+Charlie->height/2, 1,1,1);
     addRectDecorFinToMap(RCharlie, &M);
-    RectDecorFin RArthur = createRectDecor(Arthur->width, Arthur->height, -Arthur->posStartX,R1.y+R1.h/2+Arthur->height/2, 1,1,1);
-    addRectDecorFinToMap(RArthur, &M);
 
 
 
@@ -192,6 +189,7 @@ Niveau createNiveau0(){
 
     return createNiveau(0, M, Q, *player, camTest);
 }
+
 
 Niveau createNiveau1(){
 
@@ -281,9 +279,7 @@ Niveau createNiveau1(){
 
 int displayNiveau(Niveau* N, int debug) {
 
-
     drawRect(3000,3000,0,0,68/255.0,40/255.0,83/255.0,1); //fond
-
 
     glPushMatrix();
 
@@ -324,15 +320,15 @@ int displayNiveau(Niveau* N, int debug) {
         if (debug) { 
             printQuadTree(&N->Q);
 
-                    float xp= N->player.team[N->player.activePerso]->x;
-                    float yp= N->player.team[N->player.activePerso]->y;
-                    float wp= N->player.team[N->player.activePerso]->width;
-                    float hp= N->player.team[N->player.activePerso]->height;
+            float xp= N->player.team[N->player.activePerso]->x;
+            float yp= N->player.team[N->player.activePerso]->y;
+            float wp= N->player.team[N->player.activePerso]->width;
+            float hp= N->player.team[N->player.activePerso]->height;
 
-                    debugQuadTrees(N->Q, xp, yp, wp, hp, N->M);
+            debugQuadTrees(N->Q, xp, yp, wp, hp, N->M);
 
-                    debugRectQ(fillQuadTreeFromSearch(N->Q,N->player.team[N->player.activePerso]->x,N->player.team[N->player.activePerso]->y,N->player.team[N->player.activePerso]->width,N->player.team[N->player.activePerso]->height, N->M));
-               
+            debugRectQ(fillQuadTreeFromSearch(N->Q,N->player.team[N->player.activePerso]->x,N->player.team[N->player.activePerso]->y,N->player.team[N->player.activePerso]->width,N->player.team[N->player.activePerso]->height, N->M));
+        
         
         }
     
@@ -340,8 +336,6 @@ int displayNiveau(Niveau* N, int debug) {
     glPopMatrix();
 
     return 0;
-
-    
 }
 
 void restartNiveau(Niveau* N) {
@@ -350,7 +344,6 @@ void restartNiveau(Niveau* N) {
         N->player.team[i]->y = N->player.team[i]->posStartY;
     }
 }
-
 
 Niveaux createJeu() {
     Niveaux L;
@@ -372,5 +365,4 @@ void switchNiveau(Niveaux* J, int *win) {
         J->NiveauActuel++;
         return;
     }
-
 }

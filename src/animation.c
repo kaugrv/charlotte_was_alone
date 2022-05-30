@@ -1,7 +1,7 @@
 #include "animation.h"
 #include <math.h>
 
-// V 
+ 
 Animation createAnimation(char instruction, float value, float animSpeed){
     Animation res;
     res.instruction = instruction;
@@ -10,13 +10,12 @@ Animation createAnimation(char instruction, float value, float animSpeed){
     return res;
 }
 
-// V
+
 Animation createAnimationVide(){
     return  createAnimation('\0', 0, 0);
 }
 
 
-// V
 ListeAnimation initListe(){
     ListeAnimation res;
     res.isLoop = 0;
@@ -31,7 +30,6 @@ ListeAnimation initListe(){
     return res;
 }
 
-// V
 void addAnimToList(Animation Anim, ListeAnimation* List) {
     List->listeAnim[List->nbAnim] = Anim;
     List->nbAnim++;
@@ -41,13 +39,11 @@ void listeLoop(int loop, ListeAnimation* LA){
     LA->isLoop = loop;
 }
 
-// V
 void printAnimation (Animation* anim){
-    if (anim != NULL) printf("instruction : %c // value : %f // animSpeed : %f \n", anim->instruction, anim->value, anim->animSpeed);
+    if (anim != NULL) printf("instruction : %c alue : %f // animSpeed : %f \n", anim->instruction, anim->value, anim->animSpeed);
     else printf("NULL \n");
 }   
 
-// V
 void printListeAnimation (ListeAnimation* liste){
     if (liste == NULL){
         printf("Liste NULL \n");
@@ -61,7 +57,6 @@ void printListeAnimation (ListeAnimation* liste){
     }
 }
 
-// V
 void playAnimation(float *dx, float *dy, Animation A){
     switch (A.instruction){
         case 'X':
@@ -78,8 +73,6 @@ void playAnimation(float *dx, float *dy, Animation A){
             break;
     }
 }
-
-
 
 void playListeAnimation(float *dx, float *dy, ListeAnimation* LA){
     Animation animActuelle = LA->listeAnim[LA->animActuelle];

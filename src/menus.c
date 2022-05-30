@@ -145,7 +145,7 @@ void affichePause(int currentline) {
 
 void afficheFin() {
 
-    printf("affichefin\n");
+    //printf("affichefin\n");
 
     glColor3f(1,1,1);
 

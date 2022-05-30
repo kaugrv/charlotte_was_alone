@@ -109,7 +109,7 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
                 speedRectX  = listeRectDecorAnim[i]->animations->listeAnim[listeRectDecorAnim[i]->animations->animActuelle].animSpeed;
             }
 
-            printf("diff speed : %f\n",perso->vitesseX-speedRectX);
+            //printf("diff speed : %f\n",perso->vitesseX-speedRectX);
             if (perso->vitesseX+speedRectX <= 0 && perso->x <listeRectDecorAnim[i]->x) perso->x = - perso->width/2 + listeRectDecorAnim[i]->x - listeRectDecorAnim[i]->w/2 - 5;
             if (perso->vitesseX+speedRectX >= 0&& perso->x >listeRectDecorAnim[i]->x) perso->x =  perso->width/2 + listeRectDecorAnim[i]->x + listeRectDecorAnim[i]->w/2 + 5;
 

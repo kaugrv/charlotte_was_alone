@@ -39,7 +39,6 @@ int isLeaf(QuadTree Q);
 
 void drawQuadrillage(float x, float y, float size, float r, float g, float b);
 
-
 int rectDecorInZone(RectDecor R, float xTopLeft, float yTopLeft, float size);
 
 void createChildren(QuadTree* Q);

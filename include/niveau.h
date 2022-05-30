@@ -49,10 +49,6 @@ Niveau createNiveau7();
 Niveau createNiveau8();
 Niveau createNiveau9();
 
-
-
-
-
 Niveaux createJeu();
 void addNiveautoJeu(Niveau* N, Niveaux* L);
 
