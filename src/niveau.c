@@ -103,103 +103,14 @@ Niveau createNiveau(int n, Map M, QuadTree Q, Player player, Camera C) {
 
 Niveau createNiveau0(){
 
-    struct Perso* persoTest = malloc(sizeof(struct Perso));
-    struct Perso* Wooly = malloc(sizeof(struct Perso));
-    struct Perso* Charlie = malloc(sizeof(struct Perso));
-    struct Perso* Arthur = malloc(sizeof(struct Perso));
+    struct Perso* Charlotte = malloc(sizeof(struct Perso));
+
+    *Charlotte = createPerso(60, 90, 224/255.0,153/255.0,177/255.0, -980, -1200, 100, 100, 60);
+
+    struct Perso** team = malloc(1*sizeof(struct Perso));
 
 
-    *persoTest = createPerso(60,90, 0.,1.,0., 20-1000,-1200, 100,100, 100);
-    *Wooly = createPerso(90,100, 1.,0.,1., 300-1000,-1200, 500,100, 400);
-    *Charlie = createPerso(50,120, 0.,1.,1., 200-1000,-1200, 600,100, 100);
-
-    struct Perso** team = malloc(6*sizeof(struct Perso));
-
-    team[0] = persoTest;
-    team[1] = Wooly;
-    team[2] = Charlie;
-    team[3] = Arthur;
-
-    struct Player* player = malloc(sizeof(struct Player));
-    *player = createPlayer(team, 3);
-
-    Camera camTest = createCamera(player->team[player->activePerso]->posStartX, player->team[player->activePerso]->posStartY, 1.5, 1.5);
-
-
-    Map M = createMap(3000,3000); // taille de la map et creation de la map
-
-    float r = 238/255.0;
-    float g = 158/255.0;
-    float b = 204/255.0;
-
-
-    // Contours de la map
-    RectDecor R1 = createRectDecor(3000,50,0,-1475,r,g,b);
-    addRectDecorToMap(R1,&M);
-    RectDecor R2 = createRectDecor(3000,50,0,1475,r,g,b);
-    addRectDecorToMap(R2,&M);
-    RectDecor R3 = createRectDecor(50,3000,1475,0,r,g,b);
-    addRectDecorToMap(R3,&M);
-    RectDecor R4 = createRectDecor(50,3000,-1475,0,r,g,b);
-    addRectDecorToMap(R4,&M);
-
-    RectDecor R5 = createRectDecor(600, 500, 0, R1.y+R1.h/2+250, r,g,b);
-    addRectDecorToMap(R5, &M);
-
-    RectDecor R6 = createRectDecor(200, 250, -400, R1.y+R1.h/2+250/2, r,g,b);
-    addRectDecorToMap(R6, &M);
-
-
-    // RectDecor R7 = createRectDecor(50, 50, -600, -1300, r,g,b);
-    // addRectDecorToMap(R7, &M);
-
-    // RectDecor R8 = createRectDecor(50, 50, -600, -1200, r,g,b);
-    // addRectDecorToMap(R8, &M);
-
-    // RectDecor R9 = createRectDecor(50, 50, -600, -1100, r,g,b);
-    // addRectDecorToMap(R9, &M);
-    
-    // RectDecor R10 = createRectDecor(50, 50, -600, -1000, r,g,b);
-    // addRectDecorToMap(R10, &M);
-
-    // RectDecor R11 = createRectDecor(50, 50, -600, -900, r,g,b);
-    // addRectDecorToMap(R11, &M);
-
-    // RectDecor R12 = createRectDecor(50, 50, -500, -1000, r,g,b);
-    // addRectDecorToMap(R12, &M);
-
-    // RectDecor R13 = createRectDecor(50, 50, -500, -900, r,g,b);
-    // addRectDecorToMap(R13, &M);
-
-
-    // Cases de fin
-
-    RectDecorFin RpersoTest = createRectDecor(persoTest->width, persoTest->height, -persoTest->posStartX,R1.y+R1.h/2+persoTest->height/2, 1,1,1);
-    addRectDecorFinToMap(RpersoTest, &M);
-    RectDecorFin RWooly = createRectDecor(Wooly->width, Wooly->height, -Wooly->posStartX,R1.y+R1.h/2+Wooly->height/2, 1,1,1);
-    addRectDecorFinToMap(RWooly, &M);
-    RectDecorFin RCharlie = createRectDecor(Charlie->width, Charlie->height, -Charlie->posStartX,R1.y+R1.h/2+Charlie->height/2, 1,1,1);
-    addRectDecorFinToMap(RCharlie, &M);
-
-
-
-    // Quadtree shit
-    QuadTree Q = initRootFromMap(M);
-    buildQuadTree(&Q);
-
-    return createNiveau(0, M, Q, *player, camTest);
-}
-
-
-Niveau createNiveau1(){
-
-    struct Perso* persoTest = malloc(sizeof(struct Perso));
-
-    *persoTest = createPerso(60,90, 1.,1.,0., 20-1000,-1200, 100,100, 200);
-
-    struct Perso** team = malloc(6*sizeof(struct Perso));
-
-    team[0] = persoTest;
+    team[0] = Charlotte;
 
     struct Player* player = malloc(sizeof(struct Player));
     *player = createPlayer(team, 1);
@@ -224,47 +135,96 @@ Niveau createNiveau1(){
     RectDecor R4 = createRectDecor(50,3000,-1475,0,r,g,b);
     addRectDecorToMap(R4,&M);
 
-    RectDecor R5 = createRectDecor(600, 800, 0, R1.y+R1.h/2+400, r,g,b);
+    RectDecor R5 = createRectDecor(600, 200, 0, R1.y+R1.h/2+100, r,g,b);
     addRectDecorToMap(R5, &M);
 
-
-    RectDecor R6 = createRectDecor(600, 1600, 1000, R1.y+R1.h/2+800, r,g,b);
+    RectDecor R6 = createRectDecor(200, 150, -400, R1.y+R1.h/2+150/2, r,g,b);
     addRectDecorToMap(R6, &M);
 
 
-    Animation A1 = createAnimation('X',100,5);
-    Animation A2 = createAnimation('Y',600,5);
-    Animation A3 = createAnimation('X',100, -5);
-    Animation A4 = createAnimation('Y', 600, -5);
+    
+
+    // Cases de fin
+    RectDecorFin RCharlotte = createRectDecor(Charlotte->width, Charlotte->height, 980, R1.y+R1.h/2+Charlotte->height/2, 1,1,1);
+    addRectDecorFinToMap(RCharlotte, &M);
+
+
+
+    // Quadtree shit
+    QuadTree Q = initRootFromMap(M);
+    buildQuadTree(&Q);
+
+    return createNiveau(0, M, Q, *player, camTest);
+}
+
+
+
+Niveau createNiveau1(){
+
+    struct Perso* Charlotte = malloc(sizeof(struct Perso));
+    struct Perso* Orange = malloc(sizeof(struct Perso));
+
+    *Charlotte = createPerso(60, 90, 224/255.0,153/255.0,177/255.0, -1200, -1200, 100, 100, 60);
+    *Orange = createPerso(30, 150, 250/255.0,205/255.0,170/255.0, -1100, -1200, 100, 100, 400);
+
+    struct Perso** team = malloc(2*sizeof(struct Perso));
+
+
+    team[0] = Charlotte;
+    team[1] = Orange;
+
+    struct Player* player = malloc(sizeof(struct Player));
+    *player = createPlayer(team, 2);
+
+    Camera camTest = createCamera(player->team[player->activePerso]->posStartX, player->team[player->activePerso]->posStartY, 1.5, 1.5);
+
+
+    Map M = createMap(3000,3000); // taille de la map et creation de la map
+
+    float r = 238/255.0;
+    float g = 158/255.0;
+    float b = 204/255.0;
+
+
+    // Contours de la map
+    RectDecor R1 = createRectDecor(3000,50,0,-1475,r,g,b);
+    addRectDecorToMap(R1,&M);
+    RectDecor R2 = createRectDecor(3000,50,0,1475,r,g,b);
+    addRectDecorToMap(R2,&M);
+    RectDecor R3 = createRectDecor(50,3000,1475,0,r,g,b);
+    addRectDecorToMap(R3,&M);
+    RectDecor R4 = createRectDecor(50,3000,-1475,0,r,g,b);
+    addRectDecorToMap(R4,&M);
+
+    RectDecor R5 = createRectDecor(600, 200, -500, R1.y+R1.h/2+100, r,g,b);
+    addRectDecorToMap(R5, &M);
+
+    RectDecor R6 = createRectDecor(600, 500, 1200, R1.y+R1.h/2+250, r,g,b);
+    addRectDecorToMap(R6, &M);
+
+
+
+
+    Animation A1 = createAnimation('X',550,5);
+    Animation A2 = createAnimation('X', 550, -5);
+
     struct ListeAnimation *L1 = malloc(sizeof(struct ListeAnimation));
     *L1 = initListe();
     addAnimToList(A1, L1);
     addAnimToList(A2, L1);
-    addAnimToList(A3, L1);
-    addAnimToList(A4, L1);
     listeLoop(1, L1);
     struct RectDecor* Ranim = malloc(sizeof(struct RectDecor));
-    *Ranim = createRectDecor(200,50,-600,-1400,r,g,b);
+    *Ranim = createRectDecor(400,50,50,-1400+300,r,g,b);
     animateRectDecor(Ranim,L1);
     addRectDecorAnimToMap(Ranim,&M);
 
 
-    Animation A5 = createAnimation('Y', 1000, 5);
-    Animation A6 = createAnimation('Y', 1000, -5);
-    struct ListeAnimation *L2 = malloc(sizeof(struct ListeAnimation));
-    *L2 = initListe();
-    addAnimToList(A5, L2);
-    addAnimToList(A6, L2);
-    listeLoop(1, L2);
-    struct RectDecor* Ranim2 = malloc(sizeof(struct RectDecor));
-    *Ranim2 = createRectDecor(400,50,500,-1000,r,g,b);
-    animateRectDecor(Ranim2,L2);
-    addRectDecorAnimToMap(Ranim2,&M);
-
-
     // Cases de fin
-    RectDecorFin RpersoTest = createRectDecor(persoTest->width, persoTest->height,1375,R1.y+R1.h/2+persoTest->height/2, 1,1,1);
-    addRectDecorFinToMap(RpersoTest, &M);
+
+    RectDecorFin RCharlotte = createRectDecor(Charlotte->width, Charlotte->height, -Charlotte->posStartX, R1.y+R1.h/2+Charlotte->height/2+500, 1,1,1);
+    addRectDecorFinToMap(RCharlotte, &M);
+    RectDecorFin ROrange = createRectDecor(Orange->width, Orange->height, -Orange->posStartX,R1.y+R1.h/2+Orange->height/2+500, 1,1,1);
+    addRectDecorFinToMap(ROrange, &M);
 
 
     // Quadtree shit
@@ -273,6 +233,204 @@ Niveau createNiveau1(){
 
     return createNiveau(1, M, Q, *player, camTest);
 }
+
+Niveau createNiveau2(){
+
+    struct Perso* Charlotte = malloc(sizeof(struct Perso));
+    struct Perso* Orange = malloc(sizeof(struct Perso));
+    struct Perso* Mauve = malloc(sizeof(struct Perso));
+
+    *Charlotte = createPerso(60, 90, 224/255.0,153/255.0,177/255.0, -1000, -1200, 100, 100, 60);
+    *Orange = createPerso(30, 150, 250/255.0,205/255.0,170/255.0, -1100, -1200, 100, 100, 400);
+    *Mauve = createPerso(170, 40, 192/255.0,157/255.0,250/255.0, -1300, -1200, 100, 100, 30);
+
+    
+
+    struct Perso** team = malloc(2*sizeof(struct Perso));
+
+
+    team[0] = Charlotte;
+    team[1] = Orange;
+    team[2] = Mauve;
+
+    struct Player* player = malloc(sizeof(struct Player));
+    *player = createPlayer(team, 3);
+
+    Camera camTest = createCamera(player->team[player->activePerso]->posStartX, player->team[player->activePerso]->posStartY, 1.5, 1.5);
+
+
+    Map M = createMap(3000,3000); // taille de la map et creation de la map
+
+    float r = 238/255.0;
+    float g = 158/255.0;
+    float b = 204/255.0;
+
+
+    // Contours de la map
+    RectDecor R1 = createRectDecor(3000,50,0,-1475,r,g,b);
+    addRectDecorToMap(R1,&M);
+    RectDecor R2 = createRectDecor(3000,50,0,1475,r,g,b);
+    addRectDecorToMap(R2,&M);
+    RectDecor R3 = createRectDecor(50,3000,1475,0,r,g,b);
+    addRectDecorToMap(R3,&M);
+    RectDecor R4 = createRectDecor(50,3000,-1475,0,r,g,b);
+    addRectDecorToMap(R4,&M);
+
+    RectDecor R5 = createRectDecor(600, 200, -500, R1.y+R1.h/2+100+50, r,g,b);
+    addRectDecorToMap(R5, &M);
+
+    RectDecor R6 = createRectDecor(500, 1400, 1500-300, R1.y+R1.h/2+1400/2+50, r,g,b);
+    addRectDecorToMap(R6, &M);
+
+    RectDecor R7 = createRectDecor(300, 100, 100, 500, r,g,b);
+    addRectDecorToMap(R7, &M);
+
+
+
+
+
+
+    Animation A1 = createAnimation('Y',550,5);
+    Animation A2 = createAnimation('Y', 550, -5);
+
+    struct ListeAnimation *L1 = malloc(sizeof(struct ListeAnimation));
+    *L1 = initListe();
+    addAnimToList(A1, L1);
+    addAnimToList(A2, L1);
+    listeLoop(1, L1);
+    struct RectDecor* Ranim = malloc(sizeof(struct RectDecor));
+    *Ranim = createRectDecor(400,50,50,-1300,r,g,b);
+    animateRectDecor(Ranim,L1);
+    addRectDecorAnimToMap(Ranim,&M);
+
+
+    Animation A3 = createAnimation('Y',550,-5);
+    Animation A4 = createAnimation('Y', 550, 5);
+
+    struct ListeAnimation *L2 = malloc(sizeof(struct ListeAnimation));
+    *L2 = initListe();
+    addAnimToList(A3, L2);
+    addAnimToList(A4, L2);
+    listeLoop(1, L2);
+    struct RectDecor* Ranim2 = malloc(sizeof(struct RectDecor));
+    *Ranim2 = createRectDecor(550,50,600,-100,r,g,b);
+    animateRectDecor(Ranim2,L2);
+    addRectDecorAnimToMap(Ranim2,&M);
+
+
+    Animation A5 = createAnimation('Y',550,5);
+    Animation A6 = createAnimation('X', 700, -5);
+    Animation A7 = createAnimation('Y',550,-5);
+    Animation A8 = createAnimation('X', 700, 5);
+
+    struct ListeAnimation *L3 = malloc(sizeof(struct ListeAnimation));
+    *L3 = initListe();
+    addAnimToList(A5, L3);
+    addAnimToList(A6, L3);
+    addAnimToList(A7, L3);
+    addAnimToList(A8, L3);
+    listeLoop(1, L3);
+    struct RectDecor* Ranim3 = malloc(sizeof(struct RectDecor));
+    *Ranim3 = createRectDecor(100,50,1500-300, 100,r,g,b);
+    animateRectDecor(Ranim3,L3);
+    addRectDecorAnimToMap(Ranim3,&M);
+
+
+
+    // Cases de fin
+
+    RectDecorFin RCharlotte = createRectDecor(Charlotte->width, Charlotte->height, R7.x-50, R7.y+R7.h/2+Charlotte->height/2, 1,1,1);
+    addRectDecorFinToMap(RCharlotte, &M);
+    RectDecorFin ROrange = createRectDecor(Orange->width, Orange->height, R7.x+50,R7.y+R7.h/2+Orange->height/2, 1,1,1);
+    addRectDecorFinToMap(ROrange, &M);
+    RectDecorFin RMauve = createRectDecor(Mauve->width, Mauve->height,-Mauve->posStartX,R1.y+R1.h/2+Mauve->height/2, 1,1,1);
+    addRectDecorFinToMap(RMauve, &M);
+
+
+    // Quadtree shit
+    QuadTree Q = initRootFromMap(M);
+    buildQuadTree(&Q);
+
+    return createNiveau(2, M, Q, *player, camTest);
+}
+
+
+
+
+Niveau createNiveau3(){
+
+    struct Perso* Charlotte = malloc(sizeof(struct Perso));
+    struct Perso* Mauve = malloc(sizeof(struct Perso));
+    struct Perso* Bleu = malloc(sizeof(struct Perso));
+    struct Perso* Orange = malloc(sizeof(struct Perso));
+
+    *Charlotte = createPerso(60, 90, 224/255.0,153/255.0,177/255.0, 980, -1200, 100, 100, 60);
+    *Mauve = createPerso(170, 40, 192/255.0,157/255.0,250/255.0, 1200, -1200, 100, 100, 30);
+
+
+    *Bleu = createPerso(150, 150, 163/255.0,209/255.0,240/255.0, -800, -1200, 100, 100, 30);
+    *Orange = createPerso(30, 150, 250/255.0,205/255.0,170/255.0, -600, -1200, 100, 100, 400);
+
+    struct Perso** team = malloc(4*sizeof(struct Perso));
+
+
+    team[0] = Bleu;
+    team[1] = Orange;
+    
+    team[2] = Charlotte;
+    team[3] = Mauve;
+
+    struct Player* player = malloc(sizeof(struct Player));
+    *player = createPlayer(team, 4);
+
+    Camera camTest = createCamera(player->team[player->activePerso]->posStartX, player->team[player->activePerso]->posStartY, 1.5, 1.5);
+
+
+    Map M = createMap(3000,3000); // taille de la map et creation de la map
+
+    float r = 238/255.0;
+    float g = 158/255.0;
+    float b = 204/255.0;
+
+
+    // Contours de la map
+    RectDecor R1 = createRectDecor(3000,50,0,-1475,r,g,b);
+    addRectDecorToMap(R1,&M);
+    RectDecor R2 = createRectDecor(3000,50,0,1475,r,g,b);
+    addRectDecorToMap(R2,&M);
+    RectDecor R3 = createRectDecor(50,3000,1475,0,r,g,b);
+    addRectDecorToMap(R3,&M);
+    RectDecor R4 = createRectDecor(50,3000,-1475,0,r,g,b);
+    addRectDecorToMap(R4,&M);
+
+    RectDecor R5 = createRectDecor(600, 200, 0, R1.y+R1.h/2+100, r,g,b);
+    addRectDecorToMap(R5, &M);
+
+    RectDecor R6 = createRectDecor(200, 150, -400, R1.y+R1.h/2+150/2, r,g,b);
+    addRectDecorToMap(R6, &M);
+    
+
+    // Cases de fin
+
+    RectDecorFin RBleu = createRectDecor(Bleu->width, Bleu->height, -Bleu->posStartX,R1.y+R1.h/2+Bleu->height/2, 1,1,1);
+    addRectDecorFinToMap(RBleu, &M);
+    RectDecorFin ROrange = createRectDecor(Orange->width, Orange->height, -Orange->posStartX,R1.y+R1.h/2+Orange->height/2, 1,1,1);
+    addRectDecorFinToMap(ROrange, &M);
+
+    RectDecorFin RCharlotte = createRectDecor(Charlotte->width, Charlotte->height, -980, R1.y+R1.h/2+Charlotte->height/2, 1,1,1);
+    addRectDecorFinToMap(RCharlotte, &M);
+    RectDecorFin RMauve = createRectDecor(Mauve->width, Mauve->height,-1200,R1.y+R1.h/2+Mauve->height/2, 1,1,1);
+    addRectDecorFinToMap(RMauve, &M);
+
+
+
+    // Quadtree shit
+    QuadTree Q = initRootFromMap(M);
+    buildQuadTree(&Q);
+
+    return createNiveau(3, M, Q, *player, camTest);
+}
+
 
 
 

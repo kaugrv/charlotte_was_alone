@@ -81,7 +81,7 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
     }
 
     float testFriction = 1.5;
-    float gravity = 0.8;
+    float gravity = 0.6;
     
     perso->dirY += (perso->fallForce/10) * (elapsedTime/10.0) * gravity;
 
@@ -149,10 +149,10 @@ void updatePosPerso(Perso* perso, Uint32 elapsedTime, QuadTree Q, Perso* team[6]
         perso->vitesseX = 500;
     if (perso->vitesseX < -500) // X-
         perso->vitesseX = -500;
-    if (perso->vitesseY < -500) // Y-
-        perso->vitesseY = -500;
-    if (perso->vitesseY > 3000) // Y+
-        perso->vitesseY = 3000;
+    if (perso->vitesseY < -700) // Y-
+        perso->vitesseY = -700;
+    if (perso->vitesseY > 2000) // Y+
+        perso->vitesseY = 2000;
     
     // Calcul de la position
     perso->x += perso->vitesseX * elapsedTime/1000.0;

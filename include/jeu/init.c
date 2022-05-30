@@ -16,8 +16,8 @@
 
     Niveau N0 = createNiveau0();
     Niveau N1 = createNiveau1();
-    // Niveau N2 = createNiveau2();
-    // Niveau N3 = createNiveau3();
+    Niveau N2 = createNiveau2();
+    Niveau N3 = createNiveau3();
     // Niveau N4 = createNiveau4();
     // Niveau N5 = createNiveau5();
     // Niveau N6 = createNiveau6();
@@ -28,8 +28,8 @@
 
     addNiveautoJeu(&N0, &J);
     addNiveautoJeu(&N1, &J);
-    // addNiveautoJeu(&N2, &J);
-    // addNiveautoJeu(&N3, &J);
+    addNiveautoJeu(&N2, &J);
+    addNiveautoJeu(&N3, &J);
     // addNiveautoJeu(&N4, &J);
     // addNiveautoJeu(&N5, &J);
     // addNiveautoJeu(&N6, &J);
