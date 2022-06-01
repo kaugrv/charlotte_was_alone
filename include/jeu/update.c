@@ -39,9 +39,8 @@ switch (GAMESTATE) {
         // On update la position de tous les persos
         if (!pause){
                 for (int i = 0; i < N->player.nbPersos; i++) {
-                // updatePosPerso(N->player.team[i], elapsedTime, fillQuadTreeFromSearch(N->Q, N->player.team[i]->x, N->player.team[i]->y, N->player.team[i]->width, N->player.team[i]->height, N->M), N->player.team, N->player.nbPersos, i,N->player.activePerso,N->M.listeRectDecorAnim,N->M.nbRectDecorAnim);
-                updatePosPerso(N->player.team[i], elapsedTime, N->Q, N->player.team, N->player.nbPersos, i,N->player.activePerso,N->M.listeRectDecorAnim,N->M.nbRectDecorAnim);                       
-    
+                updatePosPerso(N->player.team[i], elapsedTime, fillQuadTreeFromSearch(N->Q, N->player.team[i]->x, N->player.team[i]->y, N->player.team[i]->width, N->player.team[i]->height, N->M), N->player.team, N->player.nbPersos, i,N->player.activePerso,N->M.listeRectDecorAnim,N->M.nbRectDecorAnim);
+                //updatePosPerso(N->player.team[i], elapsedTime, N->Q, N->player.team, N->player.nbPersos, i,N->player.activePerso,N->M.listeRectDecorAnim,N->M.nbRectDecorAnim);                       
             }
         }
 
