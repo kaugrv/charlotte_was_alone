@@ -29,4 +29,57 @@ make clean
 
 puis répéter les deux commandes du dessus.
 
+## Mode debug (en jeu)
+
+Afficher le quadtree
+```
+B
+```
+
+Passer le niveau actuel
+```
+N
+```
+
+## Commandes (en jeu)
+
+Se déplacer
+```
+Flèche gauche, flèche droite
+```
+
+Sauter
+```
+Espace
+```
+
+Changer de personnage
+```
+Tabulation
+```
+
+Menu pause
+```
+Echap
+```
+
+Recommencer le niveau
+```
+R
+```
+
+
+## Commandes (menu)
+
+Se déplacer
+```
+Flèche haut, flèche bas
+```
+
+Valider
+```
+Enter
+```
+
+
 
