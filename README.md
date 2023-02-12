@@ -1,4 +1,4 @@
-# IMAC_Thomas2
+# Charlotte Was Alone
 
 ![alt text](https://www.zupimages.net/up/22/21/0yma.png)
 
@@ -13,7 +13,7 @@
 
 ## Lancer le jeu
 
-dans un terminal (à la racine de imac_thomas2) :
+LINUX : dans un terminal (à la racine) :
 ```
 make jeu 
 ```
